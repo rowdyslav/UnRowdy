@@ -1,0 +1,1 @@
+from .wish import Wish
