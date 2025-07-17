@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, Form, status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login.exceptions import InvalidCredentialsException
 
-from schemas import BearerToken, User, user_already_existed
+from models import BearerToken, User, user_already_existed
 from utils import ErrorResponsesDict, login_manager
 
 router = APIRouter(prefix="/auth", tags=["Auth"])

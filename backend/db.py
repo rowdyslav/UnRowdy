@@ -23,18 +23,20 @@ ORM_CONFIG = {
     "connections": {"default": DATABASE_URL},
     "apps": {
         "models": {
-            "models": ["schemas", "aerich.models"],
+            "models": ["models", "aerich.models"],
             "default_connection": "default",
         },
     },
 }
 
-register_orm = partial(RegisterTortoise, config=ORM_CONFIG, generate_schemas=True)
+register_orm = partial(RegisterTortoise, config=ORM_CONFIG)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     async with register_orm(app):
         ic("База данных Postgres подключена через TortoiseORM!")
+        from routers import all_routers
+        app.include_router(all_routers)
         yield
         await Tortoise.close_connections()

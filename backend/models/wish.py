@@ -1,10 +1,7 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 from fastapi import HTTPException
 from tortoise import Model
-from tortoise.contrib.pydantic import pydantic_model_creator
 from tortoise.fields import (
     CharField,
     DatetimeField,
@@ -19,7 +16,7 @@ wish_not_found = HTTPException(404, "Желание не найдено!")
 
 
 class Wish(Model):
-    from schemas import User
+    from models import User
 
     id = IntField(primary_key=True)
     user: ForeignKeyRelation[User] = ForeignKeyField(
@@ -38,20 +35,6 @@ class Wish(Model):
     class Meta:
         table = "wishes"
 
-    class PydanticMeta:
-        exclude = ["..."]
+    # class PydanticMeta:
+    #     exclude = ["..."]
 
-
-if TYPE_CHECKING:
-
-    class WishSchema(Wish, PydanticModel):  # type:ignore[misc]
-        pass
-
-    class WishSchemaIn(Wish, PydanticModel):  # type:ignore[misc]
-        pass
-
-else:
-    from icecream import ic
-    ic('wish')
-    WishSchema = pydantic_model_creator(Wish, name="Wish")
-    WishSchemaIn = pydantic_model_creator(Wish, name="WishIn")

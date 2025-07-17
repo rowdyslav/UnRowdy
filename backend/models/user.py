@@ -26,7 +26,7 @@ class User(Model):
     modified_at = DatetimeField(auto_now=True)
 
     if TYPE_CHECKING:
-        from schemas import Wish
+        from models import Wish
 
         wishes: ReverseRelation[Wish]
 
@@ -47,17 +47,3 @@ class User(Model):
             await self.save()
         return valid
 
-
-if TYPE_CHECKING:
-
-    class UserSchema(User, PydanticModel):  # type:ignore[misc]
-        pass
-
-    class UserSchemaIn(User, PydanticModel):  # type:ignore[misc]
-        pass
-
-else:
-    from icecream import ic
-    ic('user')
-    UserSchema = pydantic_model_creator(User, name="User",)
-    UserSchemaIn = pydantic_model_creator(User, name="UserIn", exclude_readonly=True)

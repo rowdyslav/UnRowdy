@@ -3,8 +3,14 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status
 from pydantic import NonNegativeInt
 
-from schemas import UserSchema, Wish, WishSchema, WishSchemaIn, wish_not_found
-from utils import ErrorResponsesDict, login_manager
+from models import Wish, wish_not_found
+from utils import (
+    ErrorResponsesDict,
+    UserSchema,
+    WishSchema,
+    WishSchemaIn,
+    login_manager,
+)
 
 router = APIRouter(prefix="/wishes", tags=["Wishes"])
 
