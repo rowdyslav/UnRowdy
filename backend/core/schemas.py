@@ -20,7 +20,7 @@ if TYPE_CHECKING:
         pass
 
 else:
-    UserSchema = pydantic_model_creator(User, name="User",)
-    UserSchemaIn = pydantic_model_creator(User, name="UserIn", exclude_readonly=True)
-    WishSchema = pydantic_model_creator(Wish, name="Wish")
-    WishSchemaIn = pydantic_model_creator(Wish, name="WishIn", exclude_readonly=True)
+    UserSchema = pydantic_model_creator(User, name="UserSchema",)
+    UserSchemaIn = pydantic_model_creator(User, name="UserSchemaIn", exclude_readonly=True)
+    WishSchema = pydantic_model_creator(Wish, name="WishSchema")
+    WishSchemaIn = pydantic_model_creator(Wish, name="WishSchemaIn", exclude_readonly=True)
