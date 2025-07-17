@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login.exceptions import InvalidCredentialsException
 
 from models import BearerToken, User, user_already_existed
-from utils import ErrorResponsesDict, login_manager
+from core import ErrorResponsesDict, login_manager
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 

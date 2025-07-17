@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, status
 from pydantic import NonNegativeInt
 
 from models import Wish, wish_not_found
-from utils import (
+from core import (
     ErrorResponsesDict,
     UserSchema,
     WishSchema,

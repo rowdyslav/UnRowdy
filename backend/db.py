@@ -29,7 +29,7 @@ ORM_CONFIG = {
     },
 }
 
-register_orm = partial(RegisterTortoise, config=ORM_CONFIG)
+register_orm = partial(RegisterTortoise, config=ORM_CONFIG, generate_schemas=False)
 
 
 @asynccontextmanager

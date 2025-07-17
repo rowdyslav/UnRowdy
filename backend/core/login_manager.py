@@ -3,8 +3,8 @@ from __future__ import annotations
 from fastapi_login import LoginManager
 from pydantic import EmailStr
 
+from core.schemas import UserSchema
 from models import User
-from utils.schemas import UserSchema
 
 login_manager = LoginManager("secret", "/auth/login")
 

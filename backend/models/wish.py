@@ -36,5 +36,5 @@ class Wish(Model):
         table = "wishes"
 
     # class PydanticMeta:
-    #     exclude = ["..."]
+    #     exclude = ["user"]
 

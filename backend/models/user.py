@@ -34,7 +34,7 @@ class User(Model):
         table = "users"
 
     class PydanticMeta:
-        exclude = ["password_hash"]
+        exclude = ['wish',"password_hash"]
 
     async def hash_password(self, plain_password: str):
         self.password_hash = pwd_ctx.hash(plain_password)
