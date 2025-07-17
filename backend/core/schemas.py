@@ -19,8 +19,8 @@ if TYPE_CHECKING:
     class WishSchemaIn(Wish, PydanticModel):  # type:ignore[misc]
         pass
 
-
-UserSchema = pydantic_model_creator(User, name="User",)
-UserSchemaIn = pydantic_model_creator(User, name="UserIn", exclude_readonly=True)
-WishSchema = pydantic_model_creator(Wish, name="Wish")
-WishSchemaIn = pydantic_model_creator(Wish, name="WishIn", exclude_readonly=True)
+else:
+    UserSchema = pydantic_model_creator(User, name="User",)
+    UserSchemaIn = pydantic_model_creator(User, name="UserIn", exclude_readonly=True)
+    WishSchema = pydantic_model_creator(Wish, name="Wish")
+    WishSchemaIn = pydantic_model_creator(Wish, name="WishIn", exclude_readonly=True)
