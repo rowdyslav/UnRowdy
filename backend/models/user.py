@@ -6,7 +6,6 @@ from fastapi import HTTPException
 from passlib.context import CryptContext
 from pydantic import EmailStr
 from tortoise import Model
-from tortoise.contrib.pydantic import PydanticModel, pydantic_model_creator
 from tortoise.fields import CharField, DatetimeField, IntField, ReverseRelation
 
 user_not_found = HTTPException(404, "Пользователь не найден!")

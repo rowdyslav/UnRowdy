@@ -3,25 +3,21 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status
 from pydantic import NonNegativeInt
 
-from models import Wish, wish_not_found
 from core import (
     ErrorResponsesDict,
     UserSchema,
     WishSchema,
-    WishSchemaIn,
+    WishSchemaPublic,
     login_manager,
 )
+from models import Wish, wish_not_found
 
 router = APIRouter(prefix="/wishes", tags=["Wishes"])
 
-@router.post('', response_model=WishSchema, status_code=status.HTTP_201_CREATED)
-async def add(wish_in: WishSchemaIn):
-    return await Wish.create(**wish_in.model_dump(exclude_unset=True))
 
-@router.get('', response_model=list[WishSchema])
-async def read_many(limit: NonNegativeInt = 10, offset: NonNegativeInt = 0):
-    return await WishSchema.from_queryset(Wish.all().limit(limit).offset(offset))
-
+@router.get('', response_model=list[WishSchemaPublic])
+async def read_many(limit: NonNegativeInt = 10, offset: NonNegativeInt = 0) -> list[WishSchemaPublic]:
+    return await WishSchemaPublic.from_queryset(Wish.all().limit(limit).offset(offset))
 
 @router.delete(
     '',
@@ -30,11 +26,14 @@ async def read_many(limit: NonNegativeInt = 10, offset: NonNegativeInt = 0):
 async def remove_many(limit: NonNegativeInt = 10, offset: NonNegativeInt = 0):
     await Wish.all().limit(limit).offset(offset).delete()
 
+@router.post('/me', response_model=WishSchema, status_code=status.HTTP_201_CREATED)
+async def add_me(user: Annotated[UserSchema, Depends(login_manager)], wish_in: WishSchemaPublic):
+    return await WishSchema.from_tortoise_orm(await Wish.create(**wish_in.model_dump(exclude_unset=True), user_id=user.id))
 
 @router.get(
-    "/me", response_model=WishSchema, responses=ErrorResponsesDict("unauthorized")
+    "/me", response_model=list[WishSchema], responses=ErrorResponsesDict("unauthorized")
 )
-async def read_me(user: Annotated[UserSchema, Depends(login_manager)]) -> WishSchema:
+async def read_me(user: Annotated[UserSchema, Depends(login_manager)]) -> list[WishSchema]:
     return await WishSchema.from_queryset(user.wishes.all())
 
 
@@ -43,7 +42,7 @@ async def read_me(user: Annotated[UserSchema, Depends(login_manager)]) -> WishSc
     status_code=status.HTTP_204_NO_CONTENT,
     responses=ErrorResponsesDict("unauthorized"),
 )
-async def remove_me(user: Annotated[WishSchema, Depends(login_manager)]) -> None:
+async def remove_me(user: Annotated[UserSchema, Depends(login_manager)]) -> None:
     await user.wishes.all().delete()
 
 

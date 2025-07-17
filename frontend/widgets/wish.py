@@ -5,14 +5,14 @@ from flet import Column, Image, ImageFit, SelectionArea, Text
 
 class Wish(SelectionArea):
     def __init__(
-        self, name: str, image_url: Optional[str] = None, price: Optional[str] = None
+        self, name: str, image_b64: Optional[str] = None, price: Optional[str] = None
     ):
         super().__init__(
             Column(
                 (
                     [
                         Image(
-                            image_url,
+                            src_base64=image_b64,
                             fit=ImageFit.CONTAIN,
                         ),
                         Text(name),

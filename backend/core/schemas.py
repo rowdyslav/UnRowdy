@@ -10,17 +10,17 @@ if TYPE_CHECKING:
     class UserSchema(User, PydanticModel):  # type:ignore[misc]
         pass
 
-    class UserSchemaIn(User, PydanticModel):  # type:ignore[misc]
+    class UserSchemaPublic(User, PydanticModel):  # type:ignore[misc]
         pass
 
     class WishSchema(Wish, PydanticModel):  # type:ignore[misc]
         pass
 
-    class WishSchemaIn(Wish, PydanticModel):  # type:ignore[misc]
+    class WishSchemaPublic(Wish, PydanticModel):  # type:ignore[misc]
         pass
 
 else:
     UserSchema = pydantic_model_creator(User, name="UserSchema",)
-    UserSchemaIn = pydantic_model_creator(User, name="UserSchemaIn", exclude_readonly=True)
+    UserSchemaPublic = pydantic_model_creator(User, name="UserSchemaPublic", exclude_readonly=True)
     WishSchema = pydantic_model_creator(Wish, name="WishSchema")
-    WishSchemaIn = pydantic_model_creator(Wish, name="WishSchemaIn", exclude_readonly=True)
+    WishSchemaPublic = pydantic_model_creator(Wish, name="WishSchemaPublic", exclude_readonly=True)

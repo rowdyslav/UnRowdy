@@ -22,7 +22,7 @@ DATABASE_URL = (
 ORM_CONFIG = {
     "connections": {"default": DATABASE_URL},
     "apps": {
-        "models": {
+        "rowdywish": {
             "models": ["models", "aerich.models"],
             "default_connection": "default",
         },

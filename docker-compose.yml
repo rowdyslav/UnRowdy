@@ -4,7 +4,7 @@ services:
     container_name: rowdywish_pg
     restart: unless-stopped
     env_file:
-      - backend/.env
+      - .env
     ports:
       - "5432:5432"
     volumes:
@@ -21,7 +21,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     env_file:
-      - backend/.env
+      - .env
     depends_on:
       db:
         condition: service_healthy
@@ -30,17 +30,15 @@ services:
     volumes:
       - ./backend:/app
   app:
+    tty: true
     container_name: rowdywish_app
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    depends_on:
-      api:
-        condition: service_healthy
     ports:
       - "80:80"
     volumes:
-      - ./app:/app
+      - ./frontend:/app
 
 volumes:
   db_data:

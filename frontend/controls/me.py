@@ -1,20 +1,23 @@
-from flet import IconButton, Icons, Row, Text
+from flet import AlertDialog, Column, IconButton, Icons, Page, Row, Text, TextField
+
+from services.by_api import get_wishes
 from widgets import Wish
 
 
-async def me():
-    wishes = [
-        {
-            "name": "Nintendo Switch 2",
-            "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUidEyHOsFcNi1r3Zh6EYlEYzVyGekqy5Y6A&s",
-            "price": "60000",
-        }
-    ] * 5
-
+async def me(p: Page):
+    wishes = await get_wishes()
     text = Text("Ваши желания")
     row = Row(
         [Wish(**wish) for wish in wishes],
         wrap=True,
     )
-    button = IconButton(Icons.ADD)
+    form = AlertDialog(
+        title=Text('Добавить желание'),
+        content=Column(
+            (TextField(), TextField()),
+            tight=True
+        ),
+        actions=[IconButton(Icons.ABC)]
+    )
+    button = IconButton(Icons.ADD, on_click=lambda _: p.open(form))
     return (text, row, button)

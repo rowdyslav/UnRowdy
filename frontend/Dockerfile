@@ -9,4 +9,5 @@ COPY . .
 
 EXPOSE 80
 
-CMD ["flet","run", "-w" ,"-r" ,"-n" ,"-p", "80"]
+# CMD ["flet", "run", "--web", "-p", "80", "-d", "-r", "main.py"]
+CMD ["fastapi", "dev", "--host", "0.0.0.0", "--port", "80", "--reload"]

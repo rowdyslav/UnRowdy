@@ -1,5 +1,3 @@
-from asyncio import run
-
 from flet import (
     AppBar,
     ControlEvent,
@@ -11,15 +9,15 @@ from flet import (
     TextThemeStyle,
     View,
     ViewPopEvent,
-    app_async,
+    app,
 )
 
-from controls import me
+from controls import index, me
 
-SCREENS = {"/": me}
+SCREENS = {"/": index, "/me": me}
 
 
-async def app(p: Page):
+async def main(p: Page):
     views = p.views
 
     async def change_route(_: RouteChangeEvent | ControlEvent):
@@ -27,7 +25,7 @@ async def app(p: Page):
         get_controls = SCREENS.get(route, me)
         view = View(
             route,
-            await get_controls(),
+            await get_controls(p),
             spacing=25,
             appbar=AppBar(
                 title=Text("RowdyWish", theme_style=TextThemeStyle.DISPLAY_LARGE),
@@ -51,6 +49,4 @@ async def app(p: Page):
 
     p.go(p.route)
 
-
-if __name__ == "__main__":
-    run(app_async(app))
+app = app(main, export_asgi_app=True)
