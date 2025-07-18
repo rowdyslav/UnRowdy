@@ -3,8 +3,8 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status
 from pydantic import NonNegativeInt
 
-from models import User, user_not_found
 from core import ErrorResponsesDict, UserSchema, login_manager
+from models import User, user_not_found
 
 router = APIRouter(prefix="/users", tags=["Users"])
 

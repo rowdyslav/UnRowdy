@@ -15,26 +15,42 @@ from models import Wish, wish_not_found
 router = APIRouter(prefix="/wishes", tags=["Wishes"])
 
 
-@router.get('', response_model=list[WishSchemaPublic])
-async def read_many(limit: NonNegativeInt = 10, offset: NonNegativeInt = 0) -> list[WishSchemaPublic]:
+@router.get(
+    "",
+    response_model=list[WishSchemaPublic],
+)
+async def read_many(
+    limit: NonNegativeInt = 10, offset: NonNegativeInt = 0
+) -> list[WishSchemaPublic]:
     return await WishSchemaPublic.from_queryset(Wish.all().limit(limit).offset(offset))
 
+
 @router.delete(
-    '',
-    status_code=status.HTTP_204_NO_CONTENT
+    "",
+    status_code=status.HTTP_204_NO_CONTENT,
 )
 async def remove_many(limit: NonNegativeInt = 10, offset: NonNegativeInt = 0):
     await Wish.all().limit(limit).offset(offset).delete()
 
-@router.post('/me', response_model=WishSchema, status_code=status.HTTP_201_CREATED)
-async def add_me(user: Annotated[UserSchema, Depends(login_manager)], wish_in: WishSchemaPublic):
-    return await WishSchema.from_tortoise_orm(await Wish.create(**wish_in.model_dump(exclude_unset=True), user_id=user.id))
+
+@router.post("/me", response_model=WishSchema, status_code=status.HTTP_201_CREATED)
+async def add_me(
+    user: Annotated[UserSchema, Depends(login_manager)], wish_in: WishSchemaPublic
+):
+    return await WishSchema.from_tortoise_orm(
+        await Wish.create(**wish_in.model_dump(exclude_unset=True), user_id=user.id)
+    )
+
 
 @router.get(
-    "/me", response_model=list[WishSchema], responses=ErrorResponsesDict("unauthorized")
+    "/me",
+    response_model=list[WishSchemaPublic],
+    responses=ErrorResponsesDict("unauthorized"),
 )
-async def read_me(user: Annotated[UserSchema, Depends(login_manager)]) -> list[WishSchema]:
-    return await WishSchema.from_queryset(user.wishes.all())
+async def read_me(
+    user: Annotated[UserSchema, Depends(login_manager)],
+) -> list[WishSchemaPublic]:
+    return await WishSchemaPublic.from_queryset(Wish.filter(user_id=user.id))
 
 
 @router.delete(
@@ -43,7 +59,7 @@ async def read_me(user: Annotated[UserSchema, Depends(login_manager)]) -> list[W
     responses=ErrorResponsesDict("unauthorized"),
 )
 async def remove_me(user: Annotated[UserSchema, Depends(login_manager)]) -> None:
-    await user.wishes.all().delete()
+    await Wish.filter(user_id=user.id).delete()
 
 
 @router.get(
