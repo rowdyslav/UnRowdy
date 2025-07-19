@@ -1,3 +1,4 @@
+from controls import index, me
 from flet import (
     AppBar,
     AppView,
@@ -12,8 +13,6 @@ from flet import (
     ViewPopEvent,
     app,
 )
-
-from controls import index, me
 
 SCREENS = {"/": index, "/me": me}
 
