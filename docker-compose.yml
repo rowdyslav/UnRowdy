@@ -19,9 +19,9 @@ services:
     container_name: unrowdy_backend
     build:
       context: ./backend
-      dockerfile: Dockerfile
     env_file:
       - .env
+      - backend/.env
     depends_on:
       db:
         condition: service_healthy
@@ -29,6 +29,7 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
+      - /app/.venv
     develop:
       watch:
         - action: sync
@@ -43,13 +44,16 @@ services:
     container_name: unrowdy_frontend
     build:
       context: ./frontend
-      dockerfile: Dockerfile
     env_file:
-      - .env
+      - frontend/.env
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - "80:80"
     volumes:
       - ./frontend:/app
+      - /app/.venv
     develop:
       watch:
         - action: sync
@@ -57,9 +61,7 @@ services:
           target: /app
           ignore:
             - .venv/
-        # - action: rebuild
-        #   path: ./pyproject.toml
         - action: rebuild
-          path: ./uv.lock
+          path: ./pyproject.toml
 volumes:
   db_data:
