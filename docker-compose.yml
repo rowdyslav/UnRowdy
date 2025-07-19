@@ -14,9 +14,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  api:
+  backend:
     tty: true
-    container_name: unrowdy_api
+    container_name: unrowdy_backend
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -29,9 +29,18 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
-  app:
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - .venv/
+        - action: rebuild
+          path: ./pyproject.toml
+  frontend:
     tty: true
-    container_name: unrowdy_app
+    container_name: unrowdy_frontend
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -41,6 +50,16 @@ services:
       - "80:80"
     volumes:
       - ./frontend:/app
-
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - .venv/
+        # - action: rebuild
+        #   path: ./pyproject.toml
+        - action: rebuild
+          path: ./uv.lock
 volumes:
   db_data:

@@ -1,7 +1,0 @@
-aiohttp==3.11.10
-flet==0.28.3
-flet-desktop
-flet-cli
-flet-web
-fastapi[standard]
-icecream

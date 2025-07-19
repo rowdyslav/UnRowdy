@@ -34,7 +34,6 @@ class AddWish(AlertDialog):
             on_result=self.on_result,
             on_upload=self.on_upload,
         )
-        self._selected_file: Optional[FilePickerResultEvent] = None
         self._uploaded_path: Optional[str] = None
 
         super().__init__(
@@ -54,7 +53,6 @@ class AddWish(AlertDialog):
                             self.file_text,
                         ]
                     ),
-                    self._picker,
                 ],
                 tight=True,
                 wrap=True,
@@ -68,7 +66,6 @@ class AddWish(AlertDialog):
         )
 
     def on_result(self, e: FilePickerResultEvent):
-        self._selected_file = e
         if (f := e.files) is not None:
             file_name = f[-1].name
 

@@ -9,7 +9,6 @@ from flet import (
     ImageFit,
     MainAxisAlignment,
     SelectionArea,
-    Semantics,
     Text,
 )
 

@@ -1,8 +1,6 @@
-from controls import index, me
 from flet import (
     AppBar,
     AppView,
-    ControlEvent,
     CrossAxisAlignment,
     Page,
     RouteChangeEvent,
@@ -14,14 +12,16 @@ from flet import (
     app,
 )
 
+from controls import index, me
+
 SCREENS = {"/": index, "/me": me}
 
 
 async def main(p: Page):
     views = p.views
 
-    async def change_route(_: RouteChangeEvent):
-        route = p.route
+    async def change_route(e: RouteChangeEvent):
+        route = e.route
         get_controls = SCREENS.get(route, index)
         view = View(
             route,

@@ -1,3 +1,5 @@
-**/__pycache__
-/storage
-/uploads
+__pycache__
+uv.lock
+
+storage
+uploads
