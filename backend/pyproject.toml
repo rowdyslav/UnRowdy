@@ -27,6 +27,8 @@ tortoise_orm = "db.ORM_CONFIG"
 location = "./migrations"
 src_folder = "./."
 
+[tool.pyright]
+typeCheckingMode = "off"
 
 [tool.uv.workspace]
 members = [
@@ -40,3 +42,8 @@ unrowdy-backend = { workspace = true }
 
 [tool.hatch.build.targets.wheel]
 packages = ["backend"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12.4",
+]

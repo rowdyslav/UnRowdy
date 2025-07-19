@@ -48,15 +48,18 @@ HttpErrorName = Literal[
 
 
 class HTTPError(BaseModel):
+    """Схема HTTP ошибки."""
+
     detail: str
 
 
 class ErrorResponsesDict(dict):
-    '''Словарь для FastAPI.APIRouter.responses, где ключи — названия HTTP-ошибок.
-    Принимает на вход флаги по названиям HTTPStatus (нижний регистр) только кодов >= 400.
-    '''
+    """Словарь для FastAPI.APIRouter.responses, где ключи — названия HTTP-ошибок.
 
-    def __init__(self, *errors: HttpErrorName):
+    Принимает на вход флаги по названиям HTTPStatus только кодов >= 400.
+    """
+
+    def __init__(self, *errors: HttpErrorName) -> None:
         super().__init__()
         for error in errors:
             try:

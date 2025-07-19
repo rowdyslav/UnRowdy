@@ -1,30 +1,31 @@
-from typing import Any, Literal, Optional, Self
+from typing import Any, Literal, Self
 
 from aiohttp import ClientSession
-
 from env import API_URL
 
 
 class APIError(Exception):
     """Бросается, если API вернуло ошибку (статус ≥ 400)."""
 
-    def __init__(self, status: int, body: Any):
+    def __init__(self, status: int, body: dict) -> None:
         super().__init__(f"{status}: {body}")
         self.status = status
         self.body = body
 
 
 class APIClient:
-    def __init__(self, token: Optional[str] = None):
+    """Апи клиент."""
+
+    def __init__(self, token: str | None = None) -> None:
         self.token = token
 
-        self._session: Optional[ClientSession] = None
+        self._session: ClientSession | None = None
 
     async def __aenter__(self) -> Self:
         self._session = ClientSession()
         return self
 
-    async def __aexit__(self, *_):
+    async def __aexit__(self, *_: object) -> None:
         if self._session:
             await self._session.close()
 
@@ -33,14 +34,13 @@ class APIClient:
         method: Literal["GET", "POST", "PUT", "PATCH", "DELETE"],
         path: str,
         *,
-        params: Optional[dict[str, Any]] = None,
-        json: Optional[dict[str, Any]] = None,
-        data: Optional[dict[str, Any]] = None,
-    ) -> Any:
+        params: dict[str, Any] | None = None,
+        json: dict[str, Any] | None = None,
+        data: dict[str, Any] | None = None,
+    ) -> dict:
+        """Запрос к API через APIClient."""
         if not self._session:
-            raise RuntimeError(
-                "Session is not started. Use async with APIClient(...) as client:"
-            )
+            raise RuntimeError
 
         url = f"{API_URL}{path}"
         headers = {}

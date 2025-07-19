@@ -1,3 +1,5 @@
+"""Все роутеры в all_routers роутере."""
+
 from fastapi import APIRouter
 
 from .auth import router as auth_router

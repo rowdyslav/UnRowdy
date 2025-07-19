@@ -1,5 +1,3 @@
-from typing import Any
-
 from .client import APIClient
 
 
@@ -27,12 +25,14 @@ async def post_auth_login(email: str, password: str) -> str:
     return payload["access_token"]
 
 
-async def get_wishes_me(token: str) -> Any:
+async def get_wishes_me(token: str) -> list[dict]:
     async with APIClient(token=token) as client:
         return await client.fetch("GET", "/wishes/me")
 
 
-async def post_wishes_me(token: str, name: str, price: str, image_b64: str) -> Any:
+async def post_wishes_me(
+    token: str, name: str, price: str, image_b64: str
+) -> list[dict]:
     async with APIClient(token=token) as client:
         return await client.fetch(
             "POST",

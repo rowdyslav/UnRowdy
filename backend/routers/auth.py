@@ -1,18 +1,16 @@
 from typing import Annotated
 
+from core import ErrorResponsesDict, login_manager
 from fastapi import APIRouter, Depends, Form, status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login.exceptions import InvalidCredentialsException
-
 from models import BearerToken, User, user_already_existed
-from core import ErrorResponsesDict, login_manager
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
 @router.post(
     "/register",
-    response_model=BearerToken,
     status_code=status.HTTP_201_CREATED,
     responses=ErrorResponsesDict("conflict"),
 )
@@ -36,10 +34,9 @@ async def register(
 
 @router.post(
     "/login",
-    response_model=BearerToken,
     responses=ErrorResponsesDict("unauthorized"),
 )
-async def login(data: OAuth2PasswordRequestForm = Depends()) -> BearerToken:
+async def login(data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> BearerToken:
     email = data.username
     password = data.password
 
@@ -47,5 +44,5 @@ async def login(data: OAuth2PasswordRequestForm = Depends()) -> BearerToken:
     if not user or not await user.verify_password(password):
         raise InvalidCredentialsException
 
-    access_token = login_manager.create_access_token(data=dict(sub=email))
+    access_token = login_manager.create_access_token(data={"sub": email})
     return BearerToken(access_token=access_token)

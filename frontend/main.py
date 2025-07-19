@@ -1,3 +1,4 @@
+from controls import index, me
 from flet import (
     AppBar,
     AppView,
@@ -12,15 +13,13 @@ from flet import (
     app,
 )
 
-from controls import index, me
-
 SCREENS = {"/": index, "/me": me}
 
 
-async def main(p: Page):
+async def main(p: Page) -> None:
     views = p.views
 
-    async def change_route(e: RouteChangeEvent):
+    async def change_route(e: RouteChangeEvent) -> None:
         route = e.route
         get_controls = SCREENS.get(route, index)
         view = View(
@@ -41,7 +40,7 @@ async def main(p: Page):
         views.append(view)
         p.update()
 
-    async def pop_view(_: ViewPopEvent):
+    async def pop_view(_: ViewPopEvent) -> None:
         if len(views) > 1:
             views.pop()
             p.go(views[-1].route or "/")

@@ -1,5 +1,4 @@
-from fastapi import FastAPI
-
 from db import lifespan
+from fastapi import FastAPI
 
 app = FastAPI(lifespan=lifespan)

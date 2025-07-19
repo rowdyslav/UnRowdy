@@ -1,6 +1,8 @@
 from base64 import b64encode
-from typing import Awaitable, Callable, Optional
+from collections.abc import Awaitable, Callable
 
+from anyio import open_file
+from core.api.funcs import post_wishes_me
 from flet import (
     AlertDialog,
     Button,
@@ -19,11 +21,11 @@ from flet import (
     TextField,
 )
 
-from services.api.funcs import post_wishes_me
-
 
 class AddWish(AlertDialog):
-    def __init__(self, on_submit: Callable[[], Awaitable[None]]):
+    """Модальная форма для добавления желания."""
+
+    def __init__(self, on_submit: Callable[[], Awaitable[None]]) -> None:
         self.on_submit = on_submit
 
         self.name_field = TextField(label="Название")
@@ -34,12 +36,12 @@ class AddWish(AlertDialog):
             on_result=self.on_result,
             on_upload=self.on_upload,
         )
-        self._uploaded_path: Optional[str] = None
+        self._uploaded_path: str | None = None
 
         super().__init__(
-            True,
-            Text("Добавить желание"),
-            Column(
+            modal=False,
+            title=Text("Добавить желание"),
+            content=Column(
                 [
                     self.name_field,
                     self.price_field,
@@ -57,16 +59,27 @@ class AddWish(AlertDialog):
                 tight=True,
                 wrap=True,
             ),
-            [TextButton("OK", on_click=self.on_form_button_click)],
+            actions=[TextButton("OK", on_click=self.on_form_button_click)],
         )
 
-    async def on_file_button_click(self, _: ControlEvent):
+    def on_dismiss(self) -> None:
+        self.name_field.value = ""
+        self.price_field.value = ""
+        self._picker.clean()
+
+    async def on_file_button_click(self, _: ControlEvent) -> None:
+        self._picker = FilePicker(
+            on_result=self.on_result,
+            on_upload=self.on_upload,
+        )
         self.page.overlay.append(self._picker)
+        self.page.update()
         self._picker.pick_files(
-            file_type=FilePickerFileType.IMAGE, allow_multiple=False
+            file_type=FilePickerFileType.IMAGE,
+            allow_multiple=False,
         )
 
-    def on_result(self, e: FilePickerResultEvent):
+    def on_result(self, e: FilePickerResultEvent) -> None:
         if (f := e.files) is not None:
             file_name = f[-1].name
 
@@ -77,7 +90,7 @@ class AddWish(AlertDialog):
             self.file_text.value = file_name
             self.file_text.update()
 
-    def on_upload(self, e: FilePickerUploadEvent):
+    def on_upload(self, e: FilePickerUploadEvent) -> None:
         p = e.page
 
         self._uploaded_path = f"uploads/{e.file_name}"
@@ -85,7 +98,7 @@ class AddWish(AlertDialog):
         p.open(SnackBar(Text(f"Файл загружен как {self._uploaded_path}")))
         p.update()
 
-    async def on_form_button_click(self, e: ControlEvent):
+    async def on_form_button_click(self, e: ControlEvent) -> None:
         p = e.page
         if (
             not self.name_field.value
@@ -96,8 +109,8 @@ class AddWish(AlertDialog):
             p.update()
             return
 
-        with open(self._uploaded_path, "rb") as f:
-            image_b64 = b64encode(f.read()).decode()
+        async with await open_file(self._uploaded_path, "rb") as f:
+            image_b64 = b64encode(await f.read()).decode()
 
         token = p.session.get("access_token")
         await post_wishes_me(

@@ -1,6 +1,5 @@
+from core.api.funcs import get_wishes_me
 from flet import IconButton, Icons, Page, Row, SnackBar, Text
-
-from services.api.funcs import get_wishes_me
 from widgets import AddWish, Wish
 
 
@@ -9,7 +8,7 @@ async def me(p: Page) -> tuple[Text, Row, IconButton] | None:
     if token is None:
         p.open(SnackBar(Text("Вы не авторизованы. Пожалуйста, войдите")))
         p.go("/")
-        return
+        return None
 
     text = Text("Ваши желания")
     row = Row([], wrap=True)

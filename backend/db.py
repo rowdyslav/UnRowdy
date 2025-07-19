@@ -1,11 +1,6 @@
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from functools import partial
-from typing import AsyncIterator
-
-from fastapi import FastAPI
-from icecream import ic
-from tortoise import Tortoise
-from tortoise.contrib.fastapi import RegisterTortoise
 
 from env import (
     POSTGRES_DB,
@@ -13,6 +8,10 @@ from env import (
     POSTGRES_PORT,
     POSTGRES_USER,
 )
+from fastapi import FastAPI
+from icecream import ic
+from tortoise import Tortoise
+from tortoise.contrib.fastapi import RegisterTortoise
 
 DATABASE_URL = (
     f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db:{POSTGRES_PORT}/{POSTGRES_DB}"

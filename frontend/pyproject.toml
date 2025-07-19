@@ -16,6 +16,13 @@ dependencies = [
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+[tool.pyright]
+typeCheckingMode = "off"
 
 [tool.hatch.build.targets.wheel]
 packages = ["frontend"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12.4",
+]

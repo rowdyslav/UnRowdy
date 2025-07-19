@@ -1,3 +1,6 @@
+"""Модуль индекса."""
+
+from core.api.funcs import post_auth_login, post_auth_register
 from flet import (
     AutofillHint,
     ControlEvent,
@@ -9,10 +12,11 @@ from flet import (
     TextField,
 )
 
-from services.api.funcs import post_auth_login, post_auth_register
 
-
-async def index(p: Page):
+async def index(
+    p: Page,
+) -> tuple[TextButton, TextField, TextField, TextField, TextButton]:
+    """Индекс."""
     is_reg = False
 
     username_field = TextField(label=Text("Юзернейм"), filled=False, width=300)
@@ -30,7 +34,7 @@ async def index(p: Page):
         width=300,
     )
 
-    async def setup_form():
+    async def setup_form() -> None:
         username_field.visible = is_reg
         password_field.autofill_hints = (
             [AutofillHint.NEW_PASSWORD] if is_reg else [AutofillHint.PASSWORD]
@@ -41,14 +45,14 @@ async def index(p: Page):
         )
         p.update()
 
-    async def toggle_form(_: ControlEvent):
+    async def toggle_form(_: ControlEvent) -> None:
         nonlocal is_reg
         is_reg = not is_reg
         await setup_form()
 
     toggle_button = TextButton("Нет аккаунта? Зарегистрироваться", on_click=toggle_form)
 
-    async def submit(_: ControlEvent):
+    async def submit(_: ControlEvent) -> None:
         if email_field.value is None or email_field.value == "":
             p.open(SnackBar(Text("Введите почту")))
             p.update()
