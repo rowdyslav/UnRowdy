@@ -4,3 +4,4 @@ flet-desktop
 flet-cli
 flet-web
 fastapi[standard]
+icecream

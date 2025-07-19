@@ -22,7 +22,7 @@ DATABASE_URL = (
 ORM_CONFIG = {
     "connections": {"default": DATABASE_URL},
     "apps": {
-        "rowdywish": {
+        "unrowdy": {
             "models": ["models", "aerich.models"],
             "default_connection": "default",
         },
@@ -37,6 +37,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     async with register_orm(app):
         ic("База данных Postgres подключена через TortoiseORM!")
         from routers import all_routers
+
         app.include_router(all_routers)
         yield
         await Tortoise.close_connections()

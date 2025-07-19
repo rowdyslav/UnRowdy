@@ -1,5 +1,6 @@
 from flet import (
     AppBar,
+    AppView,
     ControlEvent,
     CrossAxisAlignment,
     Page,
@@ -20,15 +21,16 @@ SCREENS = {"/": index, "/me": me}
 async def main(p: Page):
     views = p.views
 
-    async def change_route(_: RouteChangeEvent | ControlEvent):
+    async def change_route(_: RouteChangeEvent):
         route = p.route
-        get_controls = SCREENS.get(route, me)
+        get_controls = SCREENS.get(route, index)
         view = View(
             route,
             await get_controls(p),
             spacing=25,
             appbar=AppBar(
-                title=Text("RowdyWish", theme_style=TextThemeStyle.DISPLAY_LARGE),
+                automatically_imply_leading=True,
+                title=Text("UnRowdy", theme_style=TextThemeStyle.DISPLAY_LARGE),
                 center_title=True,
             ),
             horizontal_alignment=CrossAxisAlignment.CENTER,
@@ -43,10 +45,10 @@ async def main(p: Page):
             views.pop()
             p.go(views[-1].route or "/")
 
-    p.on_connect = change_route
     p.on_route_change = change_route
     p.on_view_pop = pop_view
 
     p.go(p.route)
 
-app = app(main, export_asgi_app=True)
+
+app = app(main, view=AppView.WEB_BROWSER, upload_dir="uploads", export_asgi_app=True)

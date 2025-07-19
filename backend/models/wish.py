@@ -20,7 +20,7 @@ class Wish(Model):
 
     id = IntField(primary_key=True)
     user: ForeignKeyRelation[User] = ForeignKeyField(
-        "rowdywish.User", related_name="wishes"
+        "unrowdy.User", related_name="wishes"
     )
     name = CharField(max_length=20)
     price = DecimalField(
@@ -37,4 +37,3 @@ class Wish(Model):
 
     class PydanticMeta:
         exclude = ["user_id"]
-

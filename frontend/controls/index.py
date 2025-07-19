@@ -1,41 +1,92 @@
-from flet import AutofillHint, Column, KeyboardType, Page, Text, TextButton, TextField
+from flet import (
+    AutofillHint,
+    Button,
+    Column,
+    Control,
+    ControlEvent,
+    KeyboardType,
+    MainAxisAlignment,
+    Page,
+    Row,
+    SnackBar,
+    Text,
+    TextButton,
+    TextField,
+)
 
-from services.by_api import post_auth_login, post_auth_register
+from services.api.funcs import post_auth_login, post_auth_register
 
 
 async def index(p: Page):
-    username = TextField(label=Text("Юзернейм"), autofocus=True, filled=False)
-    email = TextField(
-        autocorrect=True,
-        keyboard_type=KeyboardType.EMAIL,
+    is_reg = False
+
+    username_field = TextField(label=Text("Юзернейм"), filled=False, width=300)
+    email_field = TextField(
         label=Text("Почта"),
+        keyboard_type=KeyboardType.EMAIL,
+        autofill_hints=[AutofillHint.EMAIL],
         filled=False,
-        autofill_hints=AutofillHint.EMAIL,
+        width=300,
     )
-    password = TextField(
-        autocorrect=True,
-        label=(Text("Пароль")),
-        autofill_hints=AutofillHint.NEW_PASSWORD,
+    password_field = TextField(
+        label=Text("Пароль"),
         password=True,
+        filled=False,
+        width=300,
     )
 
-    async def click(_):
-        data = [
-            email.value,
-            password.value,
-        ]
-        if username.value is "":
-            func = post_auth_login
-        else:
-            data.insert(0, username.value)
-            func = post_auth_register
-        access_token = await func(*data)
-        p.session.set("access_token", f"Bearer {access_token}")
+    async def setup_form():
+        username_field.visible = is_reg
+        password_field.autofill_hints = (
+            [AutofillHint.NEW_PASSWORD] if is_reg else [AutofillHint.PASSWORD]
+        )
+        submit_button.text = "Зарегистрироваться" if is_reg else "Войти"
+        toggle_button.text = (
+            "Есть аккаунт? Войти" if is_reg else "Нет аккаунта? Зарегистрироваться"
+        )
+        p.update()
 
-    button = TextButton("Войти", on_click=click)
+    async def toggle_form(_: ControlEvent):
+        nonlocal is_reg
+        is_reg = not is_reg
+        await setup_form()
+
+    toggle_button = TextButton("Нет аккаунта? Зарегистрироваться", on_click=toggle_form)
+
+    async def submit(_: ControlEvent):
+        if email_field.value is None or email_field.value == "":
+            p.open(SnackBar(Text("Введите почту")))
+            p.update()
+            return
+        if password_field.value is None or password_field.value == "":
+            p.open(SnackBar(Text("Введите пароль")))
+            p.update()
+            return
+        try:
+            if is_reg:
+                if username_field.value is None or username_field.value == "":
+                    p.open(SnackBar(Text("Введите юзернейм")))
+                    p.update()
+                    return
+                token = await post_auth_register(
+                    username_field.value, email_field.value, password_field.value
+                )
+            else:
+                token = await post_auth_login(email_field.value, password_field.value)
+            p.session.set("access_token", f"Bearer {token}")
+            p.go("/me")
+        except Exception as exc:
+            p.open(SnackBar(Text(f"Ошибка: {exc}")))
+            p.update()
+
+    submit_button = TextButton("Войти", on_click=submit)
+
+    await setup_form()
+
     return (
-        Column(
-            (username, email, password, button),
-            tight=True,
-        ),
+        toggle_button,
+        username_field,
+        email_field,
+        password_field,
+        submit_button,
     )

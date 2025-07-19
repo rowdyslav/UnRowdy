@@ -1,1 +1,2 @@
-from .wish import Wish
+from .forms import AddWish
+from .objects import Wish
