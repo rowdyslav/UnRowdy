@@ -15,6 +15,7 @@ dependencies = [
     "pydantic==2.11.7",
     "tortoise-orm[asyncpg]==0.25.1",
     "aerich>=0.9.1",
+    "argon2-cffi>=25.1.0",
 ]
 
 [build-system]

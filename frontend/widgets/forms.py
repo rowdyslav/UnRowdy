@@ -61,6 +61,7 @@ class AddWish(AlertDialog):
         )
 
     async def on_file_button_click(self, _: ControlEvent):
+        self.page.overlay.append(self._picker)
         self._picker.pick_files(
             file_type=FilePickerFileType.IMAGE, allow_multiple=False
         )

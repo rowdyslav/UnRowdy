@@ -28,17 +28,16 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app
-      - /app/.venv
+      - backend_venv:/app/.venv
     develop:
       watch:
         - action: sync
-          path: .
+          path: ./backend
           target: /app
           ignore:
             - .venv/
         - action: rebuild
-          path: ./pyproject.toml
+          path: ./uv.lock
   frontend:
     tty: true
     container_name: unrowdy_frontend
@@ -46,22 +45,20 @@ services:
       context: ./frontend
     env_file:
       - frontend/.env
-    depends_on:
-      db:
-        condition: service_healthy
     ports:
       - "80:80"
     volumes:
-      - ./frontend:/app
-      - /app/.venv
+      - frontend_venv:/app/.venv
     develop:
       watch:
         - action: sync
-          path: .
+          path: ./frontend
           target: /app
           ignore:
             - .venv/
         - action: rebuild
-          path: ./pyproject.toml
+          path: ./uv.lock
 volumes:
   db_data:
+  backend_venv:
+  frontend_venv:

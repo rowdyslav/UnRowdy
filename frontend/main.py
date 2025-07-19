@@ -31,6 +31,8 @@ async def main(p: Page):
                 automatically_imply_leading=True,
                 title=Text("UnRowdy", theme_style=TextThemeStyle.DISPLAY_LARGE),
                 center_title=True,
+                toolbar_height=88,
+                title_spacing=True,
             ),
             horizontal_alignment=CrossAxisAlignment.CENTER,
             scroll=ScrollMode.ALWAYS,
