@@ -1,6 +1,6 @@
 from core.api.funcs import get_wishes_me
 from flet import IconButton, Icons, Page, Row, SnackBar, Text
-from widgets import AddWish, Wish
+from widgets import AddWishPopupForm, Wish
 
 
 async def me(p: Page) -> tuple[Text, Row, IconButton] | None:
@@ -20,7 +20,7 @@ async def me(p: Page) -> tuple[Text, Row, IconButton] | None:
 
     await load_wishes()
 
-    add_wish_dialog = AddWish(on_submit=load_wishes)
+    add_wish_dialog = AddWishPopupForm(on_submit=load_wishes)
 
     button = IconButton(
         Icons.ADD,

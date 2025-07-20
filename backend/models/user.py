@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from typing import TYPE_CHECKING
 
 from fastapi import HTTPException
@@ -16,10 +14,9 @@ pwd_ctx = CryptContext(schemes=["argon2", "bcrypt"])
 
 
 class User(Model):
-
     id = IntField(primary_key=True)
     username = CharField(max_length=20)
-    email: EmailStr = CharField(max_length=255, unique=True)  # type: ignore
+    email: EmailStr = CharField(max_length=255, unique=True)
     password_hash = CharField(max_length=128, null=True)
     created_at = DatetimeField(auto_now_add=True)
     modified_at = DatetimeField(auto_now=True)
@@ -33,9 +30,9 @@ class User(Model):
         table = "users"
 
     class PydanticMeta:
-        exclude = ['wish',"password_hash"]
+        exclude = ["wish", "password_hash"]
 
-    async def hash_password(self, plain_password: str):
+    async def hash_password(self, plain_password: str) -> None:
         self.password_hash = pwd_ctx.hash(plain_password)
         await self.save()
 
@@ -45,4 +42,3 @@ class User(Model):
             self.password_hash = new_hash
             await self.save()
         return valid
-

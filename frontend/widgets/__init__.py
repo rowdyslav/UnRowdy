@@ -1,6 +1,6 @@
 """Кастомные виджеты."""
 
-from .forms import AddWish
+from .forms import AddWishPopupForm, AuthForm
 from .objects import Wish
 
-__all__ = ["AddWish", "Wish"]
+__all__ = ["AddWishPopupForm", "AuthForm", "Wish"]
