@@ -1,39 +1,35 @@
-from typing import Annotated
-
 from core import (
     ErrorResponsesDict,
-    UserSchema,
+    QueryParamsDep,
+    UserDep,
     WishSchema,
     WishSchemaPublic,
-    login_manager,
 )
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, status
 from models import Wish, wish_not_found
-from pydantic import NonNegativeInt
 
 router = APIRouter(prefix="/wishes", tags=["Wishes"])
 
 
-@router.get(
-    "",
-)
-async def read_many(
-    limit: NonNegativeInt = 10, offset: NonNegativeInt = 0
-) -> list[WishSchemaPublic]:
-    return await WishSchemaPublic.from_queryset(Wish.all().limit(limit).offset(offset))
+@router.get("")
+async def read_many(params: QueryParamsDep) -> list[WishSchemaPublic]:
+    return await WishSchemaPublic.from_queryset(
+        Wish.all().limit(params.limit).offset(params.offset)
+    )
 
 
 @router.delete(
     "",
     status_code=status.HTTP_204_NO_CONTENT,
 )
-async def remove_many(limit: NonNegativeInt = 10, offset: NonNegativeInt = 0) -> None:
-    await Wish.all().limit(limit).offset(offset).delete()
+async def remove_many(params: QueryParamsDep) -> None:
+    await Wish.all().limit(params.limit).offset(params.offset).delete()
 
 
 @router.post("/me", status_code=status.HTTP_201_CREATED)
 async def add_me(
-    user: Annotated[UserSchema, Depends(login_manager)], wish_in: WishSchemaPublic
+    user: UserDep,
+    wish_in: WishSchemaPublic,
 ) -> WishSchema:
     return await WishSchema.from_tortoise_orm(
         await Wish.create(**wish_in.model_dump(exclude_unset=True), user_id=user.id)
@@ -44,9 +40,7 @@ async def add_me(
     "/me",
     responses=ErrorResponsesDict("unauthorized"),
 )
-async def read_me(
-    user: Annotated[UserSchema, Depends(login_manager)],
-) -> list[WishSchemaPublic]:
+async def read_me(user: UserDep) -> list[WishSchemaPublic]:
     return await WishSchemaPublic.from_queryset(Wish.filter(user_id=user.id))
 
 
@@ -55,7 +49,7 @@ async def read_me(
     status_code=status.HTTP_204_NO_CONTENT,
     responses=ErrorResponsesDict("unauthorized"),
 )
-async def remove_me(user: Annotated[UserSchema, Depends(login_manager)]) -> None:
+async def remove_me(user: UserDep) -> None:
     await Wish.filter(user_id=user.id).delete()
 
 

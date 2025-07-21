@@ -1,17 +1,24 @@
-"""Словарь Responses ошибок, LoginManager и  Pydantic схемы."""
+"""Словарь Responses ошибок, LoginManager, Pydantic схемы и параметры"""
 
-from .errors_util import (
+from .errors import (
     ErrorResponsesDict,
 )
-from .login_manager import load_user, login_manager
-from .schemas import UserSchema, UserSchemaPublic, WishSchema, WishSchemaPublic
+from .login_manager import UserDep, login_manager
+from .schemas import (
+    QueryParamsDep,
+    UserSchema,
+    UserSchemaPublic,
+    WishSchema,
+    WishSchemaPublic,
+)
 
 __all__ = [
     "ErrorResponsesDict",
+    "QueryParamsDep",
+    "UserDep",
     "UserSchema",
     "UserSchemaPublic",
     "WishSchema",
     "WishSchemaPublic",
-    "load_user",
     "login_manager",
 ]

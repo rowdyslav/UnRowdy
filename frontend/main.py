@@ -1,13 +1,17 @@
 from controls import index, me
 from flet import (
     AppBar,
+    AppBarTheme,
     AppView,
     CrossAxisAlignment,
+    DismissDirection,
     Page,
     RouteChangeEvent,
     ScrollMode,
+    SnackBarTheme,
     Text,
     TextThemeStyle,
+    Theme,
     View,
     ViewPopEvent,
     app,
@@ -17,6 +21,13 @@ SCREENS = {"/": index, "/me": me}
 
 
 async def main(p: Page) -> None:
+    p.title = "UnRowdy"
+    p.theme = Theme(
+        use_material3=True,
+        appbar_theme=AppBarTheme(),
+        snackbar_theme=SnackBarTheme(dismiss_direction=DismissDirection.VERTICAL),
+    )
+
     views = p.views
 
     async def change_route(e: RouteChangeEvent) -> None:
@@ -28,10 +39,9 @@ async def main(p: Page) -> None:
             spacing=25,
             appbar=AppBar(
                 automatically_imply_leading=True,
-                title=Text("UnRowdy", theme_style=TextThemeStyle.DISPLAY_LARGE),
+                title=Text(p.title, theme_style=TextThemeStyle.DISPLAY_LARGE),
                 center_title=True,
                 toolbar_height=88,
-                title_spacing=True,
             ),
             horizontal_alignment=CrossAxisAlignment.CENTER,
             scroll=ScrollMode.ALWAYS,

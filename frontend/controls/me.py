@@ -13,18 +13,16 @@ async def me(p: Page) -> tuple[Text, Row, IconButton] | None:
     text = Text("Ваши желания")
     row = Row([], wrap=True)
 
-    async def load_wishes() -> None:
+    async def set_wishes() -> None:
         wishes = await get_wishes_me(token)
         row.controls = [Wish(**wish) for wish in wishes]
         p.update()
 
-    await load_wishes()
-
-    add_wish_dialog = AddWishPopupForm(on_submit=load_wishes)
+    await set_wishes()
 
     button = IconButton(
         Icons.ADD,
-        on_click=lambda _: p.open(add_wish_dialog),
+        on_click=lambda _: p.open(AddWishPopupForm(on_submit=set_wishes)),
     )
 
     return text, row, button

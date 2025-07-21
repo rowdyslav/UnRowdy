@@ -1,4 +1,4 @@
-"""Все роутеры в all_routers роутере."""
+"""Все роутеры в all_routers роутере"""
 
 from fastapi import APIRouter
 

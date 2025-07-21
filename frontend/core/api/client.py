@@ -5,16 +5,16 @@ from env import API_URL
 
 
 class APIError(Exception):
-    """Бросается, если API вернуло ошибку (статус ≥ 400)."""
+    """Бросается, если API вернуло ошибку (статус ≥ 400)"""
 
     def __init__(self, status: int, body: dict) -> None:
-        super().__init__(f"{status}: {body}")
+        super().__init__(f"{status}{body}")
         self.status = status
         self.body = body
 
 
 class APIClient:
-    """Апи клиент."""
+    """Апи клиент"""
 
     def __init__(self, token: str | None = None) -> None:
         self.token = token
@@ -38,7 +38,7 @@ class APIClient:
         json: dict[str, Any] | None = None,
         data: dict[str, Any] | None = None,
     ) -> dict:
-        """Запрос к API через APIClient."""
+        """Запрос к API через APIClient"""
         if not self._session:
             raise RuntimeError
 

@@ -1,22 +1,28 @@
 target-version = "py313"
 
 [lint]
-select = ["ALL"]
 ignore = [
     "COM812",
     "D100",
     "D102",
     "D103",
     "D105",
+    "D106",
     "D107",
+    "D400",
+    "D415",
     "PLC0415",
     "RUF003",
+    "S105",
     "BLE001",
     "PLR2004",
+
     "INP001",
     "RUF002",
+    "RUF012",
     "ERA001",
 ]
+select = ["ALL"]
 fixable = ["ALL"]
 
 [format]

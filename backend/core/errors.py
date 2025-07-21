@@ -48,7 +48,7 @@ HttpErrorName = Literal[
 
 
 class HTTPError(BaseModel):
-    """Схема HTTP ошибки."""
+    """Схема HTTP ошибки"""
 
     detail: str
 

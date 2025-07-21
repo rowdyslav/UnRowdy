@@ -1,30 +1,27 @@
-from typing import Annotated
-
-from core import ErrorResponsesDict, UserSchema, login_manager
-from fastapi import APIRouter, Depends, status
+from core import ErrorResponsesDict, QueryParamsDep, UserDep, UserSchema
+from fastapi import APIRouter, status
 from models import User, user_not_found
-from pydantic import NonNegativeInt
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.get("")
-async def read_many(
-    limit: NonNegativeInt = 10, offset: NonNegativeInt = 0
-) -> list[UserSchema]:
-    return await UserSchema.from_queryset(User.all().limit(limit).offset(offset))
+async def read_many(params: QueryParamsDep) -> list[UserSchema]:
+    return await UserSchema.from_queryset(
+        User.all().limit(params.limit).offset(params.offset)
+    )
 
 
 @router.delete(
     "",
     status_code=status.HTTP_204_NO_CONTENT,
 )
-async def remove_many(limit: NonNegativeInt = 10, offset: NonNegativeInt = 0) -> None:
-    await User.all().limit(limit).offset(offset).delete()
+async def remove_many(params: QueryParamsDep) -> None:
+    await User.all().limit(params.limit).offset(params.offset).delete()
 
 
 @router.get("/me", responses=ErrorResponsesDict("unauthorized"))
-async def read_me(user: Annotated[UserSchema, Depends(login_manager)]) -> UserSchema:
+async def read_me(user: UserDep) -> UserSchema:
     return user
 
 
@@ -33,7 +30,7 @@ async def read_me(user: Annotated[UserSchema, Depends(login_manager)]) -> UserSc
     status_code=status.HTTP_204_NO_CONTENT,
     responses=ErrorResponsesDict("unauthorized"),
 )
-async def remove_me(user: Annotated[UserSchema, Depends(login_manager)]) -> None:
+async def remove_me(user: UserDep) -> None:
     await user.delete()
 
 

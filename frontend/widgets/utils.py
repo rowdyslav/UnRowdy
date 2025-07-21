@@ -13,7 +13,7 @@ from flet import (
 
 
 class ExtendedFilePicker(Row):
-    """Универсальный виджет для выбора и загрузки файлов через FilePicker с кнопкой."""
+    """Универсальный виджет для выбора и загрузки файлов через FilePicker с кнопкой"""
 
     def __init__(
         self,
@@ -59,6 +59,12 @@ class ExtendedFilePicker(Row):
             allowed_extensions=self.allowed_extensions,
         )
 
+    def reset(self) -> None:
+        self.file_names = []
+        self.uploaded_paths = []
+        self._text.value = "Файл не выбран"
+        self._text.update()
+
     def _on_result(self, e: FilePickerResultEvent) -> None:
         if (files := e.files) is not None:
             self.file_names = [f.name for f in files]
@@ -75,11 +81,3 @@ class ExtendedFilePicker(Row):
         self.uploaded_paths.append(path)
         self.page.open(SnackBar(Text(f"Файл загружен как {path}")))
         self.page.update()
-        if self.on_uploaded:
-            self.on_uploaded(self)
-
-    # def reset(self) -> None:
-    #     self.file_names = []
-    #     self.uploaded_paths = []
-    #     self._text.value = "Файл не выбран"
-    #     self._text.update()

@@ -1,4 +1,4 @@
-"""Кастомные виджеты."""
+"""Кастомные виджеты"""
 
 from .forms import AddWishPopupForm, AuthForm
 from .objects import Wish

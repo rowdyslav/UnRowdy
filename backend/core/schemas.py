@@ -1,22 +1,35 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Annotated
 
+from fastapi import Depends, Query
 from models.user import User
 from models.wish import Wish
+from pydantic import BaseModel, NonNegativeInt
 from tortoise.contrib.pydantic import PydanticModel, pydantic_model_creator
+
+
+class QueryParams(BaseModel):
+    """Параметры запроса для пагинации"""
+
+    limit: NonNegativeInt = Query(10, ge=0, description="Limit1")
+    offset: NonNegativeInt = Query(0, ge=0, description="Offset2")
+
+
+QueryParamsDep = Annotated[QueryParams, Depends()]
+
 
 if TYPE_CHECKING:
 
     class UserSchema(User, PydanticModel):
-        """Схема модели User."""
+        """Схема модели User"""
 
     class UserSchemaPublic(User, PydanticModel):
-        """Публичная схема модели User."""
+        """Публичная схема модели User"""
 
     class WishSchema(Wish, PydanticModel):
-        """Схема модели Wish."""
+        """Схема модели Wish"""
 
     class WishSchemaPublic(Wish, PydanticModel):
-        """Публичная схема модели Wish."""
+        """Публичная схема модели Wish"""
 
 else:
     UserSchema = pydantic_model_creator(User, name="UserSchema")

@@ -3,8 +3,9 @@ from typing import TYPE_CHECKING
 from fastapi import HTTPException
 from passlib.context import CryptContext
 from pydantic import EmailStr
-from tortoise import Model
-from tortoise.fields import CharField, DatetimeField, IntField, ReverseRelation
+from tortoise.fields import CharField, ReverseRelation
+
+from .utils import TortoiseBase
 
 user_not_found = HTTPException(404, "Пользователь не найден!")
 user_already_existed = HTTPException(409, "Пользователь уже существует!")
@@ -13,13 +14,12 @@ user_already_existed = HTTPException(409, "Пользователь уже су�
 pwd_ctx = CryptContext(schemes=["argon2", "bcrypt"])
 
 
-class User(Model):
-    id = IntField(primary_key=True)
+class User(TortoiseBase):
+    """Модель пользователя"""
+
     username = CharField(max_length=20)
     email: EmailStr = CharField(max_length=255, unique=True)
     password_hash = CharField(max_length=128, null=True)
-    created_at = DatetimeField(auto_now_add=True)
-    modified_at = DatetimeField(auto_now=True)
 
     if TYPE_CHECKING:
         from models import Wish

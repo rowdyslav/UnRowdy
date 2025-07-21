@@ -1,4 +1,4 @@
-"""Страницы приложения."""
+"""Страницы приложения"""
 
 from .index import index
 from .me import me

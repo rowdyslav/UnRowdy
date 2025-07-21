@@ -1,7 +1,6 @@
 [project]
 name = "UnRowdy-frontend"
-version = "0.1.0"
-description = "Add your description here"
+version = "1.0"
 authors = [{ name = "rowdyslav", email = "rowdyslav@gmail.com" }]
 requires-python = ">=3.13"
 dependencies = [
@@ -13,9 +12,6 @@ dependencies = [
 
 [dependency-groups]
 dev = ["ruff>=0.12.4"]
-
-[tool.pyright]
-typeCheckingMode = "off"
 
 [build-system]
 requires = ["hatchling"]
