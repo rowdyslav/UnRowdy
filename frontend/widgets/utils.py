@@ -13,7 +13,10 @@ from flet import (
 
 
 class ExtendedFilePicker(Row):
-    """Универсальный виджет для выбора и загрузки файлов через FilePicker с кнопкой"""
+    """Универсальный виджет для выбора и загрузки файлов
+
+    FilePicker + кнопка и название файла
+    """
 
     def __init__(
         self,
@@ -31,10 +34,10 @@ class ExtendedFilePicker(Row):
         self.file_names: list[str] = []
         self.uploaded_paths: list[str] = []
 
-        self._text = Text(no_file_label)
         self._button = Button(
             button_text, icon=Icons.UPLOAD_FILE, on_click=lambda _: self.pick_file()
         )
+        self._text = Text(no_file_label)
 
         self._picker = FilePicker(
             on_result=self._on_result,
@@ -49,7 +52,11 @@ class ExtendedFilePicker(Row):
 
     def pick_file(self) -> None:
         p = self.page
-        assert p is not None
+        if p is None:
+            raise RuntimeError(
+                f"{self.__class__.__name__} должен быть добавлен на страницу"
+                "перед вызовом pick_file"
+            )
         po = p.overlay
         if self._picker not in po:
             po.append(self._picker)

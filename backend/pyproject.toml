@@ -25,6 +25,9 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["backend"]
 
+[tool.pyright]
+typeCheckingMode = "off"
+
 [tool.aerich]
 tortoise_orm = "db.ORM_CONFIG"
 location = "./migrations"
