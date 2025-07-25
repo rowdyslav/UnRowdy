@@ -12,7 +12,7 @@ from flet import (
 
 
 class Wish(SelectionArea):
-    """Желание из API"""
+    """Карточка желания из API"""
 
     def __init__(
         self,

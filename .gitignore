@@ -1,4 +1,2 @@
-.venv
-*.code-workspace
-
-.env
+**/__pycache__
+**/.env

@@ -49,6 +49,7 @@ class ExtendedFilePicker(Row):
 
     def pick_file(self) -> None:
         p = self.page
+        assert p is not None
         po = p.overlay
         if self._picker not in po:
             po.append(self._picker)

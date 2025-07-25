@@ -49,8 +49,8 @@ class APIClient:
 
         async with self._session.request(
             method, url, params=params, json=json, data=data, headers=headers
-        ) as resp:
-            payload = await resp.json()
-            if resp.status >= 400:
-                raise APIError(resp.status, payload)
+        ) as response:
+            payload = await response.json()
+            if (code := response.status) >= 400:
+                raise APIError(code, payload)
             return payload
