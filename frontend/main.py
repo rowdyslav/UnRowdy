@@ -29,7 +29,6 @@ async def main(p: Page) -> None:
     )
 
     views = p.views
-
     async def change_route(e: RouteChangeEvent) -> None:
         route = e.route
         get_controls = SCREENS.get(route, index)
