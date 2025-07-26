@@ -1,4 +1,4 @@
-from core.api.funcs import get_wishes_me
+from core.by_api import get_wishes_me
 from flet import IconButton, Icons, Page, Row, SnackBar, Text
 from widgets import AddWishPopupForm, Wish
 
@@ -11,7 +11,7 @@ async def me(p: Page) -> tuple[Text, Row, IconButton] | None:
         return None
 
     text = Text("Ваши желания")
-    row = Row([], wrap=True)
+    row = Row([], tight=True,wrap=True)
 
     async def set_wishes() -> None:
         wishes = await get_wishes_me(token)

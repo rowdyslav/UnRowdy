@@ -29,26 +29,21 @@ class APIClient:
         if self._session:
             await self._session.close()
 
-    async def fetch(
+    async def __call__(
         self,
         method: Literal["GET", "POST", "PUT", "PATCH", "DELETE"],
         path: str,
         *,
-        params: dict[str, Any] | None = None,
-        json: dict[str, Any] | None = None,
-        data: dict[str, Any] | None = None,
+        body: dict[str, Any] | None = None,
+        form: dict[str, Any] | None = None,
+        query: dict[str, Any] | None = None,
     ) -> dict:
         """Запрос к API через APIClient"""
         if not self._session:
             raise RuntimeError
 
-        url = f"{API_URL}{path}"
-        headers = {}
-        if self.token:
-            headers["Authorization"] = self.token
-
         async with self._session.request(
-            method, url, params=params, json=json, data=data, headers=headers
+            method, f"{API_URL}{path}", json=body, data=form, params=query, headers={"Authorization": self.token} if self.token else {}
         ) as response:
             payload = await response.json()
             if (code := response.status) >= 400:
