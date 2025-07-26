@@ -17,9 +17,9 @@ pwd_ctx = CryptContext(schemes=["argon2", "bcrypt"])
 class User(TortoiseBase):
     """Модель пользователя"""
 
-    username = CharField(max_length=20)
+    username: str = CharField(max_length=20)
     email: EmailStr = CharField(max_length=255, unique=True)
-    password_hash = CharField(max_length=128, null=True)
+    password_hash: str = CharField(max_length=128, null=True)
 
     if TYPE_CHECKING:
         from models import Wish

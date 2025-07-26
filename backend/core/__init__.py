@@ -1,4 +1,4 @@
-"""Словарь Responses ошибок, LoginManager, Pydantic схемы и параметры"""
+"""Responses словарь  ошибок, LoginManager, Pydantic схемы и параметры"""
 
 from .errors import (
     ErrorResponsesDict,
