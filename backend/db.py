@@ -13,13 +13,8 @@ from icecream import ic
 from tortoise import Tortoise
 from tortoise.contrib.fastapi import RegisterTortoise
 
-DATABASE_URL = (
-    f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db:{POSTGRES_PORT}/{POSTGRES_DB}"
-)
-
-
 ORM_CONFIG = {
-    "connections": {"default": DATABASE_URL},
+    "connections": {"default": f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db:{POSTGRES_PORT}/{POSTGRES_DB}"},
     "apps": {
         "unrowdy": {
             "models": ["models", "aerich.models"],
@@ -28,7 +23,7 @@ ORM_CONFIG = {
     },
 }
 
-register_orm = partial(RegisterTortoise, config=ORM_CONFIG, generate_schemas=False)
+register_orm = partial(RegisterTortoise, config=ORM_CONFIG)
 
 
 @asynccontextmanager
