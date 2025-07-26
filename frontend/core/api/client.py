@@ -3,7 +3,7 @@ from typing import Any, Literal, Self
 from aiohttp import ClientSession
 from env import API_URL
 
-
+#
 class APIError(Exception):
     """Бросается, если API вернуло ошибку (статус ≥ 400)"""
 
