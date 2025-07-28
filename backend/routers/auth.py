@@ -1,8 +1,7 @@
 from typing import Annotated
 
-from core import ErrorResponsesDict, login_manager
-from fastapi import APIRouter, Depends, Form, status
-from fastapi.security import OAuth2PasswordRequestForm
+from core import AuthFormDep, ErrorResponsesDict, login_manager
+from fastapi import APIRouter, Form, status
 from fastapi_login.exceptions import InvalidCredentialsException
 from models import BearerToken, User, user_already_existed
 
@@ -15,8 +14,7 @@ router = APIRouter(prefix="/auth", tags=["Auth"])
     responses=ErrorResponsesDict("conflict"),
 )
 async def register(
-    actually_username: Annotated[str, Form()],
-    data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    actually_username: Annotated[str, Form()], data: AuthFormDep
 ) -> BearerToken:
     email = data.username
     password = data.password
@@ -36,7 +34,7 @@ async def register(
     "/login",
     responses=ErrorResponsesDict("unauthorized"),
 )
-async def login(data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> BearerToken:
+async def login(data: AuthFormDep) -> BearerToken:
     email = data.username
     password = data.password
 

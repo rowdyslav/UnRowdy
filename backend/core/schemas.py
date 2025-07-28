@@ -1,20 +1,23 @@
 from typing import TYPE_CHECKING, Annotated
 
-from fastapi import Depends, Query
-from models.user import User
-from models.wish import Wish
+from fastapi import Query
+from models import User, Wish
 from pydantic import BaseModel, NonNegativeInt
 from tortoise.contrib.pydantic import PydanticModel, pydantic_model_creator
 
 
-class QueryParams(BaseModel):
+class UserFriendRequests(BaseModel):
+    """Запросы в друзья пользователя"""
+
+    sent: list[int] = []
+    received: list[int] = []
+
+
+class PaginationQuery(BaseModel):
     """Параметры запроса для пагинации"""
 
-    limit: NonNegativeInt = Query(10, ge=0, description="Limit1")
-    offset: NonNegativeInt = Query(0, ge=0, description="Offset2")
-
-
-QueryParamsDep = Annotated[QueryParams, Depends()]
+    limit: Annotated[NonNegativeInt, Query(ge=0)] = 10
+    offset: Annotated[NonNegativeInt, Query(ge=0)] = 0
 
 
 if TYPE_CHECKING:

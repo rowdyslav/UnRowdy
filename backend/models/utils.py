@@ -1,9 +1,10 @@
 from datetime import datetime as dt
 from typing import Literal
-from tortoise import Model
-from pydantic import BaseModel
 
+from pydantic import BaseModel
+from tortoise import Model
 from tortoise.fields import DatetimeField, IntField
+
 
 class TortoiseBase(Model):
     """Базовая модель для Tortoise ORM"""

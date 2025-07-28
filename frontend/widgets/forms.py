@@ -2,7 +2,7 @@ from base64 import b64encode
 from collections.abc import Awaitable, Callable
 
 from anyio import open_file
-from core.by_api import APIError, post_auth_login, post_auth_register, post_wishes_me
+from by_api import APIError, post_auth_login, post_auth_register, post_wishes_me
 from flet import (
     AlertDialog,
     AutofillHint,

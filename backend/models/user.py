@@ -1,15 +1,24 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 from fastapi import HTTPException
 from passlib.context import CryptContext
 from pydantic import EmailStr
-from tortoise.fields import CharField, ReverseRelation
+from tortoise.fields import (
+    CharField,
+    JSONField,
+    ManyToManyField,
+    ManyToManyRelation,
+    ReverseRelation,
+)
 
 from .utils import TortoiseBase
 
 user_not_found = HTTPException(404, "Пользователь не найден!")
-user_already_existed = HTTPException(409, "Пользователь уже существует!")
 
+user_already_existed = HTTPException(409, "Пользователь уже существует!")
+user_friend_request_already_sent = HTTPException(
+    409, "Запрос в друзья уже отправлен этому пользователю"
+)
 
 pwd_ctx = CryptContext(schemes=["argon2", "bcrypt"])
 
@@ -21,8 +30,17 @@ class User(TortoiseBase):
     email: EmailStr = CharField(max_length=255, unique=True)
     password_hash: str = CharField(max_length=128, null=True)
 
+    friends: ManyToManyRelation[Self] = ManyToManyField(
+        "unrowdy.User", related_name="also_friends"
+    )
+    also_friends: ManyToManyRelation[Self]
+
     if TYPE_CHECKING:
+        from core import UserFriendRequests
+
         from models import Wish
+
+        friend_requests: UserFriendRequests = JSONField(field_type=UserFriendRequests)
 
         wishes: ReverseRelation[Wish]
 
@@ -30,7 +48,7 @@ class User(TortoiseBase):
         table = "users"
 
     class PydanticMeta:
-        exclude = ["wish", "password_hash"]
+        exclude = ["password_hash"]
 
     async def hash_password(self, plain_password: str) -> None:
         self.password_hash = pwd_ctx.hash(plain_password)

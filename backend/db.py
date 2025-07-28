@@ -4,6 +4,7 @@ from functools import partial
 
 from env import (
     POSTGRES_DB,
+    POSTGRES_HOST,
     POSTGRES_PASSWORD,
     POSTGRES_PORT,
     POSTGRES_USER,
@@ -14,7 +15,9 @@ from tortoise import Tortoise
 from tortoise.contrib.fastapi import RegisterTortoise
 
 ORM_CONFIG = {
-    "connections": {"default": f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db:{POSTGRES_PORT}/{POSTGRES_DB}"},
+    "connections": {
+        "default": f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+    },
     "apps": {
         "unrowdy": {
             "models": ["models", "aerich.models"],
