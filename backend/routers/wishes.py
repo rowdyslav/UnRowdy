@@ -1,6 +1,6 @@
 from core import (
     ErrorResponsesDict,
-    PaginationQueryDep,
+    PaginationQuery,
     WishSchemaPublic,
 )
 from fastapi import APIRouter, status
@@ -10,17 +10,14 @@ router = APIRouter(prefix="/wishes", tags=["Wishes"])
 
 
 @router.get("")
-async def read_many(params: PaginationQueryDep) -> list[WishSchemaPublic]:
+async def read_many(params: PaginationQuery) -> list[WishSchemaPublic]:
     return await WishSchemaPublic.from_queryset(
         Wish.all().limit(params.limit).offset(params.offset)
     )
 
 
-@router.delete(
-    "",
-    status_code=status.HTTP_204_NO_CONTENT,
-)
-async def remove_many(params: PaginationQueryDep) -> None:
+@router.delete("", status_code=status.HTTP_204_NO_CONTENT)
+async def remove_many(params: PaginationQuery) -> None:
     await Wish.all().limit(params.limit).offset(params.offset).delete()
 
 

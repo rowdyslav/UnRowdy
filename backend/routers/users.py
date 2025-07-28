@@ -1,7 +1,7 @@
 from core import (
-    AuthorizedUserDep,
+    AuthorizedUser,
     ErrorResponsesDict,
-    PaginationQueryDep,
+    PaginationQuery,
     UserFriendRequests,
     UserSchema,
     WishSchema,
@@ -14,14 +14,14 @@ router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.get("")
-async def read_many(pagination: PaginationQueryDep) -> list[UserSchema]:
+async def read_many(pagination: PaginationQuery) -> list[UserSchema]:
     return await UserSchema.from_queryset(
         User.all().limit(pagination.limit).offset(pagination.offset)
     )
 
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)
-async def remove_many(pagination: PaginationQueryDep) -> None:
+async def remove_many(pagination: PaginationQuery) -> None:
     await User.all().limit(pagination.limit).offset(pagination.offset).delete()
 
 
@@ -46,7 +46,7 @@ async def remove_one(user_id: int) -> None:
 
 
 @router.get("/me", responses=ErrorResponsesDict("unauthorized"))
-async def read_me(me: AuthorizedUserDep) -> UserSchema:
+async def read_me(me: AuthorizedUser) -> UserSchema:
     return me
 
 
@@ -55,19 +55,19 @@ async def read_me(me: AuthorizedUserDep) -> UserSchema:
     status_code=status.HTTP_204_NO_CONTENT,
     responses=ErrorResponsesDict("unauthorized"),
 )
-async def remove_me(me: AuthorizedUserDep) -> None:
+async def remove_me(me: AuthorizedUser) -> None:
     await me.delete()
 
 
 @router.post("/me/wishes", status_code=status.HTTP_201_CREATED)
-async def add_me_wishes(me: AuthorizedUserDep, wish_in: WishSchemaPublic) -> WishSchema:
+async def add_me_wishes(me: AuthorizedUser, wish_in: WishSchemaPublic) -> WishSchema:
     return await WishSchema.from_tortoise_orm(
         await Wish.create(**wish_in.model_dump(exclude_unset=True), user_id=me.id)
     )
 
 
 @router.get("/me/wishes", responses=ErrorResponsesDict("unauthorized"))
-async def read_me_wishes(me: AuthorizedUserDep) -> list[WishSchemaPublic]:
+async def read_me_wishes(me: AuthorizedUser) -> list[WishSchemaPublic]:
     return await WishSchemaPublic.from_queryset(Wish.filter(user_id=me.id))
 
 
@@ -76,17 +76,17 @@ async def read_me_wishes(me: AuthorizedUserDep) -> list[WishSchemaPublic]:
     status_code=status.HTTP_204_NO_CONTENT,
     responses=ErrorResponsesDict("unauthorized"),
 )
-async def remove_me_wishes(me: AuthorizedUserDep) -> None:
+async def remove_me_wishes(me: AuthorizedUser) -> None:
     await Wish.filter(user_id=me.id).delete()
 
 
 @router.get("/me/friends", responses=ErrorResponsesDict("unauthorized"))
-async def read_me_friends(me: AuthorizedUserDep) -> list[UserSchema]:
+async def read_me_friends(me: AuthorizedUser) -> list[UserSchema]:
     return me.friends
 
 
 @router.get("/me/friend_requests", responses=ErrorResponsesDict("unauthorized"))
-async def read_me_friend_requests(me: AuthorizedUserDep) -> UserFriendRequests:
+async def read_me_friend_requests(me: AuthorizedUser) -> UserFriendRequests:
     return me.friend_requests
 
 
@@ -94,7 +94,7 @@ async def read_me_friend_requests(me: AuthorizedUserDep) -> UserFriendRequests:
     "/me/friend_requests/{user_id}", responses=ErrorResponsesDict("unauthorized")
 )
 async def add_me_friend_requests(
-    me: AuthorizedUserDep, user_id: int
+    me: AuthorizedUser, user_id: int
 ) -> UserFriendRequests:
     if user_id in me.friend_requests.sent:
         raise user_friend_request_already_sent

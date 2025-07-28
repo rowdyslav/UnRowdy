@@ -1,5 +1,6 @@
 """Responses словарь  ошибок, LoginManager, Pydantic схемы и параметры"""
 
+from .deps import AuthForm, AuthorizedUser, PaginationQuery
 from .errors import (
     ErrorResponsesDict,
 )
@@ -14,8 +15,11 @@ from .schemas import (
 )
 
 __all__ = [
+    "AuthForm",
+    "AuthorizedUser",
     "AuthorizedUserDep",
     "ErrorResponsesDict",
+    "PaginationQuery",
     "PaginationQueryDep",
     "UserFriendRequests",
     "UserSchema",

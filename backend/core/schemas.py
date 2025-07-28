@@ -13,7 +13,7 @@ class UserFriendRequests(BaseModel):
     received: list[int] = []
 
 
-class PaginationQuery(BaseModel):
+class Pagination(BaseModel):
     """Параметры запроса для пагинации"""
 
     limit: Annotated[NonNegativeInt, Query(ge=0)] = 10
