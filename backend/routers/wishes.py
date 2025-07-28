@@ -1,8 +1,6 @@
 from core import (
     ErrorResponsesDict,
-    QueryParamsDep,
-    UserDep,
-    WishSchema,
+    PaginationQueryDep,
     WishSchemaPublic,
 )
 from fastapi import APIRouter, status
@@ -12,7 +10,7 @@ router = APIRouter(prefix="/wishes", tags=["Wishes"])
 
 
 @router.get("")
-async def read_many(params: QueryParamsDep) -> list[WishSchemaPublic]:
+async def read_many(params: PaginationQueryDep) -> list[WishSchemaPublic]:
     return await WishSchemaPublic.from_queryset(
         Wish.all().limit(params.limit).offset(params.offset)
     )
@@ -22,43 +20,16 @@ async def read_many(params: QueryParamsDep) -> list[WishSchemaPublic]:
     "",
     status_code=status.HTTP_204_NO_CONTENT,
 )
-async def remove_many(params: QueryParamsDep) -> None:
+async def remove_many(params: PaginationQueryDep) -> None:
     await Wish.all().limit(params.limit).offset(params.offset).delete()
 
 
-@router.post("/me", status_code=status.HTTP_201_CREATED)
-async def add_me(
-    user: UserDep,
-    wish_in: WishSchemaPublic,
-) -> WishSchema:
-    return await WishSchema.from_tortoise_orm(
-        await Wish.create(**wish_in.model_dump(exclude_unset=True), user_id=user.id)
-    )
-
-
-@router.get(
-    "/me",
-    responses=ErrorResponsesDict("unauthorized"),
-)
-async def read_me(user: UserDep) -> list[WishSchemaPublic]:
-    return await WishSchemaPublic.from_queryset(Wish.filter(user_id=user.id))
-
-
-@router.delete(
-    "/me",
-    status_code=status.HTTP_204_NO_CONTENT,
-    responses=ErrorResponsesDict("unauthorized"),
-)
-async def remove_me(user: UserDep) -> None:
-    await Wish.filter(user_id=user.id).delete()
-
-
 @router.get("/{wish_id}", responses=ErrorResponsesDict("not_found"))
-async def read_one(wish_id: int) -> WishSchema:
+async def read_one(wish_id: int) -> WishSchemaPublic:
     wish = await Wish.get_or_none(id=wish_id)
     if wish is None:
         raise wish_not_found
-    return await WishSchema.from_tortoise_orm(wish)
+    return await WishSchemaPublic.from_tortoise_orm(wish)
 
 
 @router.delete(

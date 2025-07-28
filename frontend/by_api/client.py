@@ -43,7 +43,12 @@ class APIClient:
             raise RuntimeError
 
         async with self._session.request(
-            method, f"{API_URL}{path}", json=body, data=form, params=query, headers={"Authorization": self.token} if self.token else {}
+            method,
+            f"{API_URL}{path}",
+            json=body,
+            data=form,
+            params=query,
+            headers={"Authorization": self.token} if self.token else {},
         ) as response:
             payload = await response.json()
             if (code := response.status) >= 400:

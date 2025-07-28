@@ -1,37 +1,28 @@
-from core import ErrorResponsesDict, QueryParamsDep, UserDep, UserSchema
+from core import (
+    AuthorizedUserDep,
+    ErrorResponsesDict,
+    PaginationQueryDep,
+    UserFriendRequests,
+    UserSchema,
+    WishSchema,
+    WishSchemaPublic,
+)
 from fastapi import APIRouter, status
-from models import User, user_not_found
+from models import User, Wish, user_friend_request_already_sent, user_not_found
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.get("")
-async def read_many(params: QueryParamsDep) -> list[UserSchema]:
+async def read_many(pagination: PaginationQueryDep) -> list[UserSchema]:
     return await UserSchema.from_queryset(
-        User.all().limit(params.limit).offset(params.offset)
+        User.all().limit(pagination.limit).offset(pagination.offset)
     )
 
 
-@router.delete(
-    "",
-    status_code=status.HTTP_204_NO_CONTENT,
-)
-async def remove_many(params: QueryParamsDep) -> None:
-    await User.all().limit(params.limit).offset(params.offset).delete()
-
-
-@router.get("/me", responses=ErrorResponsesDict("unauthorized"))
-async def read_me(user: UserDep) -> UserSchema:
-    return user
-
-
-@router.delete(
-    "/me",
-    status_code=status.HTTP_204_NO_CONTENT,
-    responses=ErrorResponsesDict("unauthorized"),
-)
-async def remove_me(user: UserDep) -> None:
-    await user.delete()
+@router.delete("", status_code=status.HTTP_204_NO_CONTENT)
+async def remove_many(pagination: PaginationQueryDep) -> None:
+    await User.all().limit(pagination.limit).offset(pagination.offset).delete()
 
 
 @router.get("/{user_id}", responses=ErrorResponsesDict("not_found"))
@@ -52,3 +43,62 @@ async def remove_one(user_id: int) -> None:
     if user is None:
         raise user_not_found
     await user.delete()
+
+
+@router.get("/me", responses=ErrorResponsesDict("unauthorized"))
+async def read_me(me: AuthorizedUserDep) -> UserSchema:
+    return me
+
+
+@router.delete(
+    "/me",
+    status_code=status.HTTP_204_NO_CONTENT,
+    responses=ErrorResponsesDict("unauthorized"),
+)
+async def remove_me(me: AuthorizedUserDep) -> None:
+    await me.delete()
+
+
+@router.post("/me/wishes", status_code=status.HTTP_201_CREATED)
+async def add_me_wishes(me: AuthorizedUserDep, wish_in: WishSchemaPublic) -> WishSchema:
+    return await WishSchema.from_tortoise_orm(
+        await Wish.create(**wish_in.model_dump(exclude_unset=True), user_id=me.id)
+    )
+
+
+@router.get("/me/wishes", responses=ErrorResponsesDict("unauthorized"))
+async def read_me_wishes(me: AuthorizedUserDep) -> list[WishSchemaPublic]:
+    return await WishSchemaPublic.from_queryset(Wish.filter(user_id=me.id))
+
+
+@router.delete(
+    "/me/wishes",
+    status_code=status.HTTP_204_NO_CONTENT,
+    responses=ErrorResponsesDict("unauthorized"),
+)
+async def remove_me_wishes(me: AuthorizedUserDep) -> None:
+    await Wish.filter(user_id=me.id).delete()
+
+
+@router.get("/me/friends", responses=ErrorResponsesDict("unauthorized"))
+async def read_me_friends(me: AuthorizedUserDep) -> list[UserSchema]:
+    return me.friends
+
+
+@router.get("/me/friend_requests", responses=ErrorResponsesDict("unauthorized"))
+async def read_me_friend_requests(me: AuthorizedUserDep) -> UserFriendRequests:
+    return me.friend_requests
+
+
+@router.post(
+    "/me/friend_requests/{user_id}", responses=ErrorResponsesDict("unauthorized")
+)
+async def add_me_friend_requests(
+    me: AuthorizedUserDep, user_id: int
+) -> UserFriendRequests:
+    if user_id in me.friend_requests.sent:
+        raise user_friend_request_already_sent
+
+    me.friend_requests.sent.append(user_id)
+    await me.save()
+    return me.friend_requests

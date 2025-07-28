@@ -3,9 +3,10 @@
 from .errors import (
     ErrorResponsesDict,
 )
-from .login_manager import UserDep, login_manager
+from .login_manager import AuthorizedUserDep, login_manager
 from .schemas import (
-    QueryParamsDep,
+    PaginationQueryDep,
+    UserFriendRequests,
     UserSchema,
     UserSchemaPublic,
     WishSchema,
@@ -13,9 +14,10 @@ from .schemas import (
 )
 
 __all__ = [
+    "AuthorizedUserDep",
     "ErrorResponsesDict",
-    "QueryParamsDep",
-    "UserDep",
+    "PaginationQueryDep",
+    "UserFriendRequests",
     "UserSchema",
     "UserSchemaPublic",
     "WishSchema",
