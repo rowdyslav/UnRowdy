@@ -1,4 +1,4 @@
-from by_api import get_users_me_friends, get_wishes_me
+from by_api import get_users_me_friends, get_users_me_wishes
 from flet import Dropdown, IconButton, Icons, Page, Row, SnackBar, Text
 from widgets import AddWishPopupForm, Wish
 
@@ -14,7 +14,8 @@ async def me(p: Page) -> tuple[Text, Row, IconButton] | None:
     row = Row([], tight=True, wrap=True)
 
     async def set_wishes() -> None:
-        wishes = await get_wishes_me(token)
+        wishes = await get_users_me_wishes(token)
+
         row.controls = [Wish(**wish) for wish in wishes]
         p.update()
 

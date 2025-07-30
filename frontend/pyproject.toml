@@ -3,15 +3,10 @@ name = "UnRowdy-frontend"
 version = "1.0"
 authors = [{ name = "rowdyslav", email = "rowdyslav@gmail.com" }]
 requires-python = ">=3.13"
-dependencies = [
-    "aiohttp==3.11.10",
-    "environs==14.2.0",
-    "flet[all]==0.28.3",
-    "fastapi-cli",
-]
+dependencies = ["flet[all]", "fastapi-cli", "aiohttp", "environs", "icecream"]
 
 [dependency-groups]
-dev = ["ruff>=0.12.4"]
+dev = ["ruff"]
 
 [build-system]
 requires = ["hatchling"]

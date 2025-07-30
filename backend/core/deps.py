@@ -8,4 +8,4 @@ from .schemas import Pagination, UserSchema
 
 AuthForm = Annotated[OAuth2PasswordRequestForm, Depends()]
 AuthorizedUser = Annotated[UserSchema, Depends(login_manager)]
-Pagination = Annotated[Pagination, Depends()]
+PaginationQuery = Annotated[Pagination, Depends()]

@@ -3,6 +3,7 @@ from flet import (
     AppBar,
     AppBarTheme,
     AppView,
+    ControlEvent,
     CrossAxisAlignment,
     DismissDirection,
     Page,
@@ -29,8 +30,9 @@ async def main(p: Page) -> None:
     )
 
     views = p.views
-    async def change_route(e: RouteChangeEvent) -> None:
-        route = e.route
+
+    async def change_route(_: RouteChangeEvent | ControlEvent) -> None:
+        route = p.route
         get_controls = SCREENS.get(route, index)
         view = View(
             route,
@@ -54,6 +56,7 @@ async def main(p: Page) -> None:
             views.pop()
             p.go(views[-1].route or "/")
 
+    p.on_connect = change_route
     p.on_route_change = change_route
     p.on_view_pop = pop_view
 

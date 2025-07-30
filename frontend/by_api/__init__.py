@@ -3,17 +3,17 @@
 from .client import APIError
 from .funcs import (
     get_users_me_friends,
-    get_wishes_me,
+    get_users_me_wishes,
     post_auth_login,
     post_auth_register,
-    post_wishes_me,
+    post_users_me_wishes,
 )
 
 __all__ = [
     "APIError",
     "get_users_me_friends",
-    "get_wishes_me",
+    "get_users_me_wishes",
     "post_auth_login",
     "post_auth_register",
-    "post_wishes_me",
+    "post_users_me_wishes",
 ]

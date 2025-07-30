@@ -25,9 +25,9 @@ async def post_auth_login(email: str, password: str) -> str:
     return payload["access_token"]
 
 
-async def get_wishes_me(token: str) -> list[dict]:
+async def get_users_me_wishes(token: str) -> list[dict]:
     async with APIClient(token) as api:
-        return await api("GET", "/wishes/me")
+        return await api("GET", "/users/me/wishes/")
 
 
 async def get_users_me_friends(token: str) -> list[dict]:
@@ -35,12 +35,12 @@ async def get_users_me_friends(token: str) -> list[dict]:
         return await api("GET", "/users/me/friends")
 
 
-async def post_wishes_me(
+async def post_users_me_wishes(
     token: str, name: str, price: str, image_b64: str
 ) -> list[dict]:
     async with APIClient(token) as api:
         return await api(
             "POST",
-            "/wishes/me",
+            "/users/me/wishes",
             body={"name": name, "price": price, "image_b64": image_b64},
         )

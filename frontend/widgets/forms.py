@@ -2,7 +2,7 @@ from base64 import b64encode
 from collections.abc import Awaitable, Callable
 
 from anyio import open_file
-from by_api import APIError, post_auth_login, post_auth_register, post_wishes_me
+from by_api import APIError, post_auth_login, post_auth_register, post_users_me_wishes
 from flet import (
     AlertDialog,
     AutofillHint,
@@ -172,7 +172,7 @@ class AddWishPopupForm(AlertDialog):
 
         token = p.session.get("access_token")
         try:
-            await post_wishes_me(
+            await post_users_me_wishes(
                 token,
                 self.name_field.value,
                 self.price_field.value,
