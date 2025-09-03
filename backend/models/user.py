@@ -40,7 +40,7 @@ class User(TortoiseBase):
 
         from models import Wish
 
-        friend_requests: UserFriendRequests = JSONField(field_type=UserFriendRequests)
+        friend_requests: JSONField[UserFriendRequests] = JSONField(field_type=UserFriendRequests)
 
         wishes: ReverseRelation[Wish]
 
