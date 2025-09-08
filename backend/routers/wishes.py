@@ -1,31 +1,31 @@
 from core import (
     ErrorResponsesDict,
     PaginationQuery,
+    Wish,
+    wish_not_found,
 )
 from fastapi import APIRouter, status
-from models import Wish, wish_not_found
 
 router = APIRouter(prefix="/wishes", tags=["Wishes"])
 
 
 @router.get("")
-async def read_many(params: PaginationQuery) -> list[Wish]:
-    return await Wish.from_queryset(
-        Wish.all().limit(params.limit).offset(params.offset)
-    )
+async def read_many(pagination: PaginationQuery) -> list[Wish]:
+    wishes = await Wish.find_all(pagination.offset, pagination.limit).to_list()
+    return [Wish.model_validate(wish) for wish in wishes]
 
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)
-async def remove_many(params: PaginationQuery) -> None:
-    await Wish.all().limit(params.limit).offset(params.offset).delete()
+async def remove_many(pagination: PaginationQuery) -> None:
+    await Wish.find_all(pagination.offset, pagination.limit).delete()
 
 
 @router.get("/{wish_id}", responses=ErrorResponsesDict("not_found"))
-async def read_one(wish_id: int) -> Wish:
+async def read_one(wish_id: str) -> Wish:
     wish = await Wish.get_or_none(id=wish_id)
     if wish is None:
         raise wish_not_found
-    return await Wish.from_tortoise_orm(wish)
+    return Wish.model_validate(wish)
 
 
 @router.delete(
@@ -33,7 +33,7 @@ async def read_one(wish_id: int) -> Wish:
     status_code=status.HTTP_204_NO_CONTENT,
     responses=ErrorResponsesDict("not_found"),
 )
-async def remove_one(wish_id: int) -> None:
+async def remove_one(wish_id: str) -> None:
     wish = await Wish.get_or_none(id=wish_id)
     if wish is None:
         raise wish_not_found

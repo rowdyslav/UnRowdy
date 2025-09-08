@@ -2,8 +2,8 @@ from typing import Annotated
 
 from fastapi import Depends
 from fastapi.security import OAuth2PasswordRequestForm
-from models.user import User
 
+from .models import User
 from .schemas import Pagination
 from .user_manager import fastapi_users
 

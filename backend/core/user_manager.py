@@ -7,7 +7,8 @@ from fastapi_users.authentication import (
     JWTStrategy,
 )
 from fastapi_users.db import BeanieUserDatabase, ObjectIDIDMixin
-from models.user import User
+
+from .models import User
 
 SECRET = "SECRET"
 
