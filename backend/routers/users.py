@@ -1,5 +1,8 @@
 from beanie.odm.fields import PydanticObjectId
+from fastapi import APIRouter, status
+
 from core import (
+    FASTAPI_USERS,
     AuthorizedUser,
     ErrorResponsesDict,
     PaginationQuery,
@@ -9,10 +12,8 @@ from core import (
     UserUpdate,
     Wish,
     WishCreate,
-    FASTAPI_USERS,
     user_friend_request_already_sent,
 )
-from fastapi import APIRouter, status
 
 router = APIRouter(prefix="/users", tags=["Users"])
 router.include_router(FASTAPI_USERS.get_users_router(UserRead, UserUpdate))

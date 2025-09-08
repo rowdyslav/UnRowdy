@@ -1,10 +1,11 @@
+from fastapi import APIRouter, status
+
 from core import (
     ErrorResponsesDict,
     PaginationQuery,
     Wish,
     wish_not_found,
 )
-from fastapi import APIRouter, status
 
 router = APIRouter(prefix="/wishes", tags=["Wishes"])
 

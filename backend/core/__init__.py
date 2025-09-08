@@ -22,6 +22,8 @@ from .schemas import (
 from .user_manager import AUTH_BACKEND, FASTAPI_USERS
 
 __all__ = [
+    "AUTH_BACKEND",
+    "FASTAPI_USERS",
     "AuthForm",
     "AuthorizedUser",
     "AuthorizedUserDep",
@@ -33,7 +35,5 @@ __all__ = [
     "UserSchemaPublic",
     "WishSchema",
     "WishSchemaPublic",
-    "AUTH_BACKEND",
-    "FASTAPI_USERS",
     "login_manager",
 ]

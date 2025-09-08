@@ -1,9 +1,6 @@
-from typing import Annotated
-
 from beanie import Document, Link
 from fastapi import HTTPException
 from fastapi_users.db import BeanieBaseUser
-from pydantic import Field
 
 from .schemas import SharedUser, SharedWish, UserFriendRequests
 
