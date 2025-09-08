@@ -5,8 +5,8 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from .models import User
 from .schemas import Pagination
-from .user_manager import fastapi_users
+from .user_manager import FASTAPI_USERS
 
 AuthForm = Annotated[OAuth2PasswordRequestForm, Depends()]
-AuthorizedUser = Annotated[User, Depends(fastapi_users.current_user())]
+AuthorizedUser = Annotated[User, Depends(FASTAPI_USERS.current_user())]
 PaginationQuery = Annotated[Pagination, Depends()]

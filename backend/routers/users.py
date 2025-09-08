@@ -9,13 +9,13 @@ from core import (
     UserUpdate,
     Wish,
     WishCreate,
-    fastapi_users,
+    FASTAPI_USERS,
     user_friend_request_already_sent,
 )
 from fastapi import APIRouter, status
 
 router = APIRouter(prefix="/users", tags=["Users"])
-router.include_router(fastapi_users.get_users_router(UserRead, UserUpdate))
+router.include_router(FASTAPI_USERS.get_users_router(UserRead, UserUpdate))
 
 
 @router.get("")

@@ -19,7 +19,7 @@ from .schemas import (
     UserUpdate,
     WishCreate,
 )
-from .user_manager import auth_backend, fastapi_users
+from .user_manager import AUTH_BACKEND, FASTAPI_USERS
 
 __all__ = [
     "AuthForm",
@@ -33,7 +33,7 @@ __all__ = [
     "UserSchemaPublic",
     "WishSchema",
     "WishSchemaPublic",
-    "auth_backend",
-    "fastapi_users",
+    "AUTH_BACKEND",
+    "FASTAPI_USERS",
     "login_manager",
 ]
