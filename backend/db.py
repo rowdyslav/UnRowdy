@@ -1,40 +1,16 @@
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from functools import partial
 
-from env import (
-    POSTGRES_DB,
-    POSTGRES_HOST,
-    POSTGRES_PASSWORD,
-    POSTGRES_PORT,
-    POSTGRES_USER,
-)
+from beanie import init_beanie
+from env import MONGO_DATABASE_NAME, MONGO_URL
 from fastapi import FastAPI
-from icecream import ic
-from tortoise import Tortoise
-from tortoise.contrib.fastapi import RegisterTortoise
+from pymongo import AsyncMongoClient
 
-ORM_CONFIG = {
-    "connections": {
-        "default": f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
-    },
-    "apps": {
-        "unrowdy": {
-            "models": ["models", "aerich.models"],
-            "default_connection": "default",
-        },
-    },
-}
-
-register_orm = partial(RegisterTortoise, config=ORM_CONFIG)
+client = AsyncMongoClient(MONGO_URL, connect=True, uuidRepresentation="standard")
+db = client[MONGO_DATABASE_NAME]
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    async with register_orm(app):
-        ic("База данных Postgres подключена через TortoiseORM!")
-        from routers import all_routers
-
-        app.include_router(all_routers)
-        yield
-        await Tortoise.close_connections()
+async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    await init_beanie(database=db, document_models=[])
+    yield

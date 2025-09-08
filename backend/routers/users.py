@@ -3,9 +3,7 @@ from core import (
     ErrorResponsesDict,
     PaginationQuery,
     UserFriendRequests,
-    UserSchema,
-    WishSchema,
-    WishSchemaPublic,
+    UserRead,
 )
 from fastapi import APIRouter, status
 from models import User, Wish, user_friend_request_already_sent, user_not_found
@@ -14,8 +12,8 @@ router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.get("")
-async def read_many(pagination: PaginationQuery) -> list[UserSchema]:
-    return await UserSchema.from_queryset(
+async def read_many(pagination: PaginationQuery) -> list[UserRead]:
+    return await UserRead.from_queryset(
         User.all().limit(pagination.limit).offset(pagination.offset)
     )
 
@@ -26,11 +24,11 @@ async def remove_many(pagination: PaginationQuery) -> None:
 
 
 @router.get("/{user_id}", responses=ErrorResponsesDict("not_found"))
-async def read_one(user_id: int) -> UserSchema:
+async def read_one(user_id: int) -> UserRead:
     user = await User.get_or_none(id=user_id)
     if user is None:
         raise user_not_found
-    return await UserSchema.from_tortoise_orm(user)
+    return await UserRead.from_tortoise_orm(user)
 
 
 @router.delete(
@@ -46,7 +44,7 @@ async def remove_one(user_id: int) -> None:
 
 
 @router.get("/me", responses=ErrorResponsesDict("unauthorized"))
-async def read_me(me: AuthorizedUser) -> UserSchema:
+async def read_me(me: AuthorizedUser) -> UserRead:
     return me
 
 
@@ -60,15 +58,15 @@ async def remove_me(me: AuthorizedUser) -> None:
 
 
 @router.post("/me/wishes", status_code=status.HTTP_201_CREATED)
-async def add_me_wishes(me: AuthorizedUser, wish_in: WishSchemaPublic) -> WishSchema:
-    return await WishSchema.from_tortoise_orm(
+async def add_me_wishes(me: AuthorizedUser, wish_in: Wish) -> Wish:
+    return await Wish.from_tortoise_orm(
         await Wish.create(**wish_in.model_dump(exclude_unset=True), user_id=me.id)
     )
 
 
 @router.get("/me/wishes", responses=ErrorResponsesDict("unauthorized"))
-async def read_me_wishes(me: AuthorizedUser) -> list[WishSchemaPublic]:
-    return await WishSchemaPublic.from_queryset(Wish.filter(user_id=me.id))
+async def read_me_wishes(me: AuthorizedUser) -> list[Wish]:
+    return await Wish.from_queryset(Wish.filter(user_id=me.id))
 
 
 @router.delete(
@@ -81,7 +79,7 @@ async def remove_me_wishes(me: AuthorizedUser) -> None:
 
 
 @router.get("/me/friends", responses=ErrorResponsesDict("unauthorized"))
-async def read_me_friends(me: AuthorizedUser) -> list[UserSchema]:
+async def read_me_friends(me: AuthorizedUser) -> list[UserRead]:
     return me.friends
 
 

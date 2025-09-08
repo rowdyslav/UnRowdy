@@ -2,10 +2,11 @@ from typing import Annotated
 
 from fastapi import Depends
 from fastapi.security import OAuth2PasswordRequestForm
+from models.user import User
 
-from .login_manager import login_manager
-from .schemas import Pagination, UserSchema
+from .schemas import Pagination
+from .user_manager import fastapi_users
 
 AuthForm = Annotated[OAuth2PasswordRequestForm, Depends()]
-AuthorizedUser = Annotated[UserSchema, Depends(login_manager)]
+AuthorizedUser = Annotated[User, Depends(fastapi_users.current_user())]
 PaginationQuery = Annotated[Pagination, Depends()]

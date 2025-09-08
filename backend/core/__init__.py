@@ -1,17 +1,18 @@
 """Responses словарь  ошибок, LoginManager, Pydantic схемы и параметры"""
 
+from core.schemas import UserCreate, UserRead, UserUpdate
+
 from .deps import AuthForm, AuthorizedUser, PaginationQuery
 from .errors import (
     ErrorResponsesDict,
 )
-from .login_manager import login_manager
 from .schemas import (
+    UserCreate,
     UserFriendRequests,
-    UserSchema,
-    UserSchemaPublic,
-    WishSchema,
-    WishSchemaPublic,
+    UserRead,
+    UserUpdate,
 )
+from .user_manager import auth_backend, fastapi_users
 
 __all__ = [
     "AuthForm",
@@ -25,5 +26,7 @@ __all__ = [
     "UserSchemaPublic",
     "WishSchema",
     "WishSchemaPublic",
+    "auth_backend",
+    "fastapi_users",
     "login_manager",
 ]

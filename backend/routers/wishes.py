@@ -1,7 +1,6 @@
 from core import (
     ErrorResponsesDict,
     PaginationQuery,
-    WishSchemaPublic,
 )
 from fastapi import APIRouter, status
 from models import Wish, wish_not_found
@@ -10,8 +9,8 @@ router = APIRouter(prefix="/wishes", tags=["Wishes"])
 
 
 @router.get("")
-async def read_many(params: PaginationQuery) -> list[WishSchemaPublic]:
-    return await WishSchemaPublic.from_queryset(
+async def read_many(params: PaginationQuery) -> list[Wish]:
+    return await Wish.from_queryset(
         Wish.all().limit(params.limit).offset(params.offset)
     )
 
@@ -22,11 +21,11 @@ async def remove_many(params: PaginationQuery) -> None:
 
 
 @router.get("/{wish_id}", responses=ErrorResponsesDict("not_found"))
-async def read_one(wish_id: int) -> WishSchemaPublic:
+async def read_one(wish_id: int) -> Wish:
     wish = await Wish.get_or_none(id=wish_id)
     if wish is None:
         raise wish_not_found
-    return await WishSchemaPublic.from_tortoise_orm(wish)
+    return await Wish.from_tortoise_orm(wish)
 
 
 @router.delete(

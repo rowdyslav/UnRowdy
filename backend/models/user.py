@@ -1,17 +1,10 @@
-from typing import TYPE_CHECKING, Self
+from typing import Annotated, Self
 
+from beanie import BackLink, DecimalAnnotation, Document, Link
+from core.schemas import UserFriendRequests
 from fastapi import HTTPException
-from passlib.context import CryptContext
-from pydantic import EmailStr
-from tortoise.fields import (
-    CharField,
-    JSONField,
-    ManyToManyField,
-    ManyToManyRelation,
-    ReverseRelation,
-)
-
-from .utils import TortoiseBase
+from fastapi_users.db import BeanieBaseUser
+from pydantic import EmailStr, Field
 
 user_not_found = HTTPException(404, "Пользователь не найден!")
 
@@ -20,43 +13,31 @@ user_friend_request_already_sent = HTTPException(
     409, "Запрос в друзья уже отправлен этому пользователю"
 )
 
-pwd_ctx = CryptContext(schemes=["argon2", "bcrypt"])
+wish_not_found = HTTPException(404, "Желание не найдено!")
 
 
-class User(TortoiseBase):
+class User(BeanieBaseUser, Document):
     """Модель пользователя"""
 
-    username: str = CharField(max_length=20)
-    email: EmailStr = CharField(max_length=255, unique=True)
-    password_hash: str = CharField(max_length=128, null=True)
+    username: Annotated[str, Field(max_length=20)]
+    email: Annotated[EmailStr, Field(max_length=255)]
 
-    friends: ManyToManyRelation[Self] = ManyToManyField(
-        "unrowdy.User", related_name="also_friends"
-    )
-    also_friends: ManyToManyRelation[Self]
+    friends: list[Link[Self]]
+    friend_requests: UserFriendRequests
 
-    if TYPE_CHECKING:
-        from core import UserFriendRequests
+    wishes: list[BackLink["Wish"]]
 
-        from models import Wish
+    class Settings(BeanieBaseUser.Settings):
+        name = "users"
 
-        friend_requests: JSONField[UserFriendRequests] = JSONField(field_type=UserFriendRequests)
 
-        wishes: ReverseRelation[Wish]
+class Wish(Document):
+    """Модель желания пользователя"""
 
-    class Meta:
-        table = "users"
+    user: Link[User]
+    name: Annotated[str, Field(max_length=20)]
+    price: Annotated[float, DecimalAnnotation] | None
+    image_b64: str | None
 
-    class PydanticMeta:
-        exclude = ["password_hash"]
-
-    async def hash_password(self, plain_password: str) -> None:
-        self.password_hash = pwd_ctx.hash(plain_password)
-        await self.save()
-
-    async def verify_password(self, password: str) -> bool:
-        valid, new_hash = pwd_ctx.verify_and_update(password, self.password_hash)
-        if new_hash is not None:
-            self.password_hash = new_hash
-            await self.save()
-        return valid
+    class Settings:
+        name = "wishes"

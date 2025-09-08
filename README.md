@@ -11,9 +11,9 @@ UnRowdy is a web application built with a Python-based full-stack architecture. 
 
 ## Architecture
 
-- **Backend**: FastAPI-based REST API with PostgreSQL database
+- **Backend**: FastAPI-based REST API with MongoDB database
 - **Frontend**: Flet web application (Python-based UI framework)
-- **Database**: PostgreSQL with Tortoise ORM
+- **Database**: MongoDB with Beanie ODM
 - **Deployment**: Docker containerized with docker-compose
 
 The application follows a clean separation between frontend and backend services, communicating via HTTP API calls.
@@ -39,9 +39,9 @@ backend/
 ├── .env                   # Backend-specific environment variables
 ├── pyproject.toml         # Python project configuration and dependencies
 ├── main.py               # FastAPI application entry point
-├── db.py                 # Database configuration and ORM setup
+├── db.py                 # Database configuration and ODM setup
 ├── env.py                # Environment variable loading
-├── models/               # Tortoise ORM data models
+├── models/               # Beanie ODM data models
 │   ├── __init__.py
 │   ├── user.py          # User model
 │   ├── wish.py          # Wish model
@@ -51,7 +51,6 @@ backend/
 │   ├── auth.py          # Authentication endpoints
 │   ├── users.py         # User management endpoints
 │   └── wishes.py        # Wish management endpoints
-├── migrations/           # Aerich database migrations
 └── Dockerfile           # Backend container configuration
 ```
 
@@ -80,7 +79,6 @@ frontend/
 - **Module Organization**: Related functionality grouped in dedicated directories
 - **Environment Configuration**: Layered .env files (root → service-specific)
 - **Docker Integration**: Each service has its own Dockerfile with shared docker-compose
-- **Database Migrations**: Managed through Aerich in `backend/migrations/`
 - **API Communication**: Frontend communicates with backend via HTTP API calls
 - **File Uploads**: Handled in `frontend/uploads/` directory
 
@@ -100,8 +98,7 @@ frontend/
 - **Python**: 3.13+ (specified in pyproject.toml)
 - **Backend Framework**: FastAPI with standard extras
 - **Frontend Framework**: Flet (Python-based web UI)
-- **Database**: PostgreSQL with Tortoise ORM
-- **Migration Tool**: Aerich for database migrations
+- **Database**: MongoDB with Beanie ODM
 - **Authentication**: FastAPI-Login with Passlib and Argon2
 - **Environment Management**: Environs for configuration
 - **Package Manager**: uv (modern Python package manager)
@@ -111,8 +108,8 @@ frontend/
 ### Backend
 
 - `fastapi[standard]` - Web framework
-- `tortoise-orm[asyncpg]` - Async ORM with PostgreSQL driver
-- `aerich` - Database migration tool
+- `beanie` - MongoDB ODM
+- `motor` - MongoDB async driver
 - `fastapi-login` - Authentication
 - `passlib` + `argon2-cffi` - Password hashing
 
@@ -136,11 +133,6 @@ docker-compose up --build          # Build and start all services
 docker-compose up -d               # Start in detached mode
 docker-compose down                # Stop all services
 
-# Database migrations (in backend container)
-aerich init-db                     # Initialize database
-aerich migrate                     # Create migration
-aerich upgrade                     # Apply migrations
-
 # Package management with uv
 uv sync                           # Install dependencies
 uv add <package>                  # Add new dependency
@@ -155,5 +147,5 @@ ruff check --fix                  # Auto-fix issues
 ## Environment Configuration
 
 - Root `.env` file for shared database configuration
-- `backend/.env` for backend-specific settings
+- `backend/.env` for backend-specific settings (MongoDB URI, etc.)
 - `frontend/.env` for frontend-specific settings (API_URL)

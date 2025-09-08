@@ -1,46 +1,27 @@
-from typing import Annotated
-
-from core import AuthForm, ErrorResponsesDict, login_manager
-from fastapi import APIRouter, Form, status
-from fastapi_login.exceptions import InvalidCredentialsException
-from models import BearerToken, User, user_already_existed
+from core import UserCreate, UserRead, UserUpdate, auth_backend, fastapi_users
+from fastapi import APIRouter
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
-
-
-@router.post(
-    "/register",
-    status_code=status.HTTP_201_CREATED,
-    responses=ErrorResponsesDict("conflict"),
+router.include_router(
+    fastapi_users.get_auth_router(auth_backend), prefix="/jwt", tags=["auth"]
 )
-async def register(
-    actually_username: Annotated[str, Form()], data: AuthForm
-) -> BearerToken:
-    email = data.username
-    password = data.password
-
-    user_existed = await User.exists(email=email)
-    if user_existed:
-        raise user_already_existed
-
-    new_user = await User.create(username=actually_username, email=email)
-    await new_user.hash_password(password)
-
-    access_token = login_manager.create_access_token(data={"sub": email})
-    return BearerToken(access_token=access_token)
-
-
-@router.post(
-    "/login",
-    responses=ErrorResponsesDict("unauthorized"),
+router.include_router(
+    fastapi_users.get_register_router(UserRead, UserCreate),
+    prefix="",
+    tags=["auth"],
 )
-async def login(data: AuthForm) -> BearerToken:
-    email = data.username
-    password = data.password
-
-    user = await User.get_or_none(email=email)
-    if not user or not await user.verify_password(password):
-        raise InvalidCredentialsException
-
-    access_token = login_manager.create_access_token(data={"sub": email})
-    return BearerToken(access_token=access_token)
+router.include_router(
+    fastapi_users.get_reset_password_router(),
+    prefix="",
+    tags=["auth"],
+)
+router.include_router(
+    fastapi_users.get_verify_router(UserRead),
+    prefix="",
+    tags=["auth"],
+)
+router.include_router(
+    fastapi_users.get_users_router(UserRead, UserUpdate),
+    prefix="/users",
+    tags=["users"],
+)

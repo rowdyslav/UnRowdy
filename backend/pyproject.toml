@@ -6,13 +6,10 @@ requires-python = ">=3.13"
 dependencies = [
     "fastapi[standard]",
     "pydantic",
-    "tortoise-orm[asyncpg]",
-    "aerich",
-    "fastapi-login",
+    "beanie",
     "environs",
-    "passlib",
-    "argon2-cffi",
     "icecream",
+    "fastapi-users[beanie]",
 ]
 
 [dependency-groups]
@@ -27,8 +24,3 @@ packages = ["backend"]
 
 [tool.pyright]
 ignore = ["*"]
-
-[tool.aerich]
-tortoise_orm = "db.ORM_CONFIG"
-location = "./migrations"
-src_folder = "./."
