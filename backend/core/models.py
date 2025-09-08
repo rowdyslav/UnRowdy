@@ -18,8 +18,6 @@ user_friend_request_already_sent = HTTPException(
 class User(SharedUser, BeanieBaseUser, Document):
     """Модель пользователя"""
 
-    username: Annotated[str, Field(max_length=20)]
-
     friends: list[Link["User"]] = []
     friend_requests: UserFriendRequests = UserFriendRequests()
 

@@ -30,16 +30,12 @@ class UserFriendRequests(BaseModel):
     received: list[PydanticObjectId] = []
 
 
-class UserRead(SharedUser, BaseUser[PydanticObjectId]):
-    pass
+class UserRead(SharedUser, BaseUser[PydanticObjectId]): ...
 
 
-class UserCreate(SharedUser, BaseUserCreate):
-    pass
+class UserCreate(SharedUser, BaseUserCreate): ...
 
 
-class UserUpdate(SharedUser, BaseUserUpdate):
-    pass
-
+class UserUpdate(SharedUser, BaseUserUpdate): ...
 
 class WishCreate(SharedWish): ...

@@ -39,26 +39,26 @@ services:
             - .venv/
         - action: rebuild
           path: ./uv.lock
-  frontend:
-    tty: true
-    container_name: unrowdy_frontend
-    build:
-      context: ./frontend
-    env_file:
-      - frontend/.env
-    ports:
-      - "80:80"
-    volumes:
-      - frontend_venv:/app/.venv
-    develop:
-      watch:
-        - action: sync
-          path: ./frontend
-          target: /app
-          ignore:
-            - .venv/
-        - action: rebuild
-          path: ./uv.lock
+  # frontend:
+  #   tty: true
+  #   container_name: unrowdy_frontend
+  #   build:
+  #     context: ./frontend
+  #   env_file:
+  #     - frontend/.env
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - frontend_venv:/app/.venv
+  #   develop:
+  #     watch:
+  #       - action: sync
+  #         path: ./frontend
+  #         target: /app
+  #         ignore:
+  #           - .venv/
+  #       - action: rebuild
+  #         path: ./uv.lock
 volumes:
   mongo_data:
   backend_venv:
