@@ -1,3 +1,5 @@
+this branch is archive with frontend built with Flet
+
 # UnRowdy Product Overview
 
 UnRowdy is a web application built with a Python-based full-stack architecture. The application appears to be a personal management or wish-tracking system with user authentication and wish management features.
