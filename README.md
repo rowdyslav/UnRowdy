@@ -1,3 +1,6 @@
+this branch is archive built on Toroise ORM with Postgres
+latest change is not working friends requests
+
 # UnRowdy Product Overview
 
 UnRowdy is a web application built with a Python-based full-stack architecture. The application appears to be a personal management or wish-tracking system with user authentication and wish management features.
