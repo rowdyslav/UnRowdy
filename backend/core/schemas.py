@@ -14,29 +14,38 @@ class Pagination(BaseModel):
 
 
 class SharedUser(BaseModel):
+    """Базовые поля User"""
+
     username: Annotated[str, Field(max_length=20)]
 
 
 class SharedWish(BaseModel):
+    """Базовые поля Wish"""
+
     name: Annotated[str, Field(max_length=20)]
     price: DecimalAnnotation | None
     image_b64: str | None
 
 
-class UserFriendRequests(BaseModel):
+class UserFriends(BaseModel):
     """Запросы в друзья пользователя"""
 
+    active: list[PydanticObjectId] = []
     sent: list[PydanticObjectId] = []
     received: list[PydanticObjectId] = []
 
 
-class UserRead(SharedUser, BaseUser[PydanticObjectId]): ...
+class UserRead(SharedUser, BaseUser[PydanticObjectId]):
+    """Поля User для чтения"""
 
 
-class UserCreate(SharedUser, BaseUserCreate): ...
+class UserCreate(SharedUser, BaseUserCreate):
+    """Поля User для создания"""
 
 
-class UserUpdate(SharedUser, BaseUserUpdate): ...
+class UserUpdate(SharedUser, BaseUserUpdate):
+    """Поля User для обновления"""
 
 
-class WishCreate(SharedWish): ...
+class WishCreate(SharedWish):
+    """Поля Wish для создания"""

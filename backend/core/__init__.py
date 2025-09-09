@@ -7,14 +7,16 @@ from .errors import (
 from .models import (
     User,
     Wish,
+    friend_request_already_sent,
+    friend_request_yourself,
     user_already_existed,
-    user_friend_request_already_sent,
+    user_no_friend_or_request,
     user_not_found,
     wish_not_found,
 )
 from .schemas import (
     UserCreate,
-    UserFriendRequests,
+    UserFriends,
     UserRead,
     UserUpdate,
     WishCreate,
@@ -30,10 +32,13 @@ __all__ = [
     "ErrorResponsesDict",
     "PaginationQuery",
     "PaginationQueryDep",
-    "UserFriendRequests",
+    "User",
+    "UserFriends",
     "UserSchema",
     "UserSchemaPublic",
+    "Wish",
     "WishSchema",
     "WishSchemaPublic",
+    "friend_request_yourself",
     "login_manager",
 ]

@@ -7,12 +7,15 @@ from core import (
     ErrorResponsesDict,
     PaginationQuery,
     User,
-    UserFriendRequests,
+    UserFriends,
     UserRead,
     UserUpdate,
     Wish,
     WishCreate,
-    user_friend_request_already_sent,
+    friend_request_already_sent,
+    friend_request_yourself,
+    user_no_friend_or_request,
+    user_not_found,
 )
 
 router = APIRouter(prefix="/users", tags=["Users"])
@@ -20,9 +23,8 @@ router.include_router(FASTAPI_USERS.get_users_router(UserRead, UserUpdate))
 
 
 @router.get("")
-async def read_many(pagination: PaginationQuery) -> list[UserRead]:
-    users = await User.find_all(pagination.offset, pagination.limit).to_list()
-    return [UserRead.model_validate(user) for user in users]
+async def read_many(pagination: PaginationQuery) -> list[User]:
+    return await User.find_all(pagination.offset, pagination.limit).to_list()
 
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)
@@ -52,23 +54,58 @@ async def remove_me_wishes(me: AuthorizedUser) -> None:
 
 @router.get("/me/friends", responses=ErrorResponsesDict("unauthorized"))
 async def read_me_friends(me: AuthorizedUser) -> list[UserRead]:
-    return me.friends
-
-
-@router.get("/me/friend_requests", responses=ErrorResponsesDict("unauthorized"))
-async def read_me_friend_requests(me: AuthorizedUser) -> UserFriendRequests:
-    return me.friend_requests
+    return me.friends.active
 
 
 @router.post(
-    "/me/friend_requests/{user_id}", responses=ErrorResponsesDict("unauthorized")
+    "/me/friends/{user_id}",
+    responses=ErrorResponsesDict("unauthorized", "not_found", "conflict"),
 )
-async def create_me_friend_requests(
+async def create_me_friends(
     me: AuthorizedUser, user_id: PydanticObjectId
-) -> UserFriendRequests:
-    if user_id in me.friend_requests.sent:
-        raise user_friend_request_already_sent
+) -> UserFriends:
+    if user_id == me.id:
+        raise friend_request_yourself
+    user = await User.get(user_id)
+    if user is None:
+        raise user_not_found
+    sent = me.friends.sent
+    if user_id in sent:
+        raise friend_request_already_sent
 
-    me.friend_requests.sent.append(user_id)
+    received = me.friends.received
+    if user_id not in received:
+        sent.append(user_id)
+        user.friends.received.append(me.id)
+    else:
+        received.remove(user_id)
+        me.friends.active.append(user_id)
+        user.friends.active.append(me.id)
     await me.save()
+    await user.save()
     return me.friend_requests
+
+
+@router.delete(
+    "/me/friends/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    responses=ErrorResponsesDict("unauthorized", "not_found", "conflict"),
+)
+async def remove_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> None:
+    user = await User.get(user_id)
+    if user is None:
+        raise user_not_found
+
+    if user_id in (active := me.friends.active):
+        active.remove(user_id)
+        user.friends.active.remove(me.id)
+    elif user_id in (sent := me.friends.sent):
+        sent.remove(user_id)
+        user.friends.received.remove(me.id)
+    elif user_id in (received := me.friends.received):
+        received.remove(user_id)
+        user.friends.sent.remove(me.id)
+    else:
+        raise user_no_friend_or_request
+    await me.save()
+    await user.save()
