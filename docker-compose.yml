@@ -8,13 +8,6 @@ services:
       - "27017:27017"
     volumes:
       - db_data:/data/db
-    # healthcheck:
-    #   test: ["CMD", "mongo", "--eval", "db.runCommand({ ping: 1 })", "--quiet"]
-    #   interval: 10s
-    #   timeout: 5s
-    #   retries: 5
-    #   start_period: 10s
-    # restart: unless-stopped
   backend:
     tty: true
     container_name: unrowdy_backend
@@ -22,9 +15,6 @@ services:
       context: ./backend
     env_file:
       - backend/.env
-    # depends_on:
-    #   db:
-    #     condition: service_healthy
     ports:
       - "8000:8000"
     volumes:
