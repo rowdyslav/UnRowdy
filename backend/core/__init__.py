@@ -1,12 +1,7 @@
-"""Responses словарь  ошибок, LoginManager, Pydantic схемы и параметры"""
+"""Параметры, ошибки, модели, схемы и UserManager"""
 
 from .deps import AuthForm, AuthorizedUser, PaginationQuery
-from .errors import (
-    ErrorResponsesDict,
-)
-from .models import (
-    User,
-    Wish,
+from .errors.http import (
     friend_request_already_sent,
     friend_request_yourself,
     user_already_existed,
@@ -14,13 +9,9 @@ from .models import (
     user_not_found,
     wish_not_found,
 )
-from .schemas import (
-    UserCreate,
-    UserFriends,
-    UserRead,
-    UserUpdate,
-    WishCreate,
-)
+from .errors.utils import ErrorResponsesDict
+from .models import User, Wish
+from .schemas import UserCreate, UserFriends, UserRead, UserUpdate, WishCreate
 from .user_manager import AUTH_BACKEND, FASTAPI_USERS
 
 __all__ = [
@@ -28,17 +19,19 @@ __all__ = [
     "FASTAPI_USERS",
     "AuthForm",
     "AuthorizedUser",
-    "AuthorizedUserDep",
     "ErrorResponsesDict",
     "PaginationQuery",
-    "PaginationQueryDep",
     "User",
+    "UserCreate",
     "UserFriends",
-    "UserSchema",
-    "UserSchemaPublic",
+    "UserRead",
+    "UserUpdate",
     "Wish",
-    "WishSchema",
-    "WishSchemaPublic",
+    "WishCreate",
+    "friend_request_already_sent",
     "friend_request_yourself",
-    "login_manager",
+    "user_already_existed",
+    "user_no_friend_or_request",
+    "user_not_found",
+    "wish_not_found",
 ]
