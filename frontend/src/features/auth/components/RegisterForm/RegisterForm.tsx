@@ -30,7 +30,7 @@ const RegisterForm = () => {
         <input
           className='auth-form'
           {...register("username")}
-          placeholder="Name" autoComplete="given-name"
+          placeholder="Username" autoComplete="given-name"
         />
         {errors.username && <p>{errors.username.message}</p>}
       </div>

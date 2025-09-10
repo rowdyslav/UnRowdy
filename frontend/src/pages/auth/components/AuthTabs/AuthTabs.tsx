@@ -4,16 +4,21 @@ import type {
 
 const AuthTabs = ({activeTab, setActiveTab}: AuthTabsProps) => {
 
+  const handleSwitchTab = () => {
+    setActiveTab(`${activeTab == 'login' ? 'registration' : "login"}`)
+  }
+
   return (
     <div className="mx-auto w-full p-6 bg-white rounded-lg ">
-      <div className="flex border-b border-gray-300 mb-4">
+      <div className="flex border-b border-gray-300 mb-4"
+      onClick={handleSwitchTab}
+      >
         <button
           className={`flex-1 py-2 text-center font-medium ${
             activeTab === "login"
               ? "border-b-2 border-blue-500 text-blue-500"
               : "text-gray-500 hover:text-blue-500"
           }`}
-          onClick={() => setActiveTab("login")}
         >
           Вход
         </button>
@@ -23,7 +28,6 @@ const AuthTabs = ({activeTab, setActiveTab}: AuthTabsProps) => {
               ? "border-b-2 border-blue-500 text-blue-500"
               : "text-gray-500 hover:text-blue-500"
           }`}
-          onClick={() => setActiveTab("registration")}
         >
           Регистрация
         </button>

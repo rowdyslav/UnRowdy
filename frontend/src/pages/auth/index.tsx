@@ -7,9 +7,9 @@ const AuthPage = () => {
   const [activeTab, setActiveTab] = useState<'login' | 'registration'>('login')
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
+    <div className=" flex justify-center ">
       <div
-        className='w-full max-w-[500px] shadow-md flex flex-col p-4 items-stretch rounded-xl text-center'
+        className='w-full max-w-[500px] mt-42 shadow-md flex flex-col p-4 items-stretch rounded-xl text-center'
       >
 
         <h1 className="  text-foreground mb-2 text-3xl ">
