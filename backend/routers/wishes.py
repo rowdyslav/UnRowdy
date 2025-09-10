@@ -4,6 +4,7 @@ from core import (
     ErrorResponsesDict,
     PaginationQuery,
     Wish,
+    WishRead,
     wish_not_found,
 )
 
@@ -13,7 +14,7 @@ router = APIRouter(prefix="/wishes", tags=["Wishes"])
 @router.get("")
 async def read_many(pagination: PaginationQuery) -> list[Wish]:
     wishes = await Wish.find_all(pagination.offset, pagination.limit).to_list()
-    return [Wish.model_validate(wish) for wish in wishes]
+    return [WishRead.model_validate(wish) for wish in wishes]
 
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)
@@ -22,11 +23,11 @@ async def remove_many(pagination: PaginationQuery) -> None:
 
 
 @router.get("/{wish_id}", responses=ErrorResponsesDict("not_found"))
-async def read_one(wish_id: str) -> Wish:
+async def read_one(wish_id: str) -> WishRead:
     wish = await Wish.get_or_none(id=wish_id)
     if wish is None:
         raise wish_not_found
-    return Wish.model_validate(wish)
+    return WishRead.model_validate(wish)
 
 
 @router.delete(

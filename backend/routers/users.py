@@ -12,7 +12,7 @@ from core import (
     UserUpdate,
     Wish,
     WishCreate,
-    friend_request_already_sent,
+    already_friend_or_request,
     friend_request_yourself,
     user_no_friend_or_request,
     user_not_found,
@@ -69,21 +69,23 @@ async def create_me_friends(
     user = await User.get(user_id)
     if user is None:
         raise user_not_found
-    sent = me.friends.sent
-    if user_id in sent:
-        raise friend_request_already_sent
+    me_sent = me.friends.sent
+    active = me.friends.active
+    if user_id in active or user_id in me_sent:
+        raise already_friend_or_request
 
     received = me.friends.received
     if user_id not in received:
-        sent.append(user_id)
+        me_sent.append(user_id)
         user.friends.received.append(me.id)
     else:
-        received.remove(user_id)
-        me.friends.active.append(user_id)
+        me_sent.remove(user_id)
+        user.friends.received.remove(user_id)
+        active.append(user_id)
         user.friends.active.append(me.id)
     await me.save()
     await user.save()
-    return me.friend_requests
+    return me.friends
 
 
 @router.delete(

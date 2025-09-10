@@ -6,8 +6,8 @@ user_already_existed = HTTPException(409, "Пользователь уже су�
 friend_request_yourself = HTTPException(
     409, "Нельзя отправить запрос в друзья самому себе"
 )
-friend_request_already_sent = HTTPException(
-    409, "Запрос в друзья уже отправлен этому пользователю"
+already_friend_or_request = HTTPException(
+    409, "Пользователь уже ваш друг или запрос в друзья уже отправлен"
 )
 user_no_friend_or_request = HTTPException(
     409,

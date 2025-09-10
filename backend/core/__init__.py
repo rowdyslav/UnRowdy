@@ -2,7 +2,7 @@
 
 from .deps import AuthForm, AuthorizedUser, PaginationQuery
 from .errors.http import (
-    friend_request_already_sent,
+    already_friend_or_request,
     friend_request_yourself,
     user_already_existed,
     user_no_friend_or_request,
@@ -11,7 +11,7 @@ from .errors.http import (
 )
 from .errors.utils import ErrorResponsesDict
 from .models import User, Wish
-from .schemas import UserCreate, UserFriends, UserRead, UserUpdate, WishCreate
+from .schemas import UserCreate, UserFriends, UserRead, UserUpdate, WishCreate, WishRead
 from .user_manager import AUTH_BACKEND, FASTAPI_USERS
 
 __all__ = [
@@ -28,7 +28,8 @@ __all__ = [
     "UserUpdate",
     "Wish",
     "WishCreate",
-    "friend_request_already_sent",
+    "WishRead",
+    "already_friend_or_request",
     "friend_request_yourself",
     "user_already_existed",
     "user_no_friend_or_request",
