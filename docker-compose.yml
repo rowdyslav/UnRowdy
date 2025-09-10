@@ -18,7 +18,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - backend_data:/app/.venv
+      - ./backend:/app
+      - /app/.venv
     develop:
       watch:
         - action: sync
@@ -42,4 +43,3 @@ services:
       CHOKIDAR_USEPOLLING: true
 volumes:
   db_data:
-  backend_data:
