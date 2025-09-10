@@ -11,9 +11,9 @@
 
 @layer components {
   .auth-form {
-    @apply p-4 rounded-xl  border-[1.5px]  w-full
+    @apply p-4 rounded-md  border-[1.5px]  w-full
   }
   .button-form {
-    @apply p-4 rounded-xl bg-blue-500 text-white font-medium
+    @apply p-4 rounded-md bg-blue-500 text-white font-medium
   }
 }

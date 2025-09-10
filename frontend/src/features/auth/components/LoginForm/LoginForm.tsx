@@ -27,10 +27,10 @@ const LoginForm = () => {
       <div>
         <input
           className='auth-form'
-          {...register("username")}
-          placeholder="Name" autoComplete="given-name"
+          {...register("email")}
+          placeholder="Email" autoComplete="email"
         />
-        {errors.username && <p>{errors.username.message}</p>}
+        {errors.email && <p>{errors.email.message}</p>}
       </div>
 
       <div>

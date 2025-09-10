@@ -4,8 +4,7 @@ export type RegisterData = {
   username: string;
 };
 
-export type RegisterResponse = {
-  id: string;
+export type LoginData = {
   email: string;
-  username: string;
+  password: string;
 };
