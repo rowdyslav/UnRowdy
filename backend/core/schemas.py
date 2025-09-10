@@ -47,5 +47,9 @@ class UserUpdate(SharedUser, BaseUserUpdate):
     """Поля User для обновления"""
 
 
+class WishRead(SharedWish):
+    """Поля Wish для чтения"""
+
+
 class WishCreate(SharedWish):
     """Поля Wish для создания"""
