@@ -23,8 +23,9 @@ router.include_router(FASTAPI_USERS.get_users_router(UserRead, UserUpdate))
 
 
 @router.get("")
-async def read_many(pagination: PaginationQuery) -> list[User]:
-    return await User.find_all(pagination.offset, pagination.limit).to_list()
+async def read_many(pagination: PaginationQuery) -> list[UserRead]:
+    users = await User.find_all(pagination.offset, pagination.limit).to_list()
+    return [UserRead.model_validate(user) for user in users]
 
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)
@@ -54,35 +55,39 @@ async def remove_me_wishes(me: AuthorizedUser) -> None:
 
 @router.get("/me/friends", responses=ErrorResponsesDict("unauthorized"))
 async def read_me_friends(me: AuthorizedUser) -> list[UserRead]:
-    return me.friends.active
+    return me.friends
 
 
-@router.post(
+@router.patch(
     "/me/friends/{user_id}",
     responses=ErrorResponsesDict("unauthorized", "not_found", "conflict"),
 )
-async def create_me_friends(
-    me: AuthorizedUser, user_id: PydanticObjectId
-) -> UserFriends:
+async def edit_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> UserFriends:
     if user_id == me.id:
         raise friend_request_yourself
     user = await User.get(user_id)
     if user is None:
         raise user_not_found
-    me_sent = me.friends.sent
-    active = me.friends.active
-    if user_id in active or user_id in me_sent:
+
+    me_f = me.friends
+    me_sent = me_f.sent
+    me_active = me_f.active
+    if user_id in me_active or user_id in me_sent:
         raise already_friend_or_request
 
-    received = me.friends.received
-    if user_id not in received:
+    user_f = user.friends
+    me_received = me_f.received
+    user_received = user_f.received
+
+    if user_id not in me_received:
         me_sent.append(user_id)
-        user.friends.received.append(me.id)
+        user_received.append(me.id)
     else:
         me_sent.remove(user_id)
-        user.friends.received.remove(user_id)
-        active.append(user_id)
-        user.friends.active.append(me.id)
+        user_received.remove(user_id)
+        me_active.append(user_id)
+        user_f.active.append(me.id)
+
     await me.save()
     await user.save()
     return me.friends
@@ -97,17 +102,20 @@ async def remove_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> No
     user = await User.get(user_id)
     if user is None:
         raise user_not_found
+    me_f = me.friends
+    user_f = user.friends
 
-    if user_id in (active := me.friends.active):
+    if user_id in (active := me_f.active):
         active.remove(user_id)
-        user.friends.active.remove(me.id)
-    elif user_id in (sent := me.friends.sent):
+        user_f.active.remove(me.id)
+    elif user_id in (sent := me_f.sent):
         sent.remove(user_id)
-        user.friends.received.remove(me.id)
-    elif user_id in (received := me.friends.received):
+        user_f.received.remove(me.id)
+    elif user_id in (received := me_f.received):
         received.remove(user_id)
-        user.friends.sent.remove(me.id)
+        user_f.sent.remove(me.id)
     else:
         raise user_no_friend_or_request
+
     await me.save()
     await user.save()
