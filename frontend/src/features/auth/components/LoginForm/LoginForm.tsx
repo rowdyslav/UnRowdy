@@ -4,6 +4,7 @@ import type {
    LoginFormType
 } from "@/features/auth/components/LoginForm/LoginForm.schema.ts";
 import {LoginFormSchema} from "@/features/auth/components/LoginForm/LoginForm.schema.ts"
+import {useLogin} from "@/features/auth/components/LoginForm/useLogin.ts";
 
 const LoginForm = () => {
   const {
@@ -14,8 +15,10 @@ const LoginForm = () => {
     resolver: zodResolver(LoginFormSchema)
   })
 
-  const onSubmit = (data: LoginFormType) => {
-    console.log(data)
+  const {authLogin} = useLogin()
+
+  const onSubmit = async (data: LoginFormType) => {
+    await authLogin(data)
   }
 
   return (

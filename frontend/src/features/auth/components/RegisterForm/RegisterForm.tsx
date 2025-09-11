@@ -1,11 +1,14 @@
 import {useForm} from "react-hook-form";
 import type {
   RegisterFormType
-} from "@/features/auth/components/RegisterForm/RegisterForm.schema";
+} from "@/features/auth/components/RegisterForm/types/RegisterForm.schema.ts";
 import {
   RegisterFormSchema
-} from "@/features/auth/components/RegisterForm/RegisterForm.schema";
+} from "@/features/auth/components/RegisterForm/types/RegisterForm.schema.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {
+  useRegister
+} from "@/features/auth/components/RegisterForm/useRegister.ts";
 
 const RegisterForm = () => {
   const {
@@ -16,8 +19,14 @@ const RegisterForm = () => {
     resolver: zodResolver(RegisterFormSchema)
   })
 
-  const onSubmit = (data: RegisterFormType) => {
-    console.log(data)
+  const {registration, error, setError} = useRegister()
+
+  const onSubmit = async (data: RegisterFormType) => {
+    const successRegistration: boolean = await registration(data)
+
+    if (!successRegistration) { //если регистрация прошла успешно, автоматически выполняет login
+      console.log(error)
+    }
   }
 
   return (
@@ -40,8 +49,11 @@ const RegisterForm = () => {
           className='auth-form'
           {...register("email")}
           placeholder="Email" autoComplete="email"
+          onChange={() => setError(null)}
         />
         {errors.email && <p>{errors.email.message}</p>}
+        <p className='text-red-500'>{error}</p>
+
       </div>
 
       <div>
@@ -53,6 +65,7 @@ const RegisterForm = () => {
         />
         {errors.password && <p>{errors.password.message}</p>}
       </div>
+
 
       <button type="submit" className='button-form'>Зарегистрироваться</button>
     </form>
