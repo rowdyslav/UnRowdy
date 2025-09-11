@@ -5,13 +5,13 @@ import type {
 import {api} from "@/shared/api/axios.ts";
 import {useState} from "react";
 import {useAuthStore} from "@/features/auth/model/authStore.ts";
-import verifyApi from "@/shared/api/auth/verifyApi.ts";
 import type {UserType} from "@/features/auth/types/auth.ts";
 import getInfoMeApi from "@/shared/api/userApi/getInfoMe.api.ts";
 
 export const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
   const login = useAuthStore(state => state.login)
+  const setToken = useAuthStore(state => state.setToken)
 
   const authLogin = async ({email, password}: LoginDataType) => {
     const dataGetToken = new URLSearchParams();
@@ -24,21 +24,10 @@ export const useLogin = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      const access_token = data.access_token
-
-      const userData: UserType | null = await verifyApi(access_token)
-
-      if (!userData) {
-        console.log("Не удалось получить данные пользователя")
-        setError("Не удалось получить данные пользователя");
-        return false;
-      }
-
-      login(access_token, userData)
-
-
-      const m = await getInfoMeApi()
-      console.log(m)
+      const access_token = data.access_token // bearer токен
+      setToken(access_token) // сохраняем bearer токен в localStorage
+      const userData: UserType = await getInfoMeApi() // получаем id, name, Email
+      login(userData)
     }
     catch (err: any) {
       setError(err.response?.data?.message || "Ошибка регистрации");

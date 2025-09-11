@@ -10,7 +10,8 @@ export interface AuthStateType {
   isAuthenticated: boolean;
   isLoading: boolean;
 
-  login: (token: string, user: UserType) => void;
+  login: (user: UserType) => void;
+  setToken: (token: string) => void;
   logout: () => void;
   setLoading: (loading: boolean) => void
 }

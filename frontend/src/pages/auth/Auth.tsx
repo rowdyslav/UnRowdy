@@ -2,8 +2,14 @@ import {useState} from "react";
 import LoginForm from "@/features/auth/components/LoginForm";
 import RegisterForm from "@/features/auth/components/RegisterForm";
 import AuthTabs from "@/pages/auth/components/AuthTabs";
+import {useAuthStore} from "@/features/auth/model/authStore.ts";
 
 const AuthPage = () => {
+  const token = useAuthStore(state => state.token)
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated)
+  console.log('token:', token)
+  console.log('isAuthenticated:', isAuthenticated)
+
   const [activeTab, setActiveTab] = useState<'login' | 'registration'>('login')
 
   return (

@@ -10,8 +10,11 @@ export const useAuthStore = create<AuthStateType>()(
       isAuthenticated: false,
       isLoading: true,
 
-      login: (token: string, user: UserType) =>
-        set({ token, user, isAuthenticated: true}),
+      login: ( user: UserType) =>
+        set({ user: user, isAuthenticated: true}),
+
+      setToken: (token: string) =>
+        set({token}),
 
       logout: () =>
         set({ user: null, token: null, isAuthenticated: false, }),
