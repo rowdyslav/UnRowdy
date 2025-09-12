@@ -6,22 +6,9 @@ import type {
 } from "@/app/router/types/PublicOnlyRouteProps.ts";
 
 
-
 export const PublicOnlyRoute = ({ children }: PublicOnlyRouteProps) => {
-  const { isAuthenticated, isLoading } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
-
-  // Если пользователь уже авторизован, редиректим на главную
-  if (isAuthenticated) {
-    return <Navigate to={ROUTES.HOME} replace />;
-  }
-
-  return <>{children}</>;
+// если пользователь авторизован, перенаправление на main page
+  return isAuthenticated ? <Navigate to={ROUTES.HOME} replace /> : children;
 };

@@ -4,11 +4,14 @@ import type {RegisterDataType} from "../../types/auth.types.ts";
 import type {
   RegisterErrorResponse
 } from "@/features/auth/components/RegisterForm/types/types.ts";
+import {useLogin} from "@/features/auth/components/LoginForm/useLogin.ts";
+import type {AxiosError} from "axios";
 
 export const useRegister = () => {
   const [error, setError] = useState<string | null>(null);
+  const {authLogin} = useLogin()
 
-  const registration = async (data: RegisterDataType): Promise<boolean> => {
+  const registration = async (data: RegisterDataType) => {
     setError(null);
 
     try {
@@ -17,17 +20,18 @@ export const useRegister = () => {
         email: data.email,
         password: data.password,
       });
-      console.log(123)
-      return true // если регистрация прошла успешно
-    } catch (err: any) {
-      const errorData: RegisterErrorResponse = err.response?.data;
 
-      if (typeof errorData?.detail === "string") {
+      await authLogin(data) // если регистрация прошла успешно
+    } catch (err: unknown) {
+      const error = err as AxiosError<RegisterErrorResponse>;
+
+      const errorData = error.response?.data;
+
+      if (errorData?.detail === "REGISTER_USER_ALREADY_EXISTS") {
         setError('На этот Email уже зарегистрирован пользователь')
       } else {
         setError("Ошибка регистрации");
       }
-      return false // если регистрация прошла НЕ успешно
     }
   };
 

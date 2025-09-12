@@ -1,8 +1,6 @@
 import {api} from "@/shared/api/axios.ts";
 import type {UserType} from "@/features/auth/types/auth.ts";
-import type {
-  RegisterErrorResponse
-} from "@/features/auth/components/RegisterForm/types/types.ts";
+import type {AxiosError} from "axios";
 
 const verifyApi = async () => {
   try {
@@ -11,10 +9,13 @@ const verifyApi = async () => {
       },
     )
     return data // возвращаем id, email, username
-  } catch (err: any) {
-    const errorData: RegisterErrorResponse = err.response?.data;
+  } catch (err: unknown) {
+    const error = err as AxiosError<string>; //! ЗАГЛУШКА!
+
+    const errorData = error.response?.data;
     console.error(errorData)
-    return null  // при ошибке получения данных с сервера возвращает false
+
+    return false  // при ошибке получения данных с сервера возвращает false
   }
 }
 

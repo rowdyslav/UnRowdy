@@ -10,17 +10,20 @@ export const useAuthStore = create<AuthStateType>()(
       isAuthenticated: false,
       isLoading: true,
 
-      login: ( user: UserType) =>
-        set({ user: user, isAuthenticated: true}),
+      login: (user: UserType) =>
+        set({user: user, isAuthenticated: true}),
 
       setToken: (token: string) =>
         set({token}),
 
-      logout: () =>
-        set({ user: null, token: null, isAuthenticated: false, }),
+      logout: () => {
+        localStorage.removeItem('auth-storage'); //очистка localStorage
+
+        set({user: null, token: null, isAuthenticated: false,})
+      },
 
       setLoading: (loading: boolean) =>
-        set({ isLoading: loading }),
+        set({isLoading: loading}),
     }),
     {
       name: 'auth-storage',

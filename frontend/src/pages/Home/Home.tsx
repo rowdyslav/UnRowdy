@@ -3,14 +3,7 @@ import LogoutButton
 import {useAuthStore} from "@/features/auth/model/authStore.ts";
 
 const Home = () => {
-  const isAuthenticated = useAuthStore(state => state.isAuthenticated)
-  const token = useAuthStore(state => state.token)
   const user = useAuthStore(state => state.user)
-
-  console.log('isAuthenticated:', isAuthenticated)
-  console.log('token:', token)
-  console.log('user:', user)
-
 
   return (
     <div className='flex gap-x-6'>

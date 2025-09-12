@@ -7,6 +7,10 @@ import {useState} from "react";
 import {useAuthStore} from "@/features/auth/model/authStore.ts";
 import type {UserType} from "@/features/auth/types/auth.ts";
 import getInfoMeApi from "@/shared/api/userApi/getInfoMe.api.ts";
+import type {
+  LoginErrorResponse
+} from "@/features/auth/components/LoginForm/types/types.ts";
+import type {AxiosError} from "axios";
 
 export const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
@@ -19,21 +23,27 @@ export const useLogin = () => {
     dataGetToken.append("password", password);
 
     try {
-      const {data}: { data: TokenDataType } = await api.post("/auth/login", dataGetToken, {
+      const {data}: {
+        data: TokenDataType
+      } = await api.post("/auth/login", dataGetToken, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      const access_token = data.access_token // bearer токен
-      setToken(access_token) // сохраняем bearer токен в localStorage
+
+      setToken(data.access_token) // сохраняем bearer токен в localStorage
+
       const userData: UserType = await getInfoMeApi() // получаем id, name, Email
       login(userData)
-    }
-    catch (err: any) {
-      setError(err.response?.data?.message || "Ошибка регистрации");
-      return false // если логин прошел НЕ успешно
+
+    } catch (err: unknown) {
+      const error = err as AxiosError<LoginErrorResponse>;
+
+      if (error.response?.data?.detail === 'LOGIN_BAD_CREDENTIALS') {
+        setError('Неверный email или пароль')
+      }
     }
   }
 
-  return {error, authLogin}
+  return {error, authLogin, setError}
 }

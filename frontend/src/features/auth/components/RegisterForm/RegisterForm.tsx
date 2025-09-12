@@ -22,17 +22,14 @@ const RegisterForm = () => {
   const {registration, error, setError} = useRegister()
 
   const onSubmit = async (data: RegisterFormType) => {
-    const successRegistration: boolean = await registration(data)
-
-    if (!successRegistration) { //если регистрация прошла успешно, автоматически выполняет login
-      console.log(error)
-    }
+    await registration(data)
   }
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className='flex flex-col gap-y-7 justify-stretch'
+      autoComplete="on"
     >
 
       <div>
@@ -46,14 +43,14 @@ const RegisterForm = () => {
 
       <div>
         <input
-          className='auth-form'
           {...register("email")}
-          placeholder="Email" autoComplete="email"
-          onChange={() => setError(null)}
+          className='auth-form'
+          placeholder="Email"
+          autoComplete="email"
+          onInput={() => setError(null)}
         />
-        {errors.email && <p>{errors.email.message}</p>}
-        <p className='text-red-500'>{error}</p>
-
+        {errors.email && <p>{errors.email.message}</p>} {/*ошибка валидации*/}
+        <p className='text-red-500'>{error}</p> {/*ошибка с бека*/}
       </div>
 
       <div>
@@ -61,9 +58,9 @@ const RegisterForm = () => {
           className='auth-form'
           {...register("password", {required: "Введите пароль"})}
           placeholder="Password"
-          type="password" autoComplete="current-password"
+          type="password" autoComplete="new-password"
         />
-        {errors.password && <p>{errors.password.message}</p>}
+        {errors.password && <p>{errors.password.message}</p>} {/*ошибка валидации*/}
       </div>
 
 
