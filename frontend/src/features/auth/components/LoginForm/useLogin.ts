@@ -11,11 +11,14 @@ import type {
   LoginErrorResponse
 } from "@/features/auth/components/LoginForm/types/types.ts";
 import type {AxiosError} from "axios";
+import {useNavigate} from "react-router-dom";
+import {ROUTES} from "@/app/router/routes.ts";
 
 export const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
   const login = useAuthStore(state => state.login)
   const setToken = useAuthStore(state => state.setToken)
+  const navigate = useNavigate()
 
   const authLogin = async ({email, password}: LoginDataType) => {
     const dataGetToken = new URLSearchParams();
@@ -34,7 +37,9 @@ export const useLogin = () => {
       setToken(data.access_token) // сохраняем bearer токен в localStorage
 
       const userData: UserType = await getInfoMeApi() // получаем id, name, Email
-      login(userData)
+      login(userData) // сохраняем id, name, Email в localStorage
+
+      navigate(ROUTES.HOME) // направляем на главную страницу
 
     } catch (err: unknown) {
       const error = err as AxiosError<LoginErrorResponse>;

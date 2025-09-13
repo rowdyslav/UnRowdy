@@ -1,29 +1,28 @@
 import {createBrowserRouter, Navigate} from "react-router-dom";
 import {ROUTES} from "@/app/router/routes.ts";
-import {PublicOnlyRoute} from "@/app/router/PublicOnlyRoute.tsx";
-import ProtectedRoute from "@/app/router/ProtectedRoute.tsx";
 import Home from "@/pages/Home";
 import Auth from "@/pages/auth/Auth.tsx";
+import Layout from "@/app/layouts/mainLayout.tsx";
+import {protectedLoader, publicLoader} from "@/app/router/auth-loaders.ts";
 
 export const router = createBrowserRouter([
   {
     path: ROUTES.HOME,
-    element: (
-      <ProtectedRoute>
-        <Home />
-      </ProtectedRoute>
-    ),
+    element: <Layout/>,
+    loader: protectedLoader,
+    children: [
+      {index: true, element: <Home/>},
+    ]
   },
   {
     path: ROUTES.AUTH,
+    loader: publicLoader,
     element: (
-      <PublicOnlyRoute>
-        <Auth />
-      </PublicOnlyRoute>
+      <Auth/>
     ),
   },
   {
     path: '*',
-    element: <Navigate to = '/' replace />
+    element: <Navigate to='/' replace/>
   }
 ])
