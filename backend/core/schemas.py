@@ -1,9 +1,12 @@
+from ast import TypeVar
 from typing import Annotated
 
-from beanie import DecimalAnnotation, PydanticObjectId
+from beanie import DecimalAnnotation, Link, PydanticObjectId
 from fastapi import Query
 from fastapi_users.schemas import BaseUser, BaseUserCreate, BaseUserUpdate
 from pydantic import BaseModel, Field, NonNegativeInt
+
+MODEL = TypeVar("MODEL")
 
 
 class Pagination(BaseModel):
@@ -27,12 +30,12 @@ class SharedWish(BaseModel):
     image_b64: str | None
 
 
-class UserFriends(BaseModel):
+class UserFriends[MODEL](BaseModel):
     """Запросы в друзья пользователя"""
 
-    active: list[PydanticObjectId] = []
-    sent: list[PydanticObjectId] = []
-    received: list[PydanticObjectId] = []
+    active: list[Link[MODEL]] = []
+    sent: list[Link[MODEL]] = []
+    received: list[Link[MODEL]] = []
 
 
 class UserRead(SharedUser, BaseUser[PydanticObjectId]):

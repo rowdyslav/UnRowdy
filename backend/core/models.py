@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Self
 
 from beanie import BackLink, Document, Link
 from fastapi_users.db import BeanieBaseUser
@@ -11,7 +11,7 @@ class User(SharedUser, BeanieBaseUser, Document):
     """Модель пользователя"""
 
     wishes: list[Link["Wish"]] = []
-    friends: UserFriends = UserFriends()
+    friends: UserFriends[Self] = UserFriends[Self]()
 
     class Settings(BeanieBaseUser.Settings):
         name = "users"
