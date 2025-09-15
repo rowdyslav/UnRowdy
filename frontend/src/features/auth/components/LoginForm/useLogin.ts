@@ -3,9 +3,10 @@ import {useState} from "react";
 import {useAuthStore} from "@/app/providers/auth/authStore.ts";
 import type {UserType} from "@/app/providers/auth/types.ts";
 import getInfoMeApi from "@/shared/api/userApi/getInfoMe.api.ts";
+import type {TokenDataType} from "@/features/auth/components/LoginForm/types/types.ts";
 import type {
-  LoginErrorResponse, TokenDataType
-} from "@/features/auth/components/LoginForm/types/types.ts";
+  ErrorResponse
+} from "@/shared/types/ErrorResponseType.ts";
 import type {AxiosError} from "axios";
 import {useNavigate} from "react-router-dom";
 import {ROUTES} from "@/app/router/routes.ts";
@@ -41,7 +42,7 @@ export const useLogin = () => {
       navigate(ROUTES.HOME) // направляем на главную страницу
 
     } catch (err: unknown) {
-      const error = err as AxiosError<LoginErrorResponse>;
+      const error = err as AxiosError<ErrorResponse>;
 
       if (error.response?.data?.detail === 'LOGIN_BAD_CREDENTIALS') {
         setError('Неверный email или пароль')

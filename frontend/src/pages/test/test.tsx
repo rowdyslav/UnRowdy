@@ -4,7 +4,7 @@ import {ROUTES} from "@/app/router/routes.ts";
 const test = () => {
   return (
     <div>
-      <Link to={ROUTES.HOME} className='bg-blue-900 text-white p-5' >To home page </Link>
+      <Link to={ROUTES.HOME} className='bg-blue-900 text-white p-5'>To home page </Link>
     </div>
   )
 }
