@@ -1,5 +1,5 @@
 import {api} from "@/shared/api/axios.ts";
-import type {UserType} from "@/features/auth/types/auth.ts";
+import type {UserType} from "@/app/providers/auth/types.ts";
 import type {AxiosError} from "axios";
 
 const verifyApi = async () => {

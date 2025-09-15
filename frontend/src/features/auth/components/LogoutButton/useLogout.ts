@@ -1,5 +1,5 @@
 import {api} from "@/shared/api/axios.ts";
-import {useAuthStore} from "@/features/auth/model/authStore.ts";
+import {useAuthStore} from "@/app/providers/auth/authStore.ts";
 import {useNavigate} from "react-router-dom";
 import {ROUTES} from "@/app/router/routes.ts";
 
@@ -16,7 +16,7 @@ export const useLogout = () => {
 
     } finally {
       useAuthStore.getState().logout()
-      navigate(ROUTES.HOME)
+      navigate(ROUTES.AUTH)
     }
   }
 }

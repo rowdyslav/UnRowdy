@@ -1,5 +1,5 @@
 import axios from "axios";
-import {useAuthStore} from "@/features/auth/model/authStore.ts";
+import {useAuthStore} from "@/app/providers/auth/authStore.ts";
 
 export const api = axios.create({
   baseURL: "http://127.0.0.1:8000",

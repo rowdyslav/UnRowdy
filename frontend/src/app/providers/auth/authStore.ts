@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import type {AuthStateType, UserType} from "@/features/auth/types/auth.ts";
+import type {AuthStateType, UserType} from "@/app/providers/auth/types.ts";
 import {persist} from "zustand/middleware";
 
 export const useAuthStore = create<AuthStateType>()(

@@ -20,7 +20,6 @@
   .button-form {
     @apply p-4 rounded-md w-full bg-blue-500 duration-300 text-white font-medium cursor-pointer hover:scale-101
   }
-
 }
 
 @layer utilities {
@@ -30,6 +29,10 @@
 
   .color-background-main {
     background-color: var(--color-background-main)
+  }
+
+  .dark .color-background-main {
+    background-color: deepskyblue;
   }
 
   .animation-fade-out {

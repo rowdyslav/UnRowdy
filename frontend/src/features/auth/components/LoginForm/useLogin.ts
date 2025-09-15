@@ -1,18 +1,17 @@
-import type {
-  LoginDataType,
-  TokenDataType
-} from "@/features/auth/types/auth.types.ts";
 import {api} from "@/shared/api/axios.ts";
 import {useState} from "react";
-import {useAuthStore} from "@/features/auth/model/authStore.ts";
-import type {UserType} from "@/features/auth/types/auth.ts";
+import {useAuthStore} from "@/app/providers/auth/authStore.ts";
+import type {UserType} from "@/app/providers/auth/types.ts";
 import getInfoMeApi from "@/shared/api/userApi/getInfoMe.api.ts";
 import type {
-  LoginErrorResponse
+  LoginErrorResponse, TokenDataType
 } from "@/features/auth/components/LoginForm/types/types.ts";
 import type {AxiosError} from "axios";
 import {useNavigate} from "react-router-dom";
 import {ROUTES} from "@/app/router/routes.ts";
+import type {
+  LoginFormType
+} from "@/features/auth/components/LoginForm/types/LoginForm.schema.ts";
 
 export const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +19,7 @@ export const useLogin = () => {
   const setToken = useAuthStore(state => state.setToken)
   const navigate = useNavigate()
 
-  const authLogin = async ({email, password}: LoginDataType) => {
+  const authLogin = async ({email, password}: LoginFormType) => {
     const dataGetToken = new URLSearchParams();
     dataGetToken.append("username", email);
     dataGetToken.append("password", password);

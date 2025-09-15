@@ -16,7 +16,6 @@ const AuthPage = () => {
           {activeTab === 'login' ? 'Войдите в свой аккаунт' : 'Зарегистрируйте аккаунт'}
         </h1>
 
-
         <AuthTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
 
         {activeTab === 'login' ? <LoginForm/> : <RegisterForm/>}

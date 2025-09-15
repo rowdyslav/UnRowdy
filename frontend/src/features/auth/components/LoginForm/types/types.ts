@@ -5,3 +5,7 @@ export type LoginErrorResponse = {
     type: string;
   }>;
 }
+
+export type TokenDataType = {
+  "access_token": string;
+}

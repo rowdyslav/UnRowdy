@@ -1,11 +1,11 @@
 import {Outlet} from "react-router-dom";
-import Sidebar from "@/widgets/Sidebar/Sidebar.tsx";
+import SideBar from "@/app/layouts/main/ui/SideBar/SideBar.tsx";
 
 const Layout = () => {
   return (
       <div className="flex min-h-screen content-stretch">
-        <Sidebar/>
-        <main className='w-full flex-1 color-background-main'>
+        <SideBar/>
+        <main className='w-full flex-1 color-background-main dark:bg-blue-900'>
           <Outlet/>
         </main>
       </div>
