@@ -54,7 +54,7 @@ async def remove_me_wishes(me: AuthorizedUser) -> None:
 
 
 @router.get("/me/friends", responses=ErrorResponsesDict("unauthorized"))
-async def read_me_friends(me: AuthorizedUser) -> list[UserRead]:
+async def read_me_friends(me: AuthorizedUser) -> UserFriends:
     return me.friends
 
 

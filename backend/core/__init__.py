@@ -10,8 +10,14 @@ from .errors.http import (
     wish_not_found,
 )
 from .errors.utils import ErrorResponsesDict
-from .models import User, Wish
-from .schemas import UserCreate, UserFriends, UserRead, UserUpdate, WishCreate, WishRead
+from .models import User, UserFriends, Wish
+from .schemas import (
+    UserCreate,
+    UserRead,
+    UserUpdate,
+    WishCreate,
+    WishRead,
+)
 from .user_manager import AUTH_BACKEND, FASTAPI_USERS
 
 __all__ = [
