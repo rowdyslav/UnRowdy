@@ -18,6 +18,13 @@ class SharedUser(BaseModel):
 
     username: Annotated[str, Field(max_length=20)]
 
+class UserFriends(BaseModel):
+    """Запросы в друзья пользователя"""
+
+    active: list[PydanticObjectId] = []
+    sent: list[PydanticObjectId] = []
+    received: list[PydanticObjectId] = []
+
 
 class SharedWish(BaseModel):
     """Базовые поля Wish"""

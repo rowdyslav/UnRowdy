@@ -1,6 +1,6 @@
 from beanie.odm.fields import PydanticObjectId
 from fastapi import APIRouter, status
-
+from typing import Literal
 from core import (
     FASTAPI_USERS,
     AuthorizedUser,
@@ -8,7 +8,7 @@ from core import (
     PaginationQuery,
     User,
     UserFriends,
-    UserRead,
+    UserRead,bad_friends_type,
     UserUpdate,
     Wish,
     WishCreate,
@@ -54,28 +54,37 @@ async def remove_me_wishes(me: AuthorizedUser) -> None:
 
 
 @router.get("/me/friends", responses=ErrorResponsesDict("unauthorized"))
-async def read_me_friends(me: AuthorizedUser) -> UserFriends:
-    return me.friends
-
+async def read_me_friends(me: AuthorizedUser, friends_type: Literal['active', 'sent', 'recieved']) -> list[UserRead]:
+    get_users = lambda users_ids: [User.get(user_id) for user_id in users_ids]
+    match friends_type:
+        case "active":
+            friends = get_users(me.friends_ids.active)
+        case "sent":
+            friends = get_users(me.friends_ids.sent)
+        case "received":
+            friends = get_users(me.friends_ids.received)
+        case _:
+            raise bad_friends_type
+    return friends
 
 @router.patch(
     "/me/friends/{user_id}",
     responses=ErrorResponsesDict("unauthorized", "not_found", "conflict"),
 )
-async def edit_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> UserFriends:
+async def edit_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> User:
     if user_id == me.id:
         raise friend_request_yourself
     user = await User.get(user_id)
     if user is None:
         raise user_not_found
 
-    me_f = me.friends
+    me_f = me.friends_ids
     me_sent = me_f.sent
     me_active = me_f.active
     if user_id in me_active or user_id in me_sent:
         raise already_friend_or_request
 
-    user_f = user.friends
+    user_f = user.friends_ids
     me_received = me_f.received
     user_received = user_f.received
 
@@ -90,7 +99,7 @@ async def edit_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> User
 
     await me.save()
     await user.save()
-    return me.friends
+    return me
 
 
 @router.delete(
@@ -102,8 +111,8 @@ async def remove_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> No
     user = await User.get(user_id)
     if user is None:
         raise user_not_found
-    me_f = me.friends
-    user_f = user.friends
+    me_f = me.friends_ids
+    user_f = user.friends_ids
 
     if user_id in (active := me_f.active):
         active.remove(user_id)

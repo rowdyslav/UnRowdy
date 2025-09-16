@@ -3,18 +3,18 @@
 from .deps import AuthForm, AuthorizedUser, PaginationQuery
 from .errors.http import (
     already_friend_or_request,
-    friend_request_yourself,
+    friend_request_yourself,bad_friends_type,
     user_already_existed,
     user_no_friend_or_request,
     user_not_found,
     wish_not_found,
 )
 from .errors.utils import ErrorResponsesDict
-from .models import User, UserFriends, Wish
+from .models import User, Wish
 from .schemas import (
     UserCreate,
     UserRead,
-    UserUpdate,
+    UserUpdate,UserFriends,
     WishCreate,
     WishRead,
 )

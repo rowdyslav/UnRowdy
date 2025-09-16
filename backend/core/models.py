@@ -1,28 +1,21 @@
 from typing import Annotated
 
-from beanie import BackLink, Document, Link
+from beanie import BackLink, Document, Link, PydanticObjectId
 from fastapi_users.db import BeanieBaseUser
 from pydantic import BaseModel, Field
 
-from .schemas import SharedUser, SharedWish
+from .schemas import SharedUser, SharedWish, UserFriends
 
 
 class User(SharedUser, BeanieBaseUser, Document):
     """Модель пользователя"""
 
     wishes: list[Link["Wish"]] = []
-    friends: "UserFriends" = {}
+    friends_ids: UserFriends = UserFriends()
 
     class Settings(BeanieBaseUser.Settings):
         name = "users"
 
-
-class UserFriends(BaseModel):
-    """Запросы в друзья пользователя"""
-
-    active: list[Link[User]] = []
-    sent: list[Link[User]] = []
-    received: list[Link[User]] = []
 
 
 class Wish(SharedWish, Document):

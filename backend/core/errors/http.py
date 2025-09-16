@@ -1,5 +1,7 @@
 from fastapi import HTTPException
 
+bad_friends_type = HTTPException(400, "Неверный тип друзей!")
+
 user_not_found = HTTPException(404, "Пользователь не найден!")
 
 user_already_existed = HTTPException(409, "Пользователь уже существует!")
