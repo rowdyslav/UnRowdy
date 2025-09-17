@@ -10,7 +10,7 @@ const Header = () => {
     <header
       className='max-w-[var(--max-width-container-big)] mx-auto px-[15px] flex justify-between h-[64px] items-center'
     >
-      <div className='flex items-baseline'>
+      <div className='flex items-center'>
         <h2 className='text-[27px] font-bold color-font'>
           unRowdy
         </h2>
