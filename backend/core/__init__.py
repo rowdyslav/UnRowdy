@@ -3,7 +3,7 @@
 from .deps import AuthForm, AuthorizedUser, PaginationQuery
 from .errors.http import (
     already_friend_or_request,
-    friend_request_yourself,bad_friends_type,
+    friend_request_yourself,
     user_already_existed,
     user_no_friend_or_request,
     user_not_found,
@@ -14,7 +14,7 @@ from .models import User, Wish
 from .schemas import (
     UserCreate,
     UserRead,
-    UserUpdate,UserFriends,
+    UserUpdate,
     WishCreate,
     WishRead,
 )
@@ -29,13 +29,13 @@ __all__ = [
     "PaginationQuery",
     "User",
     "UserCreate",
-    "UserFriends",
     "UserRead",
     "UserUpdate",
     "Wish",
     "WishCreate",
     "WishRead",
     "already_friend_or_request",
+    "bad_friends_type",
     "friend_request_yourself",
     "user_already_existed",
     "user_no_friend_or_request",

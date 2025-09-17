@@ -20,15 +20,6 @@ services:
     volumes:
       - ./backend:/app
       - /app/.venv
-    develop:
-      watch:
-        - action: sync
-          path: ./backend
-          target: /app
-          ignore:
-            - .venv/
-        - action: rebuild
-          path: ./uv.lock
   frontend:
     tty: true
     container_name: unrowdy_frontend
