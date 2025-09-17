@@ -9,7 +9,7 @@ const LogoutButton = ({label}: {label?: ReactNode }) => {
   }
 
   return (
-    <button className='button-form flex justify-center whitespace-nowrap' onClick={handleLogout}>
+    <button className='button-blue whitespace-nowrap' onClick={handleLogout}>
       {label ? label : 'Выйти из аккаунта'}
     </button>
   );

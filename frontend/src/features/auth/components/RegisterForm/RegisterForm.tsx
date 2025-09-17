@@ -64,7 +64,7 @@ const RegisterForm = () => {
       </div>
 
 
-      <button type="submit" className='button-form'>Зарегистрироваться</button>
+      <button type="submit" className='button-blue'>Зарегистрироваться</button>
     </form>
   )
 }

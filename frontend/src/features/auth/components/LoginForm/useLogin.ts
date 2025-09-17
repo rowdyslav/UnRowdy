@@ -9,7 +9,7 @@ import type {
 } from "@/shared/types/ErrorResponseType.ts";
 import type {AxiosError} from "axios";
 import {useNavigate} from "react-router-dom";
-import {ROUTES} from "@/app/router/routes.ts";
+import {ROUTES} from "@/shared/const/routes.ts";
 import type {
   LoginFormType
 } from "@/features/auth/components/LoginForm/types/LoginForm.schema.ts";

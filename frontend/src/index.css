@@ -1,15 +1,21 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
-:root {
-  --font-family-sans: 'Roboto', sans-serif;
+body {
+  /*font-family: 'Roboto', sans-serif;*/
 }
 
 @theme {
-  --font-sans: var(--font-family-sans);
-
   --color-border: #cccccc;
-  --color-background-main: #F5F5F5;
+
+  --color-font: #344256;
+  --color-font-light: #697586;
+
+  --color-main-white: #FFF;
+  --color-main-grey: #FAFAFB;
+
+  --max-width-container: 1300px;
+  --max-width-container-big: 1400px;
 }
 
 @layer components {
@@ -17,8 +23,8 @@
     @apply p-4 rounded-md border-[1.5px] w-full
   }
 
-  .button-form {
-    @apply p-4 rounded-md w-full bg-blue-500 duration-300 text-white font-medium cursor-pointer hover:scale-101
+  .button-blue {
+    @apply p-4 rounded-md bg-blue-500 opacity-75 duration-200 text-white font-medium cursor-pointer hover:opacity-100
   }
 }
 
@@ -27,21 +33,36 @@
     border-color: var(--color-border)
   }
 
-  .color-background-main {
-    background-color: var(--color-background-main)
+  .color-main {
+    background-color: var(--color-main-white)
+  }
+  .color-main-grey {
+    background-color: var(--color-main-grey)
   }
 
-  .dark .color-background-main {
-    background-color: deepskyblue;
+  .color-font {
+    color: var(--color-font)
+  }
+  .color-font-light {
+    color: var(--color-font-light)
   }
 
-  .animation-fade-out {
-    animation: fadeOut 240ms both ease-in-out;
+  .container{
+    max-width: var(--max-width-container);
+    margin-inline: auto;
   }
 
-  .animation-fade-in {
-    animation: fadeIn 240ms both ease-in-out;
-  }
+  /*.dark .color-background-main {*/
+  /*  background-color: deepskyblue;*/
+  /*}*/
+
+  /*.animation-fade-out {*/
+  /*  animation: fadeOut 240ms both ease-in-out;*/
+  /*}*/
+
+  /*.animation-fade-in {*/
+  /*  animation: fadeIn 240ms both ease-in-out;*/
+  /*}*/
 }
 
 @keyframes fadeOut {

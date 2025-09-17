@@ -1,6 +1,6 @@
 import {useAuthStore} from "@/app/providers/auth/authStore.ts";
 import {redirect} from "react-router-dom";
-import {ROUTES} from "@/app/router/routes.ts";
+import {ROUTES} from "@/shared/const/routes.ts";
 
 export const protectedLoader = () => {
   const  isAuthenticated = useAuthStore.getState().isAuthenticated

@@ -50,7 +50,7 @@ const LoginForm = () => {
         {errors.password && <p>{errors.password.message}</p>} {/*ошибка валидации*/}
       </div>
 
-      <button type="submit" className='button-form'>Войти</button>
+      <button type="submit" className='button-blue '>Войти</button>
     </form>
   )
 }
