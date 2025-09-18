@@ -1,9 +1,14 @@
-interface colDatatype {
+interface colDataType {
   label: string;
   href: string;
 }
 
-export const footerCol1Data: colDatatype[] = [
+export interface footerDataType {
+  label: string;
+  hrefs: colDataType[];
+}
+
+export const footerCol1Data: colDataType[] = [
   {
   label: 'Как нанять',
   href: '/',
@@ -13,11 +18,66 @@ export const footerCol1Data: colDatatype[] = [
     href: '/',
   },
   {
-    label: 'здесь будет ссылка',
+    label: 'Ссылка',
     href: '/',
   },
   {
-    label: 'здесь будет ссылка',
+    label: 'Ссылка',
     href: '/',
   }
 ]
+
+export const footerCol2Data: colDataType[] = [
+  {
+    label: 'Как найти работу',
+    href: '/',
+  },
+  {
+    label: 'Создать профиль',
+    href: '/',
+  },
+  {
+    label: 'ссылка',
+    href: '/',
+  },
+  {
+    label: 'ссылка',
+    href: '/',
+  }
+]
+
+export const footerCol3Data: colDataType[] = [
+  {
+    label: 'Как найти работу',
+    href: '/',
+  },
+  {
+    label: 'Создать профиль',
+    href: '/',
+  },
+  {
+    label: 'ссылка',
+    href: '/',
+  },
+  {
+    label: 'ссылка',
+    href: '/',
+  }
+]
+
+
+export const FOOTER_DATA: footerDataType[] = [
+  {
+    label: 'Для клиентов',
+    hrefs: footerCol1Data
+  },
+  {
+    label: 'Для фрилансеров',
+    hrefs: footerCol2Data
+  },
+  {
+    label: 'Компания',
+    hrefs: footerCol3Data
+  },
+]
+

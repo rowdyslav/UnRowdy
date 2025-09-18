@@ -7,7 +7,7 @@ const SearchSection = () => {
         className="text-5xl color-font font-bold"
       >Найди лучшего <span
         className='text-blue-500'
-      >профессионала</span><br/>для своего проекта
+      >фрилансера</span><br/>для своего проекта
       </h1>
 
       <p

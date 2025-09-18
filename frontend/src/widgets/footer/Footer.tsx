@@ -1,25 +1,48 @@
-import {footerCol1Data} from "@/shared/const/footerData.ts";
+import {
+  FOOTER_DATA, type footerDataType
+} from "@/shared/const/footerData.ts";
 import {Link} from "react-router-dom";
 
 const Footer = () => {
   return (
     <footer
-      className='max-w-[var(--max-width-container-big)] mx-auto px-[15px] py-[65px] flex justify-around'
+      className='max-w-[var(--max-width-container-big)] mx-auto px-[15px] py-[65px]'
     >
-      <div>
-        <h2 className='text-[27px] font-bold color-font mb-4'>
-          unRowdy
-        </h2>
-        <p className="color-font-light">Минималистичная фриланс платформа <br/>для талантливых людей и больших проектов </p>
-      </div>
+      <div className='flex justify-around border-b-gray-100 border-b pb-8'>
+        <div>
 
-      <div>
-        <p>Для клиентов</p>
-        <ul className='font-semibold color-font'>
-          {footerCol1Data.map((item, index) =>(
-            <li key={index} className='color-font-light duration-200 font-normal hover:text-blue-500'><Link to={item.href}>{item.label}</Link></li>
-          ))}
-        </ul>
+          <h2 className='text-[27px] font-bold color-font mb-4'>
+            unRowdy
+          </h2>
+          <p
+            className="color-font-light"
+          >Минималистичная фриланс платформа <br/>для талантливых людей и больших проектов
+          </p>
+        </div>
+
+        {FOOTER_DATA.map((col: footerDataType, index: number) => (
+          <div key={index}>
+            <p className='mb-4 font-medium color-font'>{col.label}</p>
+            <ul>
+              {col.hrefs.map((item, index: number) => (
+                <li
+                  key={index}
+                  className='color-font-light duration-200 font-normal hover:text-blue-500'
+                ><Link to={item.href}>{item.label}</Link></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div className='pt-8 flex justify-between '>
+        <p
+          className='color-font-light '
+        >© 2024 unRowdy. All rights reserved.
+        </p>
+        <Link to={'/'}
+          className='color-font-light duration-200 font-normal hover:text-blue-500'
+        >Политика обслуживания
+        </Link>
       </div>
     </footer>
   );
