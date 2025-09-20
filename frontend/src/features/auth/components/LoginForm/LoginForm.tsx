@@ -4,7 +4,7 @@ import type {
    LoginFormType
 } from "@/features/auth/components/LoginForm/types/LoginForm.schema.ts";
 import {LoginFormSchema} from "@/features/auth/components/LoginForm/types/LoginForm.schema.ts"
-import {useLogin} from "@/features/auth/components/LoginForm/useLogin.ts";
+import {useLogin} from "@/features/auth/lib/useLogin.ts";
 
 const LoginForm = () => {
   const {
@@ -50,7 +50,7 @@ const LoginForm = () => {
         {errors.password && <p>{errors.password.message}</p>} {/*ошибка валидации*/}
       </div>
 
-      <button type="submit" className='button-blue '>Войти</button>
+      <button type="submit" className='button-blue'>Войти</button>
     </form>
   )
 }

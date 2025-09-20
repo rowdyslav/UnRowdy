@@ -13,7 +13,7 @@ const Layout = () => {
     // </div>
     <>
       <Header/>
-      <main className='px-[20px] color-main-grey'>
+      <main className='px-[20px] color-main-grey py-8'>
         <Outlet/>
       </main>
       <Footer/>

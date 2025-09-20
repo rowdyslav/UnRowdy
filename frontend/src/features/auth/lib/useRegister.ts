@@ -1,11 +1,11 @@
 import {useState} from "react";
 import {api} from "@/shared/api/axios.ts";
-import {useLogin} from "@/features/auth/components/LoginForm/useLogin.ts";
+import {useLogin} from "@/features/auth/lib/useLogin.ts";
 import type {AxiosError} from "axios";
 import type {
   RegisterFormType
 } from "@/features/auth/components/RegisterForm/types/RegisterForm.schema.ts";
-import type {ErrorResponse} from "@/shared/types/ErrorResponseType.ts";
+import type {ErrorResponse} from "@/shared/types/errorResponseType.ts";
 
 export const useRegister = () => {
   const [error, setError] = useState<string | null>(null);

@@ -66,7 +66,7 @@ export const footerCol3Data: colDataType[] = [
 ]
 
 
-export const FOOTER_DATA: footerDataType[] = [
+export const footerData: footerDataType[] = [
   {
     label: 'Для клиентов',
     hrefs: footerCol1Data

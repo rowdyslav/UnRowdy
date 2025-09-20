@@ -6,7 +6,7 @@ body {
 }
 
 @theme {
-  --color-border: #cccccc;
+  --color-border: #edf0f3;
 
   --color-font: #344256;
   --color-font-light: #697586;
@@ -20,11 +20,19 @@ body {
 
 @layer components {
   .auth-form {
-    @apply p-4 rounded-md border-[1.5px] w-full
+    @apply p-4 rounded-md border w-full border-[var(--color-border)] focus:outline-blue-500
   }
 
   .button-blue {
     @apply p-4 rounded-md bg-blue-500 opacity-75 duration-200 text-white font-medium cursor-pointer hover:opacity-100
+  }
+
+  .card-element {
+    @apply bg-white shadow-sm rounded-lg
+  }
+
+  .in-center{
+    @apply w-full flex justify-center
   }
 }
 

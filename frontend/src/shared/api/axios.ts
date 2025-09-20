@@ -1,5 +1,6 @@
 import axios from "axios";
 import {useAuthStore} from "@/app/providers/auth/authStore.ts";
+import {ROUTES} from "@/shared/const/routes.ts";
 
 export const api = axios.create({
   baseURL: "http://127.0.0.1:8000",
@@ -16,3 +17,22 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+
+//проверка жизни токена
+const handleUnauthorized = () => {
+  const logout = useAuthStore.getState().logout;
+  logout();
+  window.location.href = ROUTES.AUTH;
+};
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      handleUnauthorized();
+    }
+    return Promise.reject(error);
+  }
+);
+

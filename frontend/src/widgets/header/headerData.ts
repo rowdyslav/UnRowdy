@@ -3,7 +3,7 @@ interface headerDataType {
   href: string;
 }
 
-export const HEADER_DATA: headerDataType[] = [
+export const headerData: headerDataType[] = [
   {
     label: 'Главная страница',
     href: '/'

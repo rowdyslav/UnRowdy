@@ -7,7 +7,6 @@ const GetInfoMeApi = async () => {
   } catch {
     return false  // при ошибке получения данных с сервера возвращает false
   }
-
 }
 
 export default GetInfoMeApi

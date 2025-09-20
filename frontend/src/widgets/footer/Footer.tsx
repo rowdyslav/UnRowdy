@@ -1,6 +1,6 @@
 import {
-  FOOTER_DATA, type footerDataType
-} from "@/shared/const/footerData.ts";
+  footerData, type footerDataType
+} from "@/widgets/footer/footerData.ts";
 import {Link} from "react-router-dom";
 
 const Footer = () => {
@@ -20,7 +20,7 @@ const Footer = () => {
           </p>
         </div>
 
-        {FOOTER_DATA.map((col: footerDataType, index: number) => (
+        {footerData.map((col: footerDataType, index: number) => (
           <div key={index}>
             <p className='mb-4 font-medium color-font'>{col.label}</p>
             <ul>
@@ -37,7 +37,7 @@ const Footer = () => {
       <div className='pt-8 flex justify-between '>
         <p
           className='color-font-light '
-        >© 2024 unRowdy. All rights reserved.
+        >© 2025 unRowdy. All rights reserved.
         </p>
         <Link to={'/'}
           className='color-font-light duration-200 font-normal hover:text-blue-500'

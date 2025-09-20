@@ -1,4 +1,4 @@
-import {HEADER_DATA} from "@/shared/const/headerData.ts";
+import {headerData} from "@/widgets/header/headerData.ts";
 import {Link} from "react-router-dom";
 import {ROUTES} from "@/shared/const/routes.ts";
 import {useAuthStore} from "@/app/providers/auth/authStore.ts";
@@ -11,13 +11,13 @@ const Header = () => {
       className='max-w-[var(--max-width-container-big)] mx-auto px-[15px] flex justify-between h-[64px] items-center'
     >
       <div className='flex items-center'>
-        <h2 className='text-[27px] font-bold color-font'>
+        <h2 className='text-2xl font-bold color-font'>
           unRowdy
         </h2>
 
         <nav>
           <ul className='ml-8 flex gap-x-6 '>
-            {HEADER_DATA.map((link, index) => (
+            {headerData.map((link, index) => (
               <Link
                 className='color-font-light duration-100 hover:text-[color:var(--color-font)]'
                 key={index}

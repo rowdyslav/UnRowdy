@@ -1,6 +1,7 @@
 import {create} from "zustand";
-import type {AuthStateType, UserType} from "@/app/providers/auth/types.ts";
+import type {AuthStateType} from "@/app/providers/auth/types.ts";
 import {persist} from "zustand/middleware";
+import type {UserType} from "@/shared/types/userType.ts";
 
 export const useAuthStore = create<AuthStateType>()(
   persist(
@@ -18,7 +19,6 @@ export const useAuthStore = create<AuthStateType>()(
 
       logout: () => {
         localStorage.removeItem('auth-storage'); //очистка localStorage
-
         set({user: null, token: null, isAuthenticated: false,})
       },
 

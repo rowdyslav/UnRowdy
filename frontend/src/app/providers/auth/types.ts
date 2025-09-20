@@ -1,8 +1,4 @@
-export type UserType = {
-  id: string;
-  username: string;
-  email: string;
-}
+import type {UserType} from "@/shared/types/userType.ts";
 
 export interface AuthStateType {
   user: UserType | null;
