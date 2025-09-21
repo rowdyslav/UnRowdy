@@ -83,15 +83,15 @@ async def edit_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> User
 
     user_f = user.friends_ids
     me_received = me_f["received"]
-    user_received = user_f["received"]
 
     if user_id in me_received:
         me_received.remove(user_id)
+        user_f["sent"].remove(me.id)
         me_active.append(user_id)
         user_f["active"].append(me.id)
     else:
         me_sent.append(user_id)
-        user_received.append(me.id)
+        user_f["received"].append(me.id)
 
     await me.save()
     await user.save()
