@@ -19,10 +19,14 @@ const RegisterForm = () => {
     resolver: zodResolver(RegisterFormSchema)
   })
 
-  const {registration, error, setError} = useRegister()
+  const { mutateAsync: registration, isPending, error, reset } = useRegister();
 
   const onSubmit = async (data: RegisterFormType) => {
-    await registration(data)
+    try {
+      await registration(data);
+    } catch (err: unknown) {
+      console.log(err);
+    }
   }
 
   return (
@@ -32,6 +36,7 @@ const RegisterForm = () => {
       autoComplete="on"
     >
 
+      {/*USERNAME*/}
       <div>
         <input
           className='auth-form'
@@ -41,30 +46,32 @@ const RegisterForm = () => {
         {errors.username && <p>{errors.username.message}</p>}
       </div>
 
+      {/*EMAIL*/}
       <div>
         <input
           {...register("email")}
           className='auth-form'
           placeholder="Email"
           autoComplete="email"
-          onInput={() => setError(null)}
+          onInput={reset}
         />
         {errors.email && <p>{errors.email.message}</p>} {/*ошибка валидации*/}
-        <p className='text-red-500'>{error}</p> {/*ошибка с бека*/}
+        {error && <p className="text-red-500">{error}</p>} {/*ошибка с бека*/}
       </div>
 
+      {/*PASSWORD*/}
       <div>
         <input
           className='auth-form'
           {...register("password", {required: "Введите пароль"})}
           placeholder="Password"
           type="password" autoComplete="new-password"
+          onInput={reset}
         />
         {errors.password && <p>{errors.password.message}</p>} {/*ошибка валидации*/}
       </div>
 
-
-      <button type="submit" className='button-blue'>Зарегистрироваться</button>
+      <button type="submit" className='button-blue'>{isPending ? "Регистрация..." : "Зарегистрироваться"}</button>
     </form>
   )
 }

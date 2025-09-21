@@ -2,12 +2,22 @@ import {useForm} from "react-hook-form";
 import {useSendFriends} from "@/features/friends/lib/useSendFriends.ts";
 
 const AddFriendForm = () => {
-  const { register, handleSubmit } = useForm<{id: string}>();
-  const {addFriend} = useSendFriends()
+  const { register, handleSubmit, reset } = useForm<{id: string}>();
+  const {mutate: addFriend, isSuccess, isError, reset: resetError} = useSendFriends()
 
   const onSubmit = async (data: {id: string}) => {
-    await addFriend(data.id)
+    try {
+    addFriend(data.id)
+    reset()
+    } catch (e) {
+      console.log(e)
+    }
   }
+
+  let placeholder: string = "Введите id друга"
+
+  if (isSuccess) placeholder = `Запрос отправлен!`;
+  else if (isError) placeholder = "Ошибка! Попробуйте снова";
 
   return (
     <div
@@ -18,9 +28,10 @@ const AddFriendForm = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <input
-          {...register('id')}
+          {...register('id', {required: 'Введите id'})}
           className='auth-form h-12' type="text"
-          placeholder='Введите id друга'
+          placeholder={placeholder}
+          onFocus={() => resetError()}
         />
         <button className='button-blue h-12 p-2 min-w-fit' type="submit">
           Добавить в друзья

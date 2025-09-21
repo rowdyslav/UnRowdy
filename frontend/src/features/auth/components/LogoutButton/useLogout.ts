@@ -1,22 +1,24 @@
-import {api} from "@/shared/api/axios.ts";
 import {useAuthStore} from "@/app/providers/auth/authStore.ts";
 import {useNavigate} from "react-router-dom";
 import {ROUTES} from "@/shared/const/routes.ts";
+import {authApi} from "@/shared/api/auth.ts";
+import {useMutation} from "@tanstack/react-query";
 
 export const useLogout = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  return async () => {
-    try {
-      await api.post('/auth/logout')
+  return useMutation({
+    mutationFn: async () => {
+      await authApi.logout()
+    },
 
-    } catch (err: unknown) {
-      if (err) console.warn(err)
-      console.warn("Logout error")
+    onSuccess: () => {
+      useAuthStore.getState().logout();
+      navigate(ROUTES.AUTH);
+    },
 
-    } finally {
-      useAuthStore.getState().logout()
-      navigate(ROUTES.AUTH)
-    }
-  }
-}
+    onError: (error) => {
+      console.warn("Logout error:", error);
+    },
+  });
+};

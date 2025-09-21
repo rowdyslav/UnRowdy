@@ -2,6 +2,7 @@ import {headerData} from "@/widgets/header/headerData.ts";
 import {Link} from "react-router-dom";
 import {ROUTES} from "@/shared/const/routes.ts";
 import {useAuthStore} from "@/app/providers/auth/authStore.ts";
+import {api} from "@/shared/api/axios.ts";
 
 const Header = () => {
   const isAuthenticated = useAuthStore(state => state.isAuthenticated)
@@ -26,6 +27,7 @@ const Header = () => {
             ))}
           </ul>
         </nav>
+        <button className='button-blue' onClick={() => api.delete("/users")}>deleteAllUsers</button>
       </div>
 
       {isAuthenticated

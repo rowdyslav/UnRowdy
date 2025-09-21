@@ -2,14 +2,10 @@ import {useLogout} from "@/features/auth/components/LogoutButton/useLogout.ts";
 import type {ReactNode} from "react";
 
 const LogoutButton = ({label}: {label?: ReactNode }) => {
-  const logout = useLogout()
-
-  const handleLogout = async () => {
-    await logout()
-  }
+  const { mutate: logout } = useLogout();
 
   return (
-    <button className='button-blue whitespace-nowrap' onClick={handleLogout}>
+    <button className='button-blue whitespace-nowrap' onClick={() => logout()}>
       {label ? label : 'Выйти из аккаунта'}
     </button>
   );

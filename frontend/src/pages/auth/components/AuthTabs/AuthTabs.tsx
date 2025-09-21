@@ -19,7 +19,6 @@ const AuthTabs = ({activeTab, setActiveTab}: AuthTabsProps) => {
               ? " text-blue-500"
               : "text-gray-500 hover:text-blue-500"
           }`}
-
         >
           Вход
         </button>

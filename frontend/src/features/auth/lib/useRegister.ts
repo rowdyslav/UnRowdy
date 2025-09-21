@@ -1,39 +1,30 @@
-import {useState} from "react";
-import {api} from "@/shared/api/axios.ts";
 import {useLogin} from "@/features/auth/lib/useLogin.ts";
 import type {AxiosError} from "axios";
 import type {
   RegisterFormType
 } from "@/features/auth/components/RegisterForm/types/RegisterForm.schema.ts";
 import type {ErrorResponse} from "@/shared/types/errorResponseType.ts";
+import {authApi} from "@/shared/api/auth.ts";
+import {useMutation} from "@tanstack/react-query";
 
 export const useRegister = () => {
-  const [error, setError] = useState<string | null>(null);
-  const {authLogin} = useLogin()
+  const loginMutation = useLogin();
 
-  const registration = async (data: RegisterFormType) => {
-    setError(null);
+  return useMutation<void, string, RegisterFormType>({
+    mutationFn: async (data) => {
+      try {
+        await authApi.register(data);
 
-    try {
-      await api.post("/auth/register", {
-        username: data.username,
-        email: data.email,
-        password: data.password,
-      });
+        await loginMutation.mutateAsync(data);
+      } catch (err) {
+        const error = err as AxiosError<ErrorResponse>;
 
-      await authLogin(data) // если регистрация прошла успешно
-    } catch (err: unknown) {
-      const error = err as AxiosError<ErrorResponse>;
+        if (error.response?.data?.detail === "REGISTER_USER_ALREADY_EXISTS") {
+          throw "На этот Email уже зарегистрирован пользователь";
+        }
 
-      const errorData = error.response?.data;
-
-      if (errorData?.detail === "REGISTER_USER_ALREADY_EXISTS") {
-        setError('На этот Email уже зарегистрирован пользователь')
-      } else {
-        setError("Ошибка регистрации");
+        throw "Ошибка регистрации";
       }
-    }
-  };
-
-  return {registration, error, setError};
+    },
+  });
 };

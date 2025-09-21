@@ -18,14 +18,13 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-
-//проверка жизни токена
 const handleUnauthorized = () => {
   const logout = useAuthStore.getState().logout;
   logout();
   window.location.href = ROUTES.AUTH;
 };
 
+//проверка жизни токена
 api.interceptors.response.use(
   (response) => response,
   (error) => {

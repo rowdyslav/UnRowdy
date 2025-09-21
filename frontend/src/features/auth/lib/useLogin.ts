@@ -1,8 +1,5 @@
-import {api} from "@/shared/api/axios.ts";
-import {useState} from "react";
 import {useAuthStore} from "@/app/providers/auth/authStore.ts";
 import getInfoMeApi from "@/shared/api/user/getInfoMe.api.ts";
-import type {TokenDataType} from "@/features/auth/components/LoginForm/types/types.ts";
 import type {AxiosError} from "axios";
 import {useNavigate} from "react-router-dom";
 import {ROUTES} from "@/shared/const/routes.ts";
@@ -11,42 +8,35 @@ import type {
 } from "@/features/auth/components/LoginForm/types/LoginForm.schema.ts";
 import type {UserType} from "@/shared/types/userType.ts";
 import type {ErrorResponse} from "@/shared/types/errorResponseType.ts";
+import {authApi} from "@/shared/api/auth.ts";
+import {useMutation} from "@tanstack/react-query";
 
 export const useLogin = () => {
-  const [error, setError] = useState<string | null>(null);
   const login = useAuthStore(state => state.login)
   const setToken = useAuthStore(state => state.setToken)
   const navigate = useNavigate()
 
-  const authLogin = async ({email, password}: LoginFormType) => {
-    const dataGetToken = new URLSearchParams();
-    dataGetToken.append("username", email);
-    dataGetToken.append("password", password);
+  return useMutation<UserType, string, LoginFormType>({
+    mutationFn: async (data) => {
+      try {
+        const { data: tokenData } = await authApi.login(data);
+        setToken(tokenData.access_token);
 
-    try {
-      const {data}: {
-        data: TokenDataType
-      } = await api.post("/auth/login", dataGetToken, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      });
+        const userData: UserType = await getInfoMeApi();
+        login(userData);
 
-      setToken(data.access_token) // сохраняем bearer токен в localStorage
-
-      const userData: UserType = await getInfoMeApi() // получаем id, name, Email
-      login(userData) // сохраняем id, name, Email в localStorage
-
-      navigate(ROUTES.HOME) // направляем на главную страницу
-
-    } catch (err: unknown) {
-      const error = err as AxiosError<ErrorResponse>;
-
-      if (error.response?.data?.detail === 'LOGIN_BAD_CREDENTIALS') {
-        setError('Неверный email или пароль')
+        return userData;
+      } catch (err) {
+        const error = err as AxiosError<ErrorResponse>;
+        if (error.response?.data?.detail === "LOGIN_BAD_CREDENTIALS") {
+          throw "Неверный email или пароль";
+        }
+        throw "Ошибка авторизации";
       }
-    }
-  }
+    },
 
-  return {error, authLogin, setError}
+    onSuccess: () => {
+      navigate(ROUTES.HOME);
+    },
+  });
 }

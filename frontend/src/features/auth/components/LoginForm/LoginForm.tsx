@@ -1,9 +1,11 @@
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import type {
-   LoginFormType
+  LoginFormType
 } from "@/features/auth/components/LoginForm/types/LoginForm.schema.ts";
-import {LoginFormSchema} from "@/features/auth/components/LoginForm/types/LoginForm.schema.ts"
+import {
+  LoginFormSchema
+} from "@/features/auth/components/LoginForm/types/LoginForm.schema.ts"
 import {useLogin} from "@/features/auth/lib/useLogin.ts";
 
 const LoginForm = () => {
@@ -15,11 +17,13 @@ const LoginForm = () => {
     resolver: zodResolver(LoginFormSchema)
   })
 
-  const {authLogin, error, setError} = useLogin()
+  const {mutateAsync: login, isPending, error, reset} = useLogin();
 
   const onSubmit = async (data: LoginFormType) => {
-    await authLogin(data)
-  }
+    try {
+      await login(data);
+    } catch { /* empty */ }
+  };
 
   return (
     <form
@@ -32,7 +36,7 @@ const LoginForm = () => {
           className='auth-form'
           {...register("email")}
           placeholder="Email" autoComplete="email"
-          onInput={() => setError(null)}
+          onInput={reset}
         />
         {errors.email && <p>{errors.email.message}</p>} {/*ошибка валидации*/}
       </div>
@@ -43,14 +47,15 @@ const LoginForm = () => {
           {...register("password", {required: "Введите пароль"})}
           placeholder="Password"
           type="password" autoComplete="current-password"
-          onInput ={() => setError(null)}
+          onInput={reset}
         />
-
-        <p className='text-red-500'>{error}</p> {/*ошибка с бека*/}
+        <p className='text-red-500'>{error}</p>{/*ошибка с бека*/}
         {errors.password && <p>{errors.password.message}</p>} {/*ошибка валидации*/}
       </div>
 
-      <button type="submit" className='button-blue'>Войти</button>
+      <button type="submit" className='button-blue'>
+        {isPending ? "Вход..." : "Войти"}
+      </button>
     </form>
   )
 }
