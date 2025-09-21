@@ -82,9 +82,8 @@ async def edit_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> User
         raise already_friend_or_request
 
     user_f = user.friends_ids
-    me_received = me_f["received"]
 
-    if user_id in me_received:
+    if user_id in (me_received := me_f["received"]):
         me_received.remove(user_id)
         user_f["sent"].remove(me.id)
         me_active.append(user_id)
