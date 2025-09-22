@@ -19,8 +19,8 @@ class SharedUser(BaseModel):
     username: Annotated[str, Field(max_length=20)]
 
 
-class SharedWish(BaseModel):
-    """Базовые поля Wish"""
+class SharedService(BaseModel):
+    """Базовые поля Service"""
 
     name: Annotated[str, Field(max_length=20)]
     price: DecimalAnnotation | None
@@ -39,9 +39,9 @@ class UserUpdate(SharedUser, BaseUserUpdate):
     """Поля User для обновления"""
 
 
-class WishRead(SharedWish):
-    """Поля Wish для чтения"""
+class ServiceRead(SharedService):
+    """Поля Service для чтения"""
 
 
-class WishCreate(SharedWish):
-    """Поля Wish для создания"""
+class ServiceCreate(SharedService):
+    """Поля Service для создания"""

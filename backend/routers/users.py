@@ -8,11 +8,11 @@ from core import (
     AuthorizedUser,
     ErrorResponsesDict,
     PaginationQuery,
+    Service,
+    ServiceCreate,
     User,
     UserRead,
     UserUpdate,
-    Wish,
-    WishCreate,
     already_friend_or_request,
     friend_request_yourself,
     user_no_friend_or_request,
@@ -34,24 +34,24 @@ async def remove_many(pagination: PaginationQuery) -> None:
     await User.find_all(pagination.offset, pagination.limit).delete()
 
 
-@router.post("/me/wishes", status_code=status.HTTP_201_CREATED)
-async def add_me_wishes(me: AuthorizedUser, wish_in: WishCreate) -> Wish:
-    wish = Wish(user=me, **wish_in.model_dump(exclude_unset=True))
-    return await wish.insert()
+@router.post("/me/services", status_code=status.HTTP_201_CREATED)
+async def add_me_services(me: AuthorizedUser, service_in: ServiceCreate) -> Service:
+    service = Service(user=me, **service_in.model_dump(exclude_unset=True))
+    return await service.insert()
 
 
-@router.get("/me/wishes", responses=ErrorResponsesDict("unauthorized"))
-async def read_me_wishes(me: AuthorizedUser) -> list[Wish]:
-    return await Wish.find(Wish.user.id == me.id).to_list()
+@router.get("/me/services", responses=ErrorResponsesDict("unauthorized"))
+async def read_me_services(me: AuthorizedUser) -> list[Service]:
+    return await Service.find(Service.user.id == me.id).to_list()
 
 
 @router.delete(
-    "/me/wishes",
+    "/me/services",
     status_code=status.HTTP_204_NO_CONTENT,
     responses=ErrorResponsesDict("unauthorized"),
 )
-async def remove_me_wishes(me: AuthorizedUser) -> None:
-    await Wish.find(Wish.user_id == me.id).delete()
+async def remove_me_services(me: AuthorizedUser) -> None:
+    await Service.find(Service.user_id == me.id).delete()
 
 
 @router.get("/me/friends", responses=ErrorResponsesDict("unauthorized"))

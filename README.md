@@ -1,11 +1,11 @@
 # UnRowdy Product Overview
 
-UnRowdy is a web application built with a Python-based full-stack architecture. The application appears to be a personal management or wish-tracking system with user authentication and wish management features.
+UnRowdy is a web application built with a Python-based full-stack architecture. The application appears to be a personal management or service-tracking system with user authentication and service management features.
 
 ## Key Features
 
 - User authentication and management
-- Wish/goal tracking system
+- Service/goal tracking system
 - Web-based interface using Flet framework
 - RESTful API backend
 
@@ -44,13 +44,13 @@ backend/
 ├── models/               # Beanie ODM data models
 │   ├── __init__.py
 │   ├── user.py          # User model
-│   ├── wish.py          # Wish model
+│   ├── service.py          # Service model
 │   └── utils.py         # Model utilities
 ├── routers/              # FastAPI route handlers
 │   ├── __init__.py
 │   ├── auth.py          # Authentication endpoints
 │   ├── users.py         # User management endpoints
-│   └── wishes.py        # Wish management endpoints
+│   └── services.py        # Service management endpoints
 └── Dockerfile           # Backend container configuration
 ```
 
@@ -84,8 +84,8 @@ frontend/
 
 ## Naming Patterns
 
-- **Models**: Singular nouns (user.py, wish.py)
-- **Routers**: Plural nouns matching model names (users.py, wishes.py)
+- **Models**: Singular nouns (user.py, service.py)
+- **Routers**: Plural nouns matching model names (users.py, services.py)
 - **Controls**: Descriptive names matching routes (index.py, me.py)
 - **Environment Files**: Service-specific .env files in each service directory
 

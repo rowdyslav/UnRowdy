@@ -4,19 +4,19 @@ from .deps import AuthForm, AuthorizedUser, PaginationQuery
 from .errors.http import (
     already_friend_or_request,
     friend_request_yourself,
+    service_not_found,
     user_already_existed,
     user_no_friend_or_request,
     user_not_found,
-    wish_not_found,
 )
 from .errors.utils import ErrorResponsesDict
-from .models import User, Wish
+from .models import Service, User
 from .schemas import (
+    ServiceCreate,
+    ServiceRead,
     UserCreate,
     UserRead,
     UserUpdate,
-    WishCreate,
-    WishRead,
 )
 from .user_manager import AUTH_BACKEND, FASTAPI_USERS
 
@@ -27,18 +27,18 @@ __all__ = [
     "AuthorizedUser",
     "ErrorResponsesDict",
     "PaginationQuery",
+    "Service",
+    "ServiceCreate",
+    "ServiceRead",
     "User",
     "UserCreate",
     "UserRead",
     "UserUpdate",
-    "Wish",
-    "WishCreate",
-    "WishRead",
     "already_friend_or_request",
     "bad_friends_type",
     "friend_request_yourself",
+    "service_not_found",
     "user_already_existed",
     "user_no_friend_or_request",
     "user_not_found",
-    "wish_not_found",
 ]

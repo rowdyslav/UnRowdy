@@ -16,4 +16,4 @@ user_no_friend_or_request = HTTPException(
 )
 
 
-wish_not_found = HTTPException(404, "Желание не найдено!")
+service_not_found = HTTPException(404, "Желание не найдено!")
