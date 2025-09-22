@@ -14,8 +14,7 @@ const AddFriendForm = () => {
     }
   }
 
-  let placeholder: string = "Введите id друга"
-
+  let placeholder: string = "Добавить в друзья"
   if (isSuccess) placeholder = `Запрос отправлен!`;
   else if (isError) placeholder = "Ошибка! Попробуйте снова";
 
@@ -30,11 +29,11 @@ const AddFriendForm = () => {
         <input
           {...register('id', {required: 'Введите id'})}
           className='auth-form h-12' type="text"
-          placeholder={placeholder}
+          placeholder={"Введите id"}
           onFocus={() => resetError()}
         />
-        <button className='button-blue h-12 p-2 min-w-fit' type="submit">
-          Добавить в друзья
+        <button className='button-blue h-12 p-2 w-xs min-w-fit' type="submit">
+          {placeholder}
         </button>
       </form>
     </div>

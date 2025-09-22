@@ -3,11 +3,13 @@ import type {
 } from "@/features/friends/types/friendCardProps.ts"
 import DeleteButton
   from "@/features/friends/components/deleteButton/DeleteButton.tsx";
+import ViewProfileButton
+  from "@/features/friends/components/viewProfileButton/viewProfileButton.tsx";
 
 const RequestCard = ({name, id}: RequestCardProps) => {
   return (
     <article
-      className='card-element p-4 flex justify-between transition-all duration-75 hover:shadow-lg'
+      className='card-element p-4 flex justify-between items-center duration-75 hover:shadow-lg'
     >
       <div className='flex gap-x-3'>
         <div
@@ -29,7 +31,10 @@ const RequestCard = ({name, id}: RequestCardProps) => {
         </div>
       </div>
 
-      <DeleteButton id={id}/>
+      <div className='flex gap-x-2'>
+        <ViewProfileButton id={id}/>
+        <DeleteButton id={id}/>
+      </div>
     </article>
   );
 };

@@ -5,7 +5,7 @@ const AcceptButton = ({id}: {id :string}) => {
 
   return (
     <button
-      className='button-blue bg-green-400'
+      className='button-blue bg-green-400 h-10 flex items-center'
       onClick={() => addFriend(id)}
     >
       Принять

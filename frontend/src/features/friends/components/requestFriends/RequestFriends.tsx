@@ -9,8 +9,8 @@ const RequestFriends = () => {
 
   if(!requestFriends || requestFriends.length === 0) return null
   return (
-    <div className='card-element p-4'>
-      <h4 className='color-font text-2xl font-medium mb-6'>Заявки в друзья</h4>
+    <div className='card-element p-4 '>
+      <h4 className='color-font text-2xl font-medium mb-6'>Полученные заявки в друзья</h4>
 
       {isLoading ? <div className='in-center'><Spinner/></div> : null}
 

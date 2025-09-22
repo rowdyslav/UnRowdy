@@ -18,13 +18,17 @@ const UserCardSection = () => {
         </div>
 
         <div className='flex flex-col gap-y-2'>
-          {user ? <p className='text-3xl font-bold color-font'>{user.username}</p> : null}
-          {user ? <p className='color-font-light text-lg'>Очень крутой разработчик</p> : null}
+          {user ? <p
+            className='text-3xl font-bold color-font'
+          >{user.username}</p> : null}
+          {user ? <p
+            className='color-font-light text-lg'
+          >Очень крутой разработчик</p> : null}
         </div>
 
-        <div className='flex flex-col color-font-light'>
-          ВРЕМЕННОЕ РАСПОЛОЖЕНИЕ КНОПКИ ВЫХОДА
-      <LogoutButton/>
+        <div className='ml-auto text-center w-44 flex flex-col color-font-light'>
+          ВРЕМЕННОЕ РАСПОЛОЖЕНИЕ
+          <LogoutButton/>
         </div>
       </article>
     </section>

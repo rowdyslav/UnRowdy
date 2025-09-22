@@ -4,13 +4,13 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
 export const useDeleteFriend = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: async (id: string) => {
+  return useMutation<void, Error, string>({
+    mutationFn: async (id) => {
       await friendsApi.removeFriend(id);
     },
 
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ["friends", "active"] });
+      void queryClient.invalidateQueries({queryKey: ["friends", "active"]});
     },
 
     onError: (err) => {
