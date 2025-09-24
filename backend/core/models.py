@@ -7,7 +7,7 @@ from pydantic import Field
 from .schemas import FriendType, SharedService, SharedUser
 
 
-class User(SharedUser, BeanieBaseUser, Document):
+class User(Document, SharedUser, BeanieBaseUser):
     """Модель пользователя"""
 
     services: list[Link["Service"]] = []
@@ -21,7 +21,7 @@ class User(SharedUser, BeanieBaseUser, Document):
         name = "users"
 
 
-class Service(SharedService, Document):
+class Service(Document, SharedService):
     """Модель услуги пользователя"""
 
     user: Annotated[

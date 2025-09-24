@@ -1,4 +1,4 @@
-from beanie.odm.fields import PydanticObjectId
+from beanie import PydanticObjectId, WriteRules
 from fastapi import APIRouter, status
 
 from core import (
@@ -9,6 +9,7 @@ from core import (
     PaginationQuery,
     Service,
     ServiceCreate,
+    ServiceRead,
     User,
     UserRead,
     UserUpdate,
@@ -34,9 +35,16 @@ async def remove_many(pagination: PaginationQuery) -> None:
 
 
 @router.post("/me/services", status_code=status.HTTP_201_CREATED)
-async def add_me_services(me: AuthorizedUser, service_in: ServiceCreate) -> Service:
-    service = Service(user=me, **service_in.model_dump(exclude_unset=True))
-    return await service.insert()
+async def add_me_services(me: AuthorizedUser, service_in: ServiceCreate) -> ServiceRead:
+    service = Service(**service_in.model_dump(exclude_unset=True))
+    from icecream import ic
+
+    ic(service.user, 1)
+    service.user = me.to_ref()
+    ic(service.user, 2)
+    await service.insert(link_rule=WriteRules.WRITE)
+    ic(service.user, 3)
+    return ServiceRead(**service.model_dump())
 
 
 @router.get("/me/services", responses=ErrorResponsesDict("unauthorized"))
