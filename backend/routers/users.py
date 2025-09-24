@@ -1,5 +1,3 @@
-from typing import Literal
-
 from beanie.odm.fields import PydanticObjectId
 from fastapi import APIRouter, status
 
@@ -7,6 +5,7 @@ from core import (
     FASTAPI_USERS,
     AuthorizedUser,
     ErrorResponsesDict,
+    FriendType,
     PaginationQuery,
     Service,
     ServiceCreate,
@@ -54,13 +53,21 @@ async def remove_me_services(me: AuthorizedUser) -> None:
     await Service.find(Service.user_id == me.id).delete()
 
 
+@router.get("/{user_id}/services", responses=ErrorResponsesDict("not_found"))
+async def read_services(user_id: PydanticObjectId) -> list[Service]:
+    user = await User.get(user_id)
+    if user is None:
+        raise user_not_found
+    return await Service.find(Service.user.id == user_id).to_list()
+
+
 @router.get("/me/friends", responses=ErrorResponsesDict("unauthorized"))
 async def read_me_friends(
-    me: AuthorizedUser, friends_type: Literal["active", "sent", "received"]
+    me: AuthorizedUser, friend_type: FriendType
 ) -> list[UserRead]:
     return [
         UserRead.model_validate(await User.get(user_id))
-        for user_id in me.friends_ids[friends_type]
+        for user_id in me.friends_ids[friend_type]
     ]
 
 
@@ -123,3 +130,14 @@ async def remove_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> No
 
     await me.save()
     await user.save()
+
+
+@router.get("/{user_id}/friends", responses=ErrorResponsesDict("not_found"))
+async def read_me_friends(
+    user_id: PydanticObjectId, friend_type: FriendType
+) -> list[UserRead]:
+    user = await User.get(user_id)
+    if user is None:
+        raise user_not_found
+
+    return [UserRead.model_validate(user) for user_id in user.friends_ids[friend_type]]
