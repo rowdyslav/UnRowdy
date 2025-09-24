@@ -1,4 +1,4 @@
-import SearchSection from "@/pages/Home/SearchSection.tsx";
+import SearchSection from "@/pages/home/SearchSection.tsx";
 
 const HomePage = () => {
 

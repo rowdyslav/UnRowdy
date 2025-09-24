@@ -50,7 +50,7 @@ const ServiceCard = ({name, price}: ServiceType) => {
       {/* Buttons */}
       <div className="flex justify-end mt-6">
         <button className="w-1/2 px-4 py-2 color-font-light rounded-lg border border-primary hover:bg-gray-50 transition">
-          Редактировать сервис
+          Редактировать услугу
         </button>
         {/*<button className="w-1/2 ml-2 px-4 py-2 text-sm bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition">*/}
         {/*  View Analytics*/}

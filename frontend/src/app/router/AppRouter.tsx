@@ -4,7 +4,8 @@ import Auth from "@/pages/auth/Auth.tsx";
 import Layout from "@/app/layouts/main/mainLayout.tsx";
 import {protectedLoader, publicLoader} from "@/app/router/auth-loaders.ts";
 import ProfilePage from "@/pages/profile/ProfilePage.tsx";
-import HomePage from "@/pages/Home/HomePage.tsx";
+import HomePage from "@/pages/home/HomePage.tsx";
+import AddServicePage from "@/pages/addService/AddServicePage.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ export const router = createBrowserRouter([
     children: [
       {index: true, element: <HomePage/>},
       {path: ROUTES.PROFILE, element: <ProfilePage/>, loader: protectedLoader},
+      {path: ROUTES.ADD_SERVICE, element: <AddServicePage/>, loader: protectedLoader}
     ]
   },
   {
@@ -21,6 +23,7 @@ export const router = createBrowserRouter([
     element: (
       <Auth/>
     ),
+
   },
   {
     path: '*',
