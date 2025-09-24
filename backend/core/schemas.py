@@ -1,6 +1,6 @@
-from typing import Annotated
+from typing import Annotated, Literal
 
-from beanie import DecimalAnnotation, PydanticObjectId
+from beanie import PydanticObjectId
 from fastapi import Query
 from fastapi_users.schemas import BaseUser, BaseUserCreate, BaseUserUpdate
 from pydantic import BaseModel, Field, NonNegativeInt
@@ -23,8 +23,11 @@ class SharedService(BaseModel):
     """Базовые поля Service"""
 
     name: Annotated[str, Field(max_length=20)]
-    price: DecimalAnnotation | None
+    price: int | None
     image_b64: str | None
+
+
+FriendType = Literal["active", "sent", "received"]
 
 
 class UserRead(SharedUser, BaseUser[PydanticObjectId]):

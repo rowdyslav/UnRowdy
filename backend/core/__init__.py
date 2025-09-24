@@ -1,6 +1,6 @@
 """Параметры, ошибки, модели, схемы и UserManager"""
 
-from .deps import AuthForm, AuthorizedUser, PaginationQuery
+from .deps import AuthorizedUser, PaginationQuery
 from .errors.http import (
     already_friend_or_request,
     friend_request_yourself,
@@ -12,6 +12,7 @@ from .errors.http import (
 from .errors.utils import ErrorResponsesDict
 from .models import Service, User
 from .schemas import (
+    FriendType,
     ServiceCreate,
     ServiceRead,
     UserCreate,
@@ -23,9 +24,9 @@ from .user_manager import AUTH_BACKEND, FASTAPI_USERS
 __all__ = [
     "AUTH_BACKEND",
     "FASTAPI_USERS",
-    "AuthForm",
     "AuthorizedUser",
     "ErrorResponsesDict",
+    "FriendType",
     "PaginationQuery",
     "Service",
     "ServiceCreate",

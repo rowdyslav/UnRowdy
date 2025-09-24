@@ -1,17 +1,17 @@
-from typing import Annotated, Literal
+from typing import Annotated
 
 from beanie import BackLink, Document, Link, PydanticObjectId
 from fastapi_users.db import BeanieBaseUser
 from pydantic import Field
 
-from .schemas import SharedService, SharedUser
+from .schemas import FriendType, SharedService, SharedUser
 
 
 class User(SharedUser, BeanieBaseUser, Document):
     """Модель пользователя"""
 
     services: list[Link["Service"]] = []
-    friends_ids: dict[Literal["active", "sent", "received"], list[PydanticObjectId]] = {
+    friends_ids: dict[FriendType, list[PydanticObjectId]] = {
         "active": [],
         "sent": [],
         "received": [],
