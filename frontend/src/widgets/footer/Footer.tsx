@@ -10,9 +10,8 @@ const Footer = () => {
     >
       <div className='flex justify-around border-b-gray-100 border-b pb-8'>
         <div>
-
           <h2 className='text-[27px] font-bold color-font mb-4'>
-            unRowdy
+            UnRowdy
           </h2>
           <p
             className="color-font-light"
@@ -39,8 +38,9 @@ const Footer = () => {
           className='color-font-light '
         >© 2025 unRowdy. All rights reserved.
         </p>
-        <Link to={'/'}
-          className='color-font-light duration-200 font-normal hover:text-blue-500'
+        <Link
+          to={'/'}
+          className='color-font-light duration-200 hover:text-blue-500'
         >Политика обслуживания
         </Link>
       </div>

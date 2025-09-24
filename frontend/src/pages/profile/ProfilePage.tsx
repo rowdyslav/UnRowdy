@@ -4,9 +4,10 @@ import ProfileTabs
 import {useState} from "react";
 import type {ActiveTabType} from "@/pages/profile/types/activeTabType.ts";
 import FriendsSection from "@/pages/profile/FriendSection.tsx";
+import ServicesSection from "@/pages/profile/ServicesSection.tsx";
 
 const ProfilePage = () => {
-  const [activeTab, setActiveTab] = useState<ActiveTabType>({id:0, isActive: 'Friends'});
+  const [activeTab, setActiveTab] = useState<ActiveTabType>({id:0, isActive: 'Services'});
 
   return (
     <>
@@ -14,8 +15,8 @@ const ProfilePage = () => {
       <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
 
       {activeTab.isActive === 'Friends' ? <FriendsSection/> : null}
-      {activeTab.isActive === 'Other' ? <p className='container'>fdsffdssssssd</p> : null}
-    </>
+      {activeTab.isActive === 'Services' ? <ServicesSection/> : null}
+      </>
   );
 };
 

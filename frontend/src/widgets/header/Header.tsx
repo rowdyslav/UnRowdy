@@ -12,7 +12,7 @@ const Header = () => {
     >
       <div className='flex items-center'>
         <h2 className='text-2xl font-bold color-font'>
-          unRowdy
+          UnRowdy
         </h2>
 
         <nav>

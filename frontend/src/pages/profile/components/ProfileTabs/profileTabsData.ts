@@ -6,11 +6,11 @@ import type {
 export const profileTabsData: Tab[] = [
   {
     id: 0,
-    label: 'Friends'
+    label: 'Services'
   },
   {
     id: 1,
-    label: 'Other'
-  }
+    label: 'Friends'
+  },
 ]
 

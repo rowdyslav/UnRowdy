@@ -1,4 +1,4 @@
-export type TabNames = 'Friends' | 'Other'
+export type TabNames = 'Friends' | 'Services' |  'Other'
 
 export interface ActiveTabType  {
   id: number;
