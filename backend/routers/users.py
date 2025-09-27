@@ -141,11 +141,11 @@ async def remove_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> No
 
 
 @router.get("/{user_id}/friends", responses=ErrorResponsesDict("not_found"))
-async def read_me_friends(
+async def read_one_friends(
     user_id: PydanticObjectId, friend_type: FriendType
 ) -> list[UserRead]:
     user = await User.get(user_id)
     if user is None:
         raise user_not_found
 
-    return [UserRead.model_validate(user) for user_id in user.friends_ids[friend_type]]
+    return [UserRead.model_validate(await User.get(user_id)) for user_id in user.friends_ids[friend_type]]
