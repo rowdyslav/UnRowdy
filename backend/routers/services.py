@@ -12,7 +12,7 @@ router = APIRouter(prefix="/services", tags=["Services"])
 
 
 @router.get("")
-async def read_many(pagination: PaginationQuery) -> list[Service]:
+async def read_many(pagination: PaginationQuery) -> list[ServiceRead]:
     services = await Service.find_all(pagination.offset, pagination.limit).to_list()
     return [ServiceRead.model_validate(service) for service in services]
 
