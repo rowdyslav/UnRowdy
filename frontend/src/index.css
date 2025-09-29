@@ -19,7 +19,7 @@ body {
 }
 
 @layer components {
-  .auth-form {
+  .input {
     @apply p-4 rounded-md border w-full border-[var(--color-border)] focus:outline-blue-500
   }
 
@@ -28,26 +28,36 @@ body {
   }
 
   .button {
-    @apply py-2 px-4 rounded-md border border-[var(--color-border)] font-medium cursor-pointer duration-300 text-[var(--color-font-light)] hover:bg-blue-500 hover:text-white
+    @apply py-2 px-4 rounded-md border border-[var(--color-border)] font-medium cursor-pointer transition-colors duration-300 text-[var(--color-font-light)] hover:bg-blue-500 hover:text-white
   }
 
   .card-element {
-    @apply bg-white shadow-sm rounded-lg
+    @apply bg-white shadow-sm rounded-lg hover:shadow-lg duration-100 transition
   }
 
-  .in-center{
+
+  .center-inline {
     @apply w-full flex justify-center
+  }
+
+  .center {
+    @apply flex items-center justify-center
+  }
+
+  .add-service-grid {
+    @apply grid gap-x-3 justify-between grid-cols-[1fr_2fr]
   }
 }
 
 @layer utilities {
-  .border-primary {
+  .color-border-primary {
     border-color: var(--color-border)
   }
 
   .color-main {
     background-color: var(--color-main-white)
   }
+
   .color-main-grey {
     background-color: var(--color-main-grey)
   }
@@ -55,46 +65,25 @@ body {
   .color-font {
     color: var(--color-font)
   }
+
   .color-font-light {
     color: var(--color-font-light)
   }
 
-  .container{
+  .container {
     max-width: var(--max-width-container);
     margin-inline: auto;
   }
-
-  /*.dark .color-background-main {*/
-  /*  background-color: deepskyblue;*/
-  /*}*/
-
-  /*.animation-fade-out {*/
-  /*  animation: fadeOut 240ms both ease-in-out;*/
-  /*}*/
-
-  /*.animation-fade-in {*/
-  /*  animation: fadeIn 240ms both ease-in-out;*/
-  /*}*/
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(-80px);
-  }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(-80px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+/* для Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

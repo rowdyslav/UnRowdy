@@ -1,36 +1,15 @@
-import LogoutButton
-  from "@/features/auth/components/LogoutButton/LogoutButton.tsx";
-import {useAuthStore} from "@/app/providers/auth/authStore.ts";
+// import {useParams} from "react-router-dom";
+import UserCard from "@/widgets/userCard/UserCard.tsx";
+// import {useGetUserData} from "@/shared/lib/useGetUserData.ts";
 
 const UserCardSection = () => {
-  const user = useAuthStore(state => state.user)
+  // const {id} = useParams()
+  // const {data: userData} = useGetUserData(id || '')
 
+  // console.log(userData)
   return (
     <section className='container mb-8'>
-      <article className='card-element p-6 flex gap-x-6'>
-        <div
-          style={{fontVariationSettings: "'FILL' 0, 'wght' 600, 'GRAD' 0 , 'opsz' 48"}}
-        >
-        <span
-          className="material-symbols-outlined " style={{fontSize: '100px'}}
-        >account_circle
-        </span>
-        </div>
-
-        <div className='flex flex-col gap-y-2'>
-          {user ? <p
-            className='text-3xl font-bold color-font'
-          >{user.username}</p> : null}
-          {user ? <p
-            className='color-font-light text-lg'
-          >Очень крутой разработчик</p> : null}
-        </div>
-
-        <div className='ml-auto text-center w-44 flex flex-col color-font-light'>
-          ВРЕМЕННОЕ РАСПОЛОЖЕНИЕ
-          <LogoutButton/>
-        </div>
-      </article>
+      <UserCard userName={'dana'} type='profile'/>
     </section>
   );
 };

@@ -29,17 +29,17 @@ const Header = () => {
       </div>
 
       {isAuthenticated
-        ? <Link to={ROUTES.PROFILE}>
+        ? <Link to={ROUTES.MY_PROFILE}>
           <div
             style={{fontVariationSettings: "'FILL' 0, 'wght' 600, 'GRAD' 0 , 'opsz' 48"}}
           >
             <span
-              className="material-symbols-outlined " style={{fontSize: '50px'}}
+              className="material-symbols-outlined" style={{fontSize: '50px'}}
             >account_circle</span>
           </div>
         </Link>
         : <Link
-          to={ROUTES.AUTH} className='button-blue rounded-md py-2 duration-200'
+          to={ROUTES.AUTH} className='button'
         >Войти</Link>}
     </header>
   );

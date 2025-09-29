@@ -1,17 +1,17 @@
-interface colDataType {
+type colDataType = {
   label: string;
   href: string;
 }
 
-export interface footerDataType {
+export type footerDataType = {
   label: string;
   hrefs: colDataType[];
 }
 
 export const footerCol1Data: colDataType[] = [
   {
-  label: 'Как нанять',
-  href: '/',
+    label: 'Как нанять',
+    href: '/',
   },
   {
     label: 'Рынок талантов',

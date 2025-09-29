@@ -1,4 +1,4 @@
-interface headerDataType {
+type headerDataType = {
   label: string;
   href: string;
 }

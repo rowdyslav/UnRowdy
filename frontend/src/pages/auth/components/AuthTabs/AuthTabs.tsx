@@ -10,8 +10,9 @@ const AuthTabs = ({activeTab, setActiveTab}: AuthTabsProps) => {
 
   return (
     <div className="mx-auto w-full p-6 bg-white rounded-lg ">
-      <div className="flex border-b border-gray-300 mb-4 relative"
-      onClick={handleSwitchTab}
+      <div
+        className="flex border-b border-gray-300 mb-4 relative"
+        onClick={handleSwitchTab}
       >
         <button
           className={`flex-1 py-2 text-center font-medium  ${

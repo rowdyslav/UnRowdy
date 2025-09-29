@@ -1,6 +1,6 @@
 import type {UserType} from "@/shared/types/userType.ts";
 
-export interface AuthStateType {
+export type AuthStateType = {
   user: UserType | null;
   token: string | null;
   isAuthenticated: boolean;

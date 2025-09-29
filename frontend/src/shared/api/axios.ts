@@ -9,7 +9,7 @@ export const api = axios.create({
   },
 });
 
-// при наличии access_token автоматом подставляется заголовок Authorization: Bearer eyJhbGciOiJIUzI1...
+// при наличии access_token подставляется заголовок Authorization: Bearer eyJhb...
 api.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token;
   if (token) {
@@ -17,6 +17,7 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
 
 const handleUnauthorized = () => {
   const logout = useAuthStore.getState().logout;

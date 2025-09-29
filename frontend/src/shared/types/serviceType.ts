@@ -1,6 +1,6 @@
 export type ServiceType = {
   name: string;
   price: number;
-  img: string;
+  image_b64: string;
   id?: string
 }

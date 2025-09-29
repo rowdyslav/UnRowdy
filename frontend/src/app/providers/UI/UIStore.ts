@@ -11,6 +11,6 @@ export const useUIStore = create<UIStateType>()(
         isOpenSideBar: !state.isOpenSideBar,
       })),
     }),
-    { name: 'UI-storage' }
+    {name: 'UI-storage'}
   )
 );

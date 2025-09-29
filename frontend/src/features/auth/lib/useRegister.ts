@@ -2,7 +2,7 @@ import {useLogin} from "@/features/auth/lib/useLogin.ts";
 import type {AxiosError} from "axios";
 import type {
   RegisterFormType
-} from "@/features/auth/components/RegisterForm/types/RegisterForm.schema.ts";
+} from "@/features/auth/types/RegisterForm.schema.ts";
 import type {ErrorResponse} from "@/shared/types/errorResponseType.ts";
 import {authApi} from "@/shared/api/auth.ts";
 import {useMutation} from "@tanstack/react-query";

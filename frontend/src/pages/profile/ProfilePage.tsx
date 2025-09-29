@@ -1,22 +1,23 @@
-import UserCardSection from "@/pages/profile/UserCardSection.tsx";
 import ProfileTabs
-  from "@/pages/profile/components/ProfileTabs/ProfileTabs.tsx";
+  from "@/shared/components/ProfileTabs/ProfileTabs.tsx";
 import {useState} from "react";
-import type {ActiveTabType} from "@/pages/profile/types/activeTabType.ts";
-import FriendsSection from "@/pages/profile/FriendSection.tsx";
-import ServicesSection from "@/pages/profile/ServicesSection.tsx";
+import FriendsSection from "@/pages/profile/FriendsSection.tsx";
+import UserCardSection from "@/pages/profile/UserCardSection.tsx";
+import type {
+  Tab
+} from "@/shared/components/ProfileTabs/types/profileTabsType.ts";
 
 const ProfilePage = () => {
-  const [activeTab, setActiveTab] = useState<ActiveTabType>({id:0, isActive: 'Services'});
+  const [activeTab, setActiveTab] = useState<Tab>({id: 0, label: 'Сервисы'});
 
   return (
     <>
       <UserCardSection/>
-      <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
+      <ProfileTabs activeTab={activeTab} onTabChange={setActiveTab}/>
 
-      {activeTab.isActive === 'Friends' ? <FriendsSection/> : null}
-      {activeTab.isActive === 'Services' ? <ServicesSection/> : null}
-      </>
+      {activeTab.label === 'Сервисы' ? <p></p> : null}
+      {activeTab.label === 'Друзья' ? <FriendsSection/> : null}
+    </>
   );
 };
 
