@@ -2,8 +2,11 @@ import {api} from "@/shared/api/axios.ts";
 import type {ServiceType} from "@/shared/types/serviceType.ts";
 
 export const service = {
-  getServices: () =>
+  getMyServices: () =>
     api.get<ServiceType[]>('/users/me/services'),
+
+  getServices: (userId: string) =>
+    api.get<ServiceType[]>(`/users/${userId}/services`),
 
   getAllServices: () =>
     api.get<ServiceType[]>('/services?limit=10&offset=0'),

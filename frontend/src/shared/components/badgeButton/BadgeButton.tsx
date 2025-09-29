@@ -13,7 +13,7 @@ const CreateServiceBadge = ({size = 'sm', label, to}: BadgeButtonProps) => {
   return (
     <Link
       to={to}
-      className={`group relative h-6 w-6 rounded-full bg-blue-500 center cursor-pointer transition-all duration-300 ${widthClasses[size]} overflow-hidden`}
+      className={`group relative h-6 w-6 mb-[1px] rounded-full bg-blue-500 center cursor-pointer transition-all duration-300 ${widthClasses[size]} overflow-hidden`}
     >
       <span
         style={{fontSize: '20px'}}

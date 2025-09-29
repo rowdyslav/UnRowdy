@@ -3,7 +3,6 @@ import type {
   ServiceListProps
 } from "@/features/service/types/ServiceListProps.ts";
 import Spinner from "@/shared/ui/Spinner.tsx";
-import ToCreate from "@/features/service/components/ToCreate.tsx";
 
 const ServiceList = ({servicesData, isLoading}: ServiceListProps) => {
 
@@ -13,7 +12,6 @@ const ServiceList = ({servicesData, isLoading}: ServiceListProps) => {
 
   return (
     <>
-      {servicesData.length === 0 && <ToCreate/>}
 
       <ul className='grid grid-cols-3 gap-3 w-full'>
         {servicesData.map((service, index) => (
