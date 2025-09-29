@@ -8,6 +8,20 @@ services:
       - "27017:27017"
     volumes:
       - db_data:/data/db
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongosh",
+          "--username=admin",
+          "--password=password",
+          "--authenticationDatabase=admin",
+          "--eval",
+          "db.adminCommand('ping')",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   backend:
     tty: true
     container_name: unrowdy_backend
@@ -20,6 +34,9 @@ services:
     volumes:
       - ./backend:/app
       - /app/.venv
+    depends_on:
+      db:
+        condition: service_healthy
   frontend:
     tty: true
     container_name: unrowdy_frontend

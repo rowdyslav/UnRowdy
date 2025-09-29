@@ -7,7 +7,7 @@ from pydantic import Field
 from .schemas import FriendType, SharedService, SharedUser
 
 
-class User(Document, SharedUser, BeanieBaseUser):
+class User(SharedUser, BeanieBaseUser, Document):
     """Модель пользователя"""
 
     services: list[Link["Service"]] = []
@@ -21,12 +21,10 @@ class User(Document, SharedUser, BeanieBaseUser):
         name = "users"
 
 
-class Service(Document, SharedService):
+class Service(SharedService, Document):
     """Модель услуги пользователя"""
 
-    user: Annotated[
-        BackLink[User], Field(json_schema_extra={"original_field": "services"})
-    ]
+    user: BackLink[User] = Field(json_schema_extra={"original_field": "services"})
 
     class Settings:
         name = "services"

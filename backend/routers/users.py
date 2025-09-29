@@ -37,19 +37,17 @@ async def remove_many(pagination: PaginationQuery) -> None:
 @router.post("/me/services", status_code=status.HTTP_201_CREATED)
 async def add_me_services(me: AuthorizedUser, service_in: ServiceCreate) -> ServiceRead:
     service = Service(**service_in.model_dump(exclude_unset=True))
-    from icecream import ic
-
-    ic(service.user, 1)
-    service.user = me.to_ref()
-    ic(service.user, 2)
-    await service.insert(link_rule=WriteRules.WRITE)
-    ic(service.user, 3)
-    return ServiceRead(**service.model_dump())
+    await service.insert()
+    me.services.append(service)
+    await me.save()
+    return service
 
 
 @router.get("/me/services", responses=ErrorResponsesDict("unauthorized"))
-async def read_me_services(me: AuthorizedUser) -> list[Service]:
-    return await Service.find(Service.user.id == me.id).to_list()
+async def read_me_services(me: AuthorizedUser) -> list[ServiceRead]:
+    await me.fetch_link(User.services)
+    return me.services
+
 
 
 @router.delete(
@@ -58,16 +56,15 @@ async def read_me_services(me: AuthorizedUser) -> list[Service]:
     responses=ErrorResponsesDict("unauthorized"),
 )
 async def remove_me_services(me: AuthorizedUser) -> None:
-    await Service.find(Service.user_id == me.id).delete()
+    await Service.find(Service.user.id == me.id).delete()
 
 
 @router.get("/{user_id}/services", responses=ErrorResponsesDict("not_found"))
-async def read_services(user_id: PydanticObjectId) -> list[Service]:
-    user = await User.get(user_id)
+async def read_services(user_id: PydanticObjectId) -> list[ServiceRead]:
+    user = await User.get(user_id, fetch_links=True)
     if user is None:
         raise user_not_found
-    return await Service.find(Service.user.id == user_id).to_list()
-
+    return user.services
 
 @router.get("/me/friends", responses=ErrorResponsesDict("unauthorized"))
 async def read_me_friends(
