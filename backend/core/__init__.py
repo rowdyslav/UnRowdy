@@ -1,6 +1,6 @@
 """Параметры, ошибки, модели, схемы и UserManager"""
 
-from .deps import AuthorizedUser, PaginationQuery
+from .deps import AuthorizedUser, PaginationQuery, UserQuery
 from .errors.http import (
     already_friend_or_request,
     friend_request_yourself,
@@ -33,6 +33,7 @@ __all__ = [
     "ServiceRead",
     "User",
     "UserCreate",
+    "UserQuery",
     "UserRead",
     "UserUpdate",
     "already_friend_or_request",

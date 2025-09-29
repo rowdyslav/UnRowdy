@@ -1,5 +1,3 @@
-from typing import Annotated
-
 from beanie import BackLink, Document, Link, PydanticObjectId
 from fastapi_users.db import BeanieBaseUser
 from pydantic import Field

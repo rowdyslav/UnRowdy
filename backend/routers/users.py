@@ -1,4 +1,4 @@
-from beanie import PydanticObjectId, WriteRules
+from beanie import PydanticObjectId
 from fastapi import APIRouter, status
 
 from core import (
@@ -11,6 +11,7 @@ from core import (
     ServiceCreate,
     ServiceRead,
     User,
+    UserQuery,
     UserRead,
     UserUpdate,
     already_friend_or_request,
@@ -24,34 +25,42 @@ router.include_router(FASTAPI_USERS.get_users_router(UserRead, UserUpdate))
 
 
 @router.get("")
-async def read_many(pagination: PaginationQuery) -> list[UserRead]:
-    users = await User.find_all(pagination.offset, pagination.limit).to_list()
-    return [UserRead.model_validate(user) for user in users]
+async def read_many(pagination: PaginationQuery, q: UserQuery) -> list[UserRead]:
+    return await User.find(
+        q.model_dump(), skip=pagination.skip, limit=pagination.limit
+    ).to_list()
 
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)
 async def remove_many(pagination: PaginationQuery) -> None:
-    await User.find_all(pagination.offset, pagination.limit).delete()
+    await User.find_all(pagination.skip, pagination.limit).delete()
 
 
-@router.post("/me/services", status_code=status.HTTP_201_CREATED)
+@router.get("/{user_id}/services/", responses=ErrorResponsesDict("not_found"))
+async def read_services(user_id: PydanticObjectId) -> list[ServiceRead]:
+    user = await User.get(user_id, fetch_links=True)
+    if user is None:
+        raise user_not_found
+    return user.services
+
+
+@router.post("/me/services/", status_code=status.HTTP_201_CREATED)
 async def add_me_services(me: AuthorizedUser, service_in: ServiceCreate) -> ServiceRead:
-    service = Service(**service_in.model_dump(exclude_unset=True))
+    service = Service(user=me, **service_in.model_dump(exclude_unset=True))
     await service.insert()
-    me.services.append(service)
-    await me.save()
+    # me.services.append(service)
+    # await me.save()
     return service
 
 
-@router.get("/me/services", responses=ErrorResponsesDict("unauthorized"))
+@router.get("/me/services/", responses=ErrorResponsesDict("unauthorized"))
 async def read_me_services(me: AuthorizedUser) -> list[ServiceRead]:
     await me.fetch_link(User.services)
     return me.services
 
 
-
 @router.delete(
-    "/me/services",
+    "/me/services/",
     status_code=status.HTTP_204_NO_CONTENT,
     responses=ErrorResponsesDict("unauthorized"),
 )
@@ -59,20 +68,17 @@ async def remove_me_services(me: AuthorizedUser) -> None:
     await Service.find(Service.user.id == me.id).delete()
 
 
-@router.get("/{user_id}/services", responses=ErrorResponsesDict("not_found"))
-async def read_services(user_id: PydanticObjectId) -> list[ServiceRead]:
-    user = await User.get(user_id, fetch_links=True)
+@router.get("/{user_id}/friends/", responses=ErrorResponsesDict("not_found"))
+async def read_one_friends(
+    user_id: PydanticObjectId, friend_type: FriendType
+) -> list[UserRead]:
+    user = await User.get(user_id)
     if user is None:
         raise user_not_found
-    return user.services
 
-@router.get("/me/friends", responses=ErrorResponsesDict("unauthorized"))
-async def read_me_friends(
-    me: AuthorizedUser, friend_type: FriendType
-) -> list[UserRead]:
     return [
         UserRead.model_validate(await User.get(user_id))
-        for user_id in me.friends_ids[friend_type]
+        for user_id in user.friends_ids[friend_type]
     ]
 
 
@@ -109,6 +115,16 @@ async def edit_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> User
     return me
 
 
+@router.get("/me/friends/", responses=ErrorResponsesDict("unauthorized"))
+async def read_me_friends(
+    me: AuthorizedUser, friend_type: FriendType
+) -> list[UserRead]:
+    return [
+        UserRead.model_validate(await User.get(user_id))
+        for user_id in me.friends_ids[friend_type]
+    ]
+
+
 @router.delete(
     "/me/friends/{user_id}",
     status_code=status.HTTP_204_NO_CONTENT,
@@ -135,14 +151,3 @@ async def remove_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> No
 
     await me.save()
     await user.save()
-
-
-@router.get("/{user_id}/friends", responses=ErrorResponsesDict("not_found"))
-async def read_one_friends(
-    user_id: PydanticObjectId, friend_type: FriendType
-) -> list[UserRead]:
-    user = await User.get(user_id)
-    if user is None:
-        raise user_not_found
-
-    return [UserRead.model_validate(await User.get(user_id)) for user_id in user.friends_ids[friend_type]]

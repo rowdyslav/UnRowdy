@@ -10,7 +10,7 @@ class Pagination(BaseModel):
     """Параметры запроса для пагинации"""
 
     limit: Annotated[NonNegativeInt, Query(ge=0)] = 10
-    offset: Annotated[NonNegativeInt, Query(ge=0)] = 0
+    skip: Annotated[NonNegativeInt, Query(ge=0)] = 0
 
 
 class SharedUser(BaseModel):
@@ -40,6 +40,8 @@ class UserCreate(SharedUser, BaseUserCreate):
 
 class UserUpdate(SharedUser, BaseUserUpdate):
     """Поля User для обновления"""
+
+    username: Annotated[str, Field(max_length=20)] | None
 
 
 class ServiceRead(SharedService):
