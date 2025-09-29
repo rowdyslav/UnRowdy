@@ -6,7 +6,9 @@ import type {
   LoginFormType
 } from "@/features/auth/types/LoginForm.schema.ts";
 import type {UserType} from "@/shared/types/userType.ts";
-import type {ErrorResponse} from "@/shared/types/errorResponseType.ts";
+import type {
+  ErrorResponseType
+} from "@/shared/types/errorResponseType.ts";
 import {authApi} from "@/shared/api/auth.ts";
 import {useMutation} from "@tanstack/react-query";
 import {userApi} from "@/shared/api/user.ts";
@@ -27,7 +29,7 @@ export const useLogin = () => {
 
         return userData;
       } catch (err) {
-        const error = err as AxiosError<ErrorResponse>;
+        const error = err as AxiosError<ErrorResponseType>;
 
         if (error.response?.data?.detail === "LOGIN_BAD_CREDENTIALS") {
           throw "Неверный email или пароль";

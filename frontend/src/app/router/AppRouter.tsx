@@ -3,7 +3,7 @@ import {ROUTES} from "@/shared/const/routes.ts";
 import Auth from "@/pages/auth/Auth.tsx";
 import Layout from "@/app/layouts/mainLayout.tsx";
 import {protectedLoader, publicLoader} from "@/app/router/auth-loaders.ts";
-import MyProfilePage from "@/pages/myProfile/MyProfilePage.tsx";
+import MyProfilePage from "@/pages/my/MyProfilePage.tsx";
 import HomePage from "@/pages/home/HomePage.tsx";
 import AddServicePage from "@/pages/addService/AddServicePage.tsx";
 import ProfilePage from "@/pages/profile/ProfilePage.tsx";

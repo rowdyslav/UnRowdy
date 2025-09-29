@@ -1,7 +1,6 @@
-import BackPageBadge
-  from "@/shared/components/BackPageBadge/BackPageBadge.tsx";
 import AddForm
   from "@/features/service/components/AddForm.tsx";
+import BackPageBadge from "@/shared/components/backPageBadge/BackPageBadge.tsx";
 
 const AddServicePage = () => {
   return (

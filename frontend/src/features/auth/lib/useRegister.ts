@@ -3,7 +3,9 @@ import type {AxiosError} from "axios";
 import type {
   RegisterFormType
 } from "@/features/auth/types/RegisterForm.schema.ts";
-import type {ErrorResponse} from "@/shared/types/errorResponseType.ts";
+import type {
+  ErrorResponseType
+} from "@/shared/types/errorResponseType.ts";
 import {authApi} from "@/shared/api/auth.ts";
 import {useMutation} from "@tanstack/react-query";
 
@@ -17,7 +19,7 @@ export const useRegister = () => {
 
         await loginMutation.mutateAsync(data);
       } catch (err) {
-        const error = err as AxiosError<ErrorResponse>;
+        const error = err as AxiosError<ErrorResponseType>;
 
         if (error.response?.data?.detail === "REGISTER_USER_ALREADY_EXISTS") {
           throw "На этот Email уже зарегистрирован пользователь";
