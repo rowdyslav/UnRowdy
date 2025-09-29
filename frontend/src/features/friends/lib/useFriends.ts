@@ -4,10 +4,10 @@ import type {UserType} from "@/shared/types/userType";
 
 export const useFriends = (id: string) => {
   return useQuery<UserType[]>({
-    queryKey: ["friends", id],
+    queryKey: ["friends"],
 
     queryFn: async () => {
-      const response = await friendsApi.getFriends("active", id);
+      const response = await (id ? friendsApi.getFriends("active", id) : friendsApi.getMyFriends('active'));
       return response.data;
     },
   });

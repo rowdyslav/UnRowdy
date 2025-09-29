@@ -5,10 +5,6 @@ type headerDataType = {
 
 export const headerData: headerDataType[] = [
   {
-    label: 'Главная страница',
-    href: '/'
-  },
-  {
     label: 'Как начать работу',
     href: '/'
   },

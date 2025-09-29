@@ -6,8 +6,9 @@ import UserCardSection from "@/pages/profile/UserCardSection.tsx";
 import type {
   Tab
 } from "@/shared/components/ProfileTabs/types/profileTabsType.ts";
+import type {ProfileType} from "@/shared/types/profileType.ts";
 
-const ProfilePage = () => {
+const ProfilePage = ({type}: ProfileType) => {
   const [activeTab, setActiveTab] = useState<Tab>({id: 0, label: 'Сервисы'});
 
   return (
@@ -16,7 +17,7 @@ const ProfilePage = () => {
       <ProfileTabs activeTab={activeTab} onTabChange={setActiveTab}/>
 
       {activeTab.label === 'Сервисы' ? <p></p> : null}
-      {activeTab.label === 'Друзья' ? <FriendsSection/> : null}
+      {activeTab.label === 'Друзья' ? <FriendsSection type={type}/> : null}
     </>
   );
 };

@@ -11,9 +11,9 @@ const Header = () => {
       className='max-w-[var(--max-width-container-big)] mx-auto px-[15px] flex justify-between h-[64px] items-center'
     >
       <div className='flex items-center'>
-        <h2 className='text-2xl font-bold color-font'>
+        <Link className='text-2xl font-bold color-font' to={ROUTES.HOME}>
           UnRowdy
-        </h2>
+        </Link>
 
         <nav>
           <ul className='ml-8 flex gap-x-6 '>

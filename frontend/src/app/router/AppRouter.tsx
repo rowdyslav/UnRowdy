@@ -3,7 +3,7 @@ import {ROUTES} from "@/shared/const/routes.ts";
 import Auth from "@/pages/auth/Auth.tsx";
 import Layout from "@/app/layouts/mainLayout.tsx";
 import {protectedLoader, publicLoader} from "@/app/router/auth-loaders.ts";
-import MyProfilePage from "@/pages/my/MyProfilePage.tsx";
+import MyPage from "@/pages/my/MyPage.tsx";
 import HomePage from "@/pages/home/HomePage.tsx";
 import AddServicePage from "@/pages/addService/AddServicePage.tsx";
 import ProfilePage from "@/pages/profile/ProfilePage.tsx";
@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
       {index: true, element: <HomePage/>},
       {
         path: ROUTES.MY_PROFILE,
-        element: <MyProfilePage/>,
+        element: <MyPage/>,
         loader: protectedLoader
       },
       {
@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
         element: <AddServicePage/>,
         loader: protectedLoader
       },
-      {path: ROUTES.PROFILE, element: <ProfilePage/>}
+      {path: ROUTES.PROFILE, element: <ProfilePage type='profile'/>}
     ]
   },
   {

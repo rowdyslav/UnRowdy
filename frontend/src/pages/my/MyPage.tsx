@@ -3,12 +3,12 @@ import ProfileTabs
   from "@/shared/components/ProfileTabs/ProfileTabs.tsx";
 import {useState} from "react";
 import MyServicesSection from "@/pages/my/MyServicesSection.tsx";
-import MyFriendsSection from "@/pages/my/MyFriendsSection.tsx";
 import type {
   Tab
 } from "@/shared/components/ProfileTabs/types/profileTabsType.ts";
+import FriendsSection from "@/pages/profile/FriendsSection.tsx";
 
-const MyProfilePage = () => {
+const MyPage = () => {
   const [activeTab, setActiveTab] = useState<Tab>({id: 0, label: 'Сервисы'});
 
   return (
@@ -16,10 +16,10 @@ const MyProfilePage = () => {
       <MyCardSection/>
       <ProfileTabs activeTab={activeTab} onTabChange={setActiveTab}/>
 
-      {activeTab.label === 'Друзья' ? <MyFriendsSection/> : null}
       {activeTab.label === 'Сервисы' ? <MyServicesSection/> : null}
+      {activeTab.label === 'Друзья' ? <FriendsSection type={"myProfile"}/> : null}
     </>
   );
 };
 
-export default MyProfilePage;
+export default MyPage;

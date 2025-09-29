@@ -2,6 +2,7 @@ import {
   footerData, type footerDataType
 } from "@/widgets/footer/footerData.ts";
 import {Link} from "react-router-dom";
+import {ROUTES} from "@/shared/const/routes.ts";
 
 const Footer = () => {
   return (
@@ -10,9 +11,9 @@ const Footer = () => {
     >
       <div className='flex justify-around border-b-gray-100 border-b pb-8'>
         <div>
-          <h2 className='text-[27px] font-bold color-font mb-4'>
+          <Link className='text-[27px] font-bold color-font mb-4' to={ROUTES.HOME}>
             UnRowdy
-          </h2>
+          </Link>
           <p
             className="color-font-light"
           >Минималистичная фриланс платформа <br/>для талантливых людей и больших проектов
