@@ -31,32 +31,19 @@ async def read_many(pagination: PaginationQuery, q: UserQuery) -> list[UserRead]
     ).to_list()
 
 
-@router.delete("", status_code=status.HTTP_204_NO_CONTENT)
-async def remove_many(pagination: PaginationQuery) -> None:
-    await User.find_all(pagination.skip, pagination.limit).delete()
-
-
-@router.get("/{user_id}/services/", responses=ErrorResponsesDict("not_found"))
-async def read_services(user_id: PydanticObjectId) -> list[ServiceRead]:
-    user = await User.get(user_id, fetch_links=True)
-    if user is None:
-        raise user_not_found
-    return user.services
+@router.get("/me/services/", responses=ErrorResponsesDict("unauthorized"))
+async def read_me_services(me: AuthorizedUser) -> list[ServiceRead]:
+    await me.fetch_link(User.services)
+    return me.services
 
 
 @router.post("/me/services/", status_code=status.HTTP_201_CREATED)
 async def add_me_services(me: AuthorizedUser, service_in: ServiceCreate) -> ServiceRead:
     service = Service(user=me, **service_in.model_dump(exclude_unset=True))
     await service.insert()
-    # me.services.append(service)
-    # await me.save()
+    me.services.append(service)
+    await me.save()
     return service
-
-
-@router.get("/me/services/", responses=ErrorResponsesDict("unauthorized"))
-async def read_me_services(me: AuthorizedUser) -> list[ServiceRead]:
-    await me.fetch_link(User.services)
-    return me.services
 
 
 @router.delete(
@@ -65,21 +52,24 @@ async def read_me_services(me: AuthorizedUser) -> list[ServiceRead]:
     responses=ErrorResponsesDict("unauthorized"),
 )
 async def remove_me_services(me: AuthorizedUser) -> None:
-    await Service.find(Service.user.id == me.id).delete()
+    await me.fetch_link(User.services)
+    for service in me.services:
+        await service.delete()
+    me.services = []
+    await me.save()
 
 
-@router.get("/{user_id}/friends/", responses=ErrorResponsesDict("not_found"))
-async def read_one_friends(
-    user_id: PydanticObjectId, friend_type: FriendType
-) -> list[UserRead]:
-    user = await User.get(user_id)
+@router.delete("", status_code=status.HTTP_204_NO_CONTENT)
+async def remove_many(pagination: PaginationQuery) -> None:
+    await User.find_all(pagination.skip, pagination.limit).delete()
+
+
+@router.get("/{user_id}/services/", responses=ErrorResponsesDict("not_found"))
+async def read_one_services(user_id: PydanticObjectId) -> list[ServiceRead]:
+    user = await User.get(user_id, fetch_links=True)
     if user is None:
         raise user_not_found
-
-    return [
-        UserRead.model_validate(await User.get(user_id))
-        for user_id in user.friends_ids[friend_type]
-    ]
+    return user.services
 
 
 @router.patch(
@@ -151,3 +141,17 @@ async def remove_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> No
 
     await me.save()
     await user.save()
+
+
+@router.get("/{user_id}/friends/", responses=ErrorResponsesDict("not_found"))
+async def read_one_friends(
+    user_id: PydanticObjectId, friend_type: FriendType
+) -> list[UserRead]:
+    user = await User.get(user_id)
+    if user is None:
+        raise user_not_found
+
+    return [
+        UserRead.model_validate(await User.get(user_id))
+        for user_id in user.friends_ids[friend_type]
+    ]
