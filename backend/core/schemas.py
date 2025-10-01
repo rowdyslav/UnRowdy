@@ -1,10 +1,9 @@
 from typing import Annotated, Literal
 
-from beanie import PydanticObjectId
+from beanie import PydanticObjectId, Indexed
 from fastapi import Query
 from fastapi_users.schemas import BaseUser, BaseUserCreate, BaseUserUpdate
 from pydantic import BaseModel, Field, NonNegativeInt
-
 
 class Pagination(BaseModel):
     """Параметры запроса для пагинации"""
@@ -16,7 +15,7 @@ class Pagination(BaseModel):
 class SharedUser(BaseModel):
     """Базовые поля User"""
 
-    username: Annotated[str, Field(max_length=20)]
+    username: Annotated[str, Field(max_length=20), Indexed(unique=True)]
 
 
 class SharedService(BaseModel):
