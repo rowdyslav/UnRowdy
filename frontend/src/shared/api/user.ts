@@ -12,5 +12,5 @@ export const userApi = {
   },
 
   getInfo: (id: string) =>
-    api.get<UserType>(`/users/${id}`)
+    api.get<UserType>(`/users?username=${id}`)
 }

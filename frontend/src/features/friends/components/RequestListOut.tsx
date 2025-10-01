@@ -1,5 +1,5 @@
 import Spinner from "@/shared/ui/Spinner.tsx";
-import useRequestsOut from "@/features/friends/lib/useRequestsOut.ts";
+import useRequestsOut from "@/features/friends/hooks/useRequestsOut.ts";
 import RequestOutCard from "@/features/friends/ui/RequestOutCard.tsx";
 
 const RequestFriends = () => {

@@ -4,7 +4,7 @@ import {
   type ServiceFormType
 } from "@/features/service/types/ServiceForm.schema.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {useAdd} from "@/features/service/lib/useAdd.ts";
+import {useAdd} from "@/features/service/hooks/useAdd.ts";
 import {fileToBase64} from "@/shared/utils/fileToBase64.ts";
 import type {ServiceType} from "@/shared/types/serviceType.ts";
 

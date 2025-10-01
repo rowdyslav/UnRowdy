@@ -1,4 +1,4 @@
-import {useAdd} from "@/features/friends/lib/useAdd.ts";
+import {useAdd} from "@/features/friends/hooks/useAdd.ts";
 
 const AcceptButton = ({id}: { id: string }) => {
   const {mutate: addFriend} = useAdd()

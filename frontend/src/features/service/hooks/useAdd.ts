@@ -1,5 +1,5 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {service} from "@/shared/api/service.ts";
+import {serviceApi} from "@/shared/api/serviceApi.ts";
 import type {ServiceType} from "@/shared/types/serviceType.ts";
 import {useNavigate} from "react-router-dom";
 
@@ -9,7 +9,7 @@ export const useAdd = () => {
 
   return useMutation<void, Error, ServiceType>({
     mutationFn: async (data) => {
-      await service.addService(data)
+      await serviceApi.addService(data)
     },
 
     onSuccess: () => {

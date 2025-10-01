@@ -1,4 +1,4 @@
 export type UserCardProps = {
-  userName?: string
+  userName: string
   type: 'myProfile' | 'profile'
 }

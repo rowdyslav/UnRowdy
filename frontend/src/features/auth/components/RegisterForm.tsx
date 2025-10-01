@@ -8,7 +8,7 @@ import {
 import {zodResolver} from "@hookform/resolvers/zod";
 import {
   useRegister
-} from "@/features/auth/lib/useRegister.ts";
+} from "@/features/auth/hooks/useRegister.ts";
 
 const RegisterForm = () => {
   const {

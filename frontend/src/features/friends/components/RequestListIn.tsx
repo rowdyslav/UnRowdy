@@ -1,13 +1,14 @@
 import Spinner from "@/shared/ui/Spinner.tsx";
 import {
   useRequestFriends
-} from "@/features/friends/lib/useRequestsIn.ts";
+} from "@/features/friends/hooks/useRequestsIn.ts";
 import RequestInCard from "@/features/friends/ui/RequestInCard.tsx";
 
 const RequestListIn = () => {
   const {data: requestFriends, isLoading} = useRequestFriends();
 
   if (!requestFriends || requestFriends.length === 0) return null
+
   return (
     <div className='card-element p-4 '>
       <h4

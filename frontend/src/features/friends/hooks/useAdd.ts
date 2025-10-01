@@ -14,6 +14,7 @@ export const useAdd = () => {
       queryClient.setQueryData<UserType[]>(["friends", "request"], (old) =>
         old ? old.filter(user => user.id !== id) : []
       );
+
       void queryClient.invalidateQueries({queryKey: ["friends", "active"]});
       void queryClient.invalidateQueries({queryKey: ["friends", "sent"]})
     },

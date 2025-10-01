@@ -1,6 +1,7 @@
 import type {ServiceType} from "@/shared/types/serviceType.ts";
+import type {ProfileType} from "@/shared/types/profileType.ts";
 
-const Card = ({name, price, image_b64}: ServiceType) => {
+const Card = ({name, price, image_b64, type}: ServiceType & ProfileType) => {
 
   return (
     <article className="w-full card-element">
@@ -55,16 +56,18 @@ const Card = ({name, price, image_b64}: ServiceType) => {
         {/*</div>*/}
 
         {/* Buttons */}
-        <div className="flex justify-end">
-          <button
-            className="button"
-          >
-            Редактировать услугу
-          </button>
-          {/*<button className="w-1/2 ml-2 px-4 py-2 text-sm bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition">*/}
-          {/*  View Analytics*/}
-          {/*</button>*/}
-        </div>
+        {type === 'myProfile' && (
+          <div className="flex justify-end">
+            <button
+              className="button"
+            >
+              Редактировать услугу
+            </button>
+            {/*<button className="w-1/2 ml-2 px-4 py-2 text-sm bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition">*/}
+            {/*  View Analytics*/}
+            {/*</button>*/}
+          </div>
+        )}
       </div>
     </article>
   )

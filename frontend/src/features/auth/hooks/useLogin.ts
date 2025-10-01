@@ -39,7 +39,7 @@ export const useLogin = () => {
     },
 
     onSuccess: () => {
-      navigate(ROUTES.HOME);
+      navigate(ROUTES.MY_PROFILE)  ;
     },
   });
 }

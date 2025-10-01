@@ -7,8 +7,8 @@ export const useRequestFriends = () => {
     queryKey: ["friends", "request"],
 
     queryFn: async () => {
-      const response = await friendsApi.getMyFriends("received");
+      const response = await friendsApi.getMyFriends("received")
       return response.data;
-    },
-  });
-};
+    }
+  })
+}

@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form";
-import {useAdd} from "@/features/friends/lib/useAdd.ts";
+import {useAdd} from "@/features/friends/hooks/useAdd.ts";
 
 const AddForm = () => {
   const {register, handleSubmit, reset} = useForm<{ id: string }>();

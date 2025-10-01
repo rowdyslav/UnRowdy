@@ -6,7 +6,7 @@ import type {
 import {
   LoginFormSchema
 } from "@/features/auth/types/LoginForm.schema.ts"
-import {useLogin} from "@/features/auth/lib/useLogin.ts";
+import {useLogin} from "@/features/auth/hooks/useLogin.ts";
 
 const LoginForm = () => {
   const {
@@ -22,8 +22,7 @@ const LoginForm = () => {
   const onSubmit = async (data: LoginFormType) => {
     try {
       await login(data);
-    } catch { /* empty */
-    }
+    } catch { /* empty */}
   };
 
   return (

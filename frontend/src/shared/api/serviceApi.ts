@@ -1,7 +1,7 @@
 import {api} from "@/shared/api/axios.ts";
 import type {ServiceType} from "@/shared/types/serviceType.ts";
 
-export const service = {
+export const serviceApi = {
   getMyServices: () =>
     api.get<ServiceType[]>('/users/me/services'),
 

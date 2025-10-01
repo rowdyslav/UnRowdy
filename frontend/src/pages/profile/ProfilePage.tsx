@@ -7,16 +7,17 @@ import type {
   Tab
 } from "@/shared/components/ProfileTabs/types/profileTabsType.ts";
 import type {ProfileType} from "@/shared/types/profileType.ts";
+import ServicesSection from "@/pages/profile/ServicesSection.tsx";
 
 const ProfilePage = ({type}: ProfileType) => {
   const [activeTab, setActiveTab] = useState<Tab>({id: 0, label: 'Сервисы'});
 
   return (
     <>
-      <UserCardSection/>
+      <UserCardSection type={type}/>
       <ProfileTabs activeTab={activeTab} onTabChange={setActiveTab}/>
 
-      {activeTab.label === 'Сервисы' ? <p></p> : null}
+      {activeTab.label === 'Сервисы' ? <ServicesSection type={type} /> : null}
       {activeTab.label === 'Друзья' ? <FriendsSection type={type}/> : null}
     </>
   );

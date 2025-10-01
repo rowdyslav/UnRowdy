@@ -1,4 +1,4 @@
-import {useLogout} from "@/features/auth/lib/useLogout.ts";
+import {useLogout} from "@/features/auth/hooks/useLogout.ts";
 import type {ReactNode} from "react";
 
 const LogoutButton = ({label}: { label?: ReactNode }) => {

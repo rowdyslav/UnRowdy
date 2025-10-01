@@ -13,4 +13,4 @@ const useRequestsOut = () => {
   })
 };
 
-export default useRequestsOut;
+export default useRequestsOut

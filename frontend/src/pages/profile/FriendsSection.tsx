@@ -5,7 +5,7 @@ import type {ProfileType} from "@/shared/types/profileType.ts";
 import AddForm from "@/features/friends/components/AddForm.tsx";
 import RequestListIn from "@/features/friends/components/RequestListIn.tsx";
 import SentRequests from "@/features/friends/components/RequestListOut.tsx";
-import {useFriends} from "@/features/friends/lib/useFriends.ts";
+import {useFriends} from "@/features/friends/hooks/useFriends.ts";
 
 const FriendsSection = ({type}: ProfileType) => {
   const {id} = useParams()
@@ -24,7 +24,7 @@ const FriendsSection = ({type}: ProfileType) => {
         </>}
 
       <ActiveList
-        activeFriends={friendData || []} isLoading={isLoading} type='profile'
+        activeFriends={friendData || []} isLoading={isLoading} type={type}
       />
     </section>
   );

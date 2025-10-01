@@ -1,4 +1,4 @@
-import {useLogin} from "@/features/auth/lib/useLogin.ts";
+import {useLogin} from "@/features/auth/hooks/useLogin.ts";
 import type {AxiosError} from "axios";
 import type {
   RegisterFormType
