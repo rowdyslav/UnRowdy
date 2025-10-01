@@ -8,9 +8,9 @@ import SentRequests from "@/features/friends/components/RequestListOut.tsx";
 import {useFriends} from "@/features/friends/hooks/useFriends.ts";
 
 const FriendsSection = ({type}: ProfileType) => {
-  const {id} = useParams()
+  const {username} = useParams()
 
-  const {data: friendData, isLoading} = useFriends(id || '')
+  const {data: friendData, isLoading} = useFriends(username || '')
 
   return (
     <section className='container flex flex-col gap-y-6'>

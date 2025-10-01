@@ -7,8 +7,8 @@ import {useParams} from "react-router-dom";
 import type {ProfileType} from "@/shared/types/profileType.ts";
 
 const ServicesSection = ({type}: ProfileType) => {
-  const {id} = useParams()
-  const {data: servicesData, isLoading} = useServices(id || '')
+  const {username} = useParams()
+  const {data: servicesData, isLoading} = useServices(username || '')
 
   return (
     <section className='container flex flex-col gap-y-6'>

@@ -32,7 +32,8 @@ const RequestCard = ({name, id, type}: CardProps) => {
       </div>
 
       <div className='flex gap-x-2'>
-        <ViewProfileButton id={id}/>
+        <ViewProfileButton username={
+          name}/>
         {type === 'myProfile' && <DeleteButton id={id}/>}
       </div>
     </article>

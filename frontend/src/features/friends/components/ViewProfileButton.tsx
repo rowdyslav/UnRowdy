@@ -1,12 +1,12 @@
 import {Link} from "react-router-dom";
 import {ROUTES} from "@/shared/const/routes.ts";
 
-const ViewProfileButton = ({id}: { id: string }) => {
+const ViewProfileButton = ({username}: { username: string }) => {
 
   return (
     <Link
       className='button h-10 flex items-center'
-      to={ROUTES.PROFILE.replace(':id', id)}
+      to={ROUTES.PROFILE.replace(':username', username)}
     >
       Просмотреть профиль
     </Link>

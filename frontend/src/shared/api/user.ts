@@ -11,6 +11,6 @@ export const userApi = {
     }
   },
 
-  getInfo: (id: string) =>
-    api.get<UserType>(`/users?username=${id}`)
+  getInfo: (username: string) =>
+    api.get<UserType[]>(`/users?limit=1&username=${username}`)
 }
