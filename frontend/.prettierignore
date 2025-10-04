@@ -1,7 +1,2 @@
 node_modules/
-dist/
-build/
 .coverage
-*.min.js
-package-lock.json
-yarn.lock
