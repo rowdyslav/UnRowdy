@@ -1,11 +1,12 @@
-import {useAuthStore} from "@/app/providers/auth/authStore.ts";
-import {useNavigate} from "react-router-dom";
-import {ROUTES} from "@/shared/const/routes.ts";
-import {authApi} from "@/shared/api/auth.ts";
-import {useMutation} from "@tanstack/react-query";
+import { useAuthStore } from '@/app/providers/auth/authStore.ts'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '@/shared/const/routes.ts'
+import { authApi } from '@/shared/api/auth.ts'
+import { useMutation } from '@tanstack/react-query'
 
 export const useLogout = () => {
-  const navigate = useNavigate();
+  const logout = useAuthStore(state => state.logout)
+  const navigate = useNavigate()
 
   return useMutation({
     mutationFn: async () => {
@@ -13,12 +14,8 @@ export const useLogout = () => {
     },
 
     onSuccess: () => {
-      useAuthStore.getState().logout();
-      navigate(ROUTES.HOME);
+      navigate(ROUTES.HOME)
+      logout()
     },
-
-    onError: (error) => {
-      console.warn("Logout error:", error);
-    },
-  });
-};
+  })
+}

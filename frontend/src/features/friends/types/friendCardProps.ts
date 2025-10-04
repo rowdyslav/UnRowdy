@@ -1,5 +1,4 @@
 export type CardProps = {
-  name: string;
-  id: string;
-  type?: 'myProfile' | 'profile'
+  name: string
+  id: string
 }

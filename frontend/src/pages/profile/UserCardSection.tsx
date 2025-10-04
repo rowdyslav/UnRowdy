@@ -1,33 +1,14 @@
-import {useParams} from "react-router-dom";
-import UserCard from "@/widgets/userCard/UserCard.tsx";
-import {useAuthStore} from "@/app/providers/auth/authStore.ts";
-import type {ProfileType} from "@/shared/types/profileType.ts";
-import {useGetUserData} from "@/shared/lib/useGetUserData.ts";
-import type {UserType} from "@/shared/types/userType.ts";
+import { useProfileStore } from '@/app/providers/profile/userStore.ts'
+import UserCard from '@/widgets/userCard/UserCard.tsx'
 
-const UserCardSection = ({type}: ProfileType) => {
-  const { username } = useParams();
-  const user = useAuthStore(state => state.user);
-
-  const { data: userData } = useGetUserData(username || '');
-
-  let data: UserType
-
-  if (userData){
-    data = userData[0]
-  }
-
-  const getUserName = (): string => {
-    if (data?.username) return data.username;
-    if (user?.username) return user.username;
-    return 'Не существует пользователя';
-  };
+const UserCardSection = () => {
+  const profile = useProfileStore(state => state.profile)
 
   return (
     <section className='container mb-8'>
-      <UserCard userName={getUserName()} type={type}/>
+      <UserCard username={profile?.username || 'Не существует'} />
     </section>
-  );
-};
+  )
+}
 
-export default UserCardSection;
+export default UserCardSection

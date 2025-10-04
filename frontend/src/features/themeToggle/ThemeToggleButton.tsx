@@ -1,7 +1,7 @@
-import {useThemeStore} from "@/app/providers/theme/themeStore.ts";
+import { useThemeStore } from '@/app/providers/theme/themeStore.ts'
 
 const ThemeToggleButton = () => {
-  const toggleTheme = useThemeStore(state => state.toggleTheme);
+  const toggleTheme = useThemeStore(state => state.toggleTheme)
 
   return (
     <button
@@ -10,7 +10,7 @@ const ThemeToggleButton = () => {
     >
       Сменить тему
     </button>
-  );
-};
+  )
+}
 
-export default ThemeToggleButton;
+export default ThemeToggleButton

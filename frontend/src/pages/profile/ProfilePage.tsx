@@ -1,26 +1,22 @@
-import ProfileTabs
-  from "@/shared/components/ProfileTabs/ProfileTabs.tsx";
-import {useState} from "react";
-import FriendsSection from "@/pages/profile/FriendsSection.tsx";
-import UserCardSection from "@/pages/profile/UserCardSection.tsx";
-import type {
-  Tab
-} from "@/shared/components/ProfileTabs/types/profileTabsType.ts";
-import type {ProfileType} from "@/shared/types/profileType.ts";
-import ServicesSection from "@/pages/profile/ServicesSection.tsx";
+import type { TabNames } from '@/pages/profile/components/ProfileTabs/profileTabsType.ts'
+import ProfileTabs from '@/pages/profile/components/ProfileTabs/ProfileTabs.tsx'
+import ServicesSection from '@/pages/profile/ServicesSection.tsx'
+import UserCardSection from '@/pages/profile/UserCardSection.tsx'
+import FriendsSection from '@/pages/profile/FriendsSection.tsx'
+import { useState } from 'react'
 
-const ProfilePage = ({type}: ProfileType) => {
-  const [activeTab, setActiveTab] = useState<Tab>({id: 0, label: 'Сервисы'});
+const ProfilePage = () => {
+  const [activeTab, setActiveTab] = useState<TabNames>('Сервисы')
 
   return (
     <>
-      <UserCardSection type={type}/>
-      <ProfileTabs activeTab={activeTab} onTabChange={setActiveTab}/>
+      <UserCardSection />
+      <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      {activeTab.label === 'Сервисы' ? <ServicesSection type={type} /> : null}
-      {activeTab.label === 'Друзья' ? <FriendsSection type={type}/> : null}
+      {activeTab === 'Сервисы' && <ServicesSection />}
+      {activeTab === 'Друзья' && <FriendsSection />}
     </>
-  );
-};
+  )
+}
 
-export default ProfilePage;
+export default ProfilePage

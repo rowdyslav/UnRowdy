@@ -1,33 +1,27 @@
-import {useParams} from "react-router-dom";
-import ActiveList
-  from "@/features/friends/components/ActiveList.tsx";
-import type {ProfileType} from "@/shared/types/profileType.ts";
-import AddForm from "@/features/friends/components/AddForm.tsx";
-import RequestListIn from "@/features/friends/components/RequestListIn.tsx";
-import SentRequests from "@/features/friends/components/RequestListOut.tsx";
-import {useFriends} from "@/features/friends/hooks/useFriends.ts";
+import SentRequests from '@/features/friends/components/RequestListOut.tsx'
+import RequestListIn from '@/features/friends/components/RequestListIn.tsx'
+import { useProfileStore } from '@/app/providers/profile/userStore.ts'
+import ActiveList from '@/features/friends/components/ActiveList.tsx'
+import Add from '@/features/friends/components/Add.tsx'
 
-const FriendsSection = ({type}: ProfileType) => {
-  const {username} = useParams()
-
-  const {data: friendData, isLoading} = useFriends(username || '')
+const FriendsSection = () => {
+  const isMyProfile = useProfileStore(state => state.isMyProfile)
 
   return (
     <section className='container flex flex-col gap-y-6'>
       <h3 className='text-2xl font-bold color-font'>Друзья</h3>
 
-      {type === 'myProfile' &&
+      {isMyProfile && (
         <>
-          <AddForm/>
-          <RequestListIn/>
-          <SentRequests/>
-        </>}
+          <Add />
+          <RequestListIn />
+          <SentRequests />
+        </>
+      )}
 
-      <ActiveList
-        activeFriends={friendData || []} isLoading={isLoading} type={type}
-      />
+      <ActiveList />
     </section>
-  );
-};
+  )
+}
 
-export default FriendsSection;
+export default FriendsSection

@@ -1,3 +1,3 @@
 export type TokenType = {
-  "access_token": string;
+  access_token: string
 }
