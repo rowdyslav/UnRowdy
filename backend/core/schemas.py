@@ -22,6 +22,7 @@ class SharedService(BaseModel):
     """Базовые поля Service"""
 
     name: Annotated[str, Field(max_length=20)]
+    description: str | None
     price: int | None
     image_b64: str | None
 
