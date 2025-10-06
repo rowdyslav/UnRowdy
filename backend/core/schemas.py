@@ -47,6 +47,7 @@ class UserUpdate(SharedUser, BaseUserUpdate):
 class ServiceRead(SharedService):
     """Поля Service для чтения"""
 
+    id: PydanticObjectId
 
 class ServiceCreate(SharedService):
     """Поля Service для создания"""
