@@ -1,7 +1,7 @@
 export const ROUTES = {
-  HOME: "/",
-  AUTH: "/auth",
-  MY_PROFILE: "/profile",
-  PROFILE: "/profile/:id",
-  ADD_SERVICE: "/add"
-};
+  HOME: '/',
+  AUTH: '/auth',
+  PROFILE: '/profile',
+  ADD_SERVICE: '/add',
+  SERVICE: '/service',
+}

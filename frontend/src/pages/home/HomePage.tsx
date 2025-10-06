@@ -1,10 +1,9 @@
-import SearchSection from "@/pages/home/SearchSection.tsx";
+import SearchSection from '@/pages/home/SearchSection.tsx'
 
 const HomePage = () => {
-
   return (
     <>
-      <SearchSection/>
+      <SearchSection />
     </>
   )
 }

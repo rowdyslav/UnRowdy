@@ -1,26 +1,26 @@
-import {friendsApi} from "@/shared/api/friends.ts";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import type {UserType} from "@/shared/types/userType.ts";
+import { friendsApi } from '@/shared/api/friends.ts'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { getDataByUsername } from '@/shared/lib/getDataByUsername.ts'
+import { queryKeys } from '@/features/friends/types/queryKeys.ts'
 
 export const useAdd = () => {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   return useMutation<void, Error, string>({
-    mutationFn: async (id) => {
-      await friendsApi.addFriend(id);
+    mutationFn: async username => {
+      const user = await getDataByUsername(username)
+
+      if (user) {
+        await friendsApi.addFriend(user.id)
+      }
     },
 
-    onSuccess: (_, id) => {
-      queryClient.setQueryData<UserType[]>(["friends", "request"], (old) =>
-        old ? old.filter(user => user.id !== id) : []
-      );
-
-      void queryClient.invalidateQueries({queryKey: ["friends", "active"]});
-      void queryClient.invalidateQueries({queryKey: ["friends", "sent"]})
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: queryKeys.sent })
     },
 
-    onError: (err) => {
-      console.error("Ошибка при отправке запроса в друзья:", err);
+    onError: err => {
+      console.error('Ошибка при отправке запроса в друзья:', err)
     },
-  });
-};
+  })
+}

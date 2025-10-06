@@ -1,17 +1,29 @@
-import {useQuery} from "@tanstack/react-query";
-import type {ServiceType} from "@/shared/types/serviceType.ts";
-import {serviceApi} from "@/shared/api/serviceApi.ts";
+import { useQuery } from '@tanstack/react-query'
+import type { ServiceType } from '@/shared/types/serviceType.ts'
+import { serviceApi } from '@/shared/api/serviceApi.ts'
+import { useProfileStore } from '@/app/providers/profile/userStore.ts'
+import { queryKeys } from '@/features/service/types/queryKeys.ts'
 
-export const useServices = (id: string) => {
-  return useQuery<ServiceType[]>({
-    queryKey: ['services', id],
+export const useServices = () => {
+  const profile = useProfileStore(state => state.profile)
+  const isMyProfile = useProfileStore(state => state.isMyProfile)
 
-    // если передан id, получаем услуги по нему, в ином случае получаем свои услуги
+  return useQuery<ServiceType[], Error>({
+    queryKey: [...queryKeys.services, profile?.id],
     queryFn: async () => {
-      const response = await (id
-        ? serviceApi.getServices(id)
-        : serviceApi.getMyServices())
+      if (isMyProfile) {
+        const response = await serviceApi.getMyServices()
+        return response.data
+      }
+
+      if (!profile?.id) {
+        throw new Error('Не удалось получить id пользователя')
+      }
+
+      const response = await serviceApi.getServices(profile.id)
       return response.data
-    }
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
   })
 }

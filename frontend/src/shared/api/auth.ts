@@ -1,34 +1,29 @@
-import type {
-  TokenType
-} from "@/features/auth/types/tokenType.ts";
-import {api} from "@/shared/api/axios.ts";
-import type {
-  LoginFormType
-} from "@/features/auth/types/LoginForm.schema.ts";
-import type {
-  RegisterFormType
-} from "@/features/auth/types/RegisterForm.schema.ts";
+import type { TokenType } from '@/features/auth/types/tokenType.ts'
+import { api } from '@/shared/api/axios.ts'
+import type { LoginFormType } from '@/features/auth/types/LoginForm.schema.ts'
+import type { RegisterFormType } from '@/features/auth/types/RegisterForm.schema.ts'
 
 export const authApi = {
   login: (data: LoginFormType) => {
-    const formData = new URLSearchParams();
-    formData.append("username", data.email);
-    formData.append("password", data.password);
+    const formData = new URLSearchParams()
+    formData.append('username', data.email)
+    formData.append('password', data.password)
 
-    return api.post<TokenType>("/auth/login", formData, {
+    return api.post<TokenType>('/auth/login', formData, {
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
     })
   },
 
   register: (data: RegisterFormType) => {
-    return api.post("/auth/register", {
+    return api.post('/auth/register', {
       username: data.username,
       email: data.email,
       password: data.password,
-    });
+      is_superuser: true,
+    })
   },
 
-  logout: () => api.post('/auth/logout')
+  logout: () => api.post('/auth/logout'),
 }

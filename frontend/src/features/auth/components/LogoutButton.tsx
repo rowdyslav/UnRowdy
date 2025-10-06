@@ -1,14 +1,13 @@
-import {useLogout} from "@/features/auth/hooks/useLogout.ts";
-import type {ReactNode} from "react";
+import { useLogout } from '@/features/auth/hooks/useLogout.ts'
 
-const LogoutButton = ({label}: { label?: ReactNode }) => {
-  const {mutate: logout} = useLogout();
+const LogoutButton = () => {
+  const { mutate: logout } = useLogout()
 
   return (
     <button className='button-blue whitespace-nowrap' onClick={() => logout()}>
-      {label ? label : 'Выйти из аккаунта'}
+      Выйти из аккаунта
     </button>
-  );
-};
+  )
+}
 
-export default LogoutButton;
+export default LogoutButton

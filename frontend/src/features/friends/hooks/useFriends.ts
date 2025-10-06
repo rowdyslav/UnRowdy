@@ -1,18 +1,28 @@
-import {useQuery} from "@tanstack/react-query";
-import {friendsApi} from "@/shared/api/friends";
-import type {UserType} from "@/shared/types/userType";
+import type { UserType } from '@/shared/types/userType'
+import { friendsApi } from '@/shared/api/friends'
+import { useQuery } from '@tanstack/react-query'
+import { queryKeys } from '@/features/friends/types/queryKeys.ts'
+import { useProfileStore } from '@/app/providers/profile/userStore.ts'
 
-export const useFriends = (id: string) => {
+export const useFriends = () => {
+  const profile = useProfileStore(state => state.profile)
+  const isMyProfile = useProfileStore(state => state.isMyProfile)
+
   return useQuery<UserType[]>({
-    queryKey: ["friends", "active", id],
-
-    // если передан id, получаем друзей по нему, в ином случае получаем своих друзей
+    queryKey: [...queryKeys.myActive, profile?.id],
     queryFn: async () => {
-      const response = await (id
-        ? friendsApi.getFriends("active", id)
-        : friendsApi.getMyFriends("active"));
+      if (isMyProfile) {
+        const response = await friendsApi.getMyFriends('active')
+        return response.data
+      }
 
-      return response.data;
+      if (!profile?.id) {
+        throw new Error('Не удалось получить id пользователя')
+      }
+
+      const response = await friendsApi.getFriends('active', profile?.id)
+      return response.data
     },
-  });
-};
+    refetchOnWindowFocus: false,
+  })
+}

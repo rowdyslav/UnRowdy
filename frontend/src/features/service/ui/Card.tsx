@@ -1,26 +1,19 @@
-import type {ServiceType} from "@/shared/types/serviceType.ts";
-import type {ProfileType} from "@/shared/types/profileType.ts";
+import type { ServiceType } from '@/shared/types/serviceType.ts'
+import { useProfileStore } from '@/app/providers/profile/userStore.ts'
 
-const Card = ({name, price, image_b64, type}: ServiceType & ProfileType) => {
+const Card = ({ name, price, image_b64 }: ServiceType) => {
+  const isMyProfile = useProfileStore(state => state.isMyProfile)
 
   return (
-    <article className="w-full card-element">
-      <img
-        src={`data:${image_b64}`} alt="/"
-        className='max-h-69 w-full object-cover rounded-t-lg h-64'
-      />
+    <article className='w-full card-element'>
+      <img src={`data:${image_b64}`} alt='/' className='rounded-t-lg' />
 
       <div className='px-6 py-3 flex justify-between flex-col'>
-
         {/* Header */}
-        <div className="flex justify-between flex-col">
+        <div className='flex justify-between flex-col'>
           <div>
-            <h3 className="text-2xl font-semibold color-font">
-              {name}
-            </h3>
-            <p className="text-sm color-font-light mt-1">
-              Создание серверов для майнкрафт
-            </p>
+            <h3 className='text-2xl font-semibold color-font'>{name}</h3>
+            <p className='text-sm color-font-light mt-1'>Создание серверов для майнкрафт</p>
           </div>
           {/*<span className="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">*/}
           {/*  Development*/}
@@ -35,8 +28,8 @@ const Card = ({name, price, image_b64, type}: ServiceType & ProfileType) => {
         {/*</div>*/}
 
         {/* Price & Delivery */}
-        <div className="flex justify-between items-center mt-4">
-          <span className="text-xl font-bold color-font">₽{price}</span>
+        <div className='flex justify-between items-center mt-4'>
+          <span className='text-xl font-bold color-font'>₽{price}</span>
           {/*<span className="text-sm text-gray-500">Delivery: 2-4 weeks</span>*/}
         </div>
 
@@ -56,13 +49,9 @@ const Card = ({name, price, image_b64, type}: ServiceType & ProfileType) => {
         {/*</div>*/}
 
         {/* Buttons */}
-        {type === 'myProfile' && (
-          <div className="flex justify-end">
-            <button
-              className="button"
-            >
-              Редактировать услугу
-            </button>
+        {isMyProfile && (
+          <div className='flex justify-end'>
+            <button className='button'>Редактировать услугу</button>
             {/*<button className="w-1/2 ml-2 px-4 py-2 text-sm bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition">*/}
             {/*  View Analytics*/}
             {/*</button>*/}
@@ -71,6 +60,6 @@ const Card = ({name, price, image_b64, type}: ServiceType & ProfileType) => {
       </div>
     </article>
   )
-};
+}
 
-export default Card;
+export default Card

@@ -1,45 +1,33 @@
-import {useAuthStore} from "@/app/providers/auth/authStore.ts";
-import type {AxiosError} from "axios";
-import {useNavigate} from "react-router-dom";
-import {ROUTES} from "@/shared/const/routes.ts";
-import type {
-  LoginFormType
-} from "@/features/auth/types/LoginForm.schema.ts";
-import type {UserType} from "@/shared/types/userType.ts";
-import type {
-  ErrorResponseType
-} from "@/shared/types/errorResponseType.ts";
-import {authApi} from "@/shared/api/auth.ts";
-import {useMutation} from "@tanstack/react-query";
-import {userApi} from "@/shared/api/user.ts";
+import { useAuthStore } from '@/app/providers/auth/authStore.ts'
+import type { AxiosError } from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '@/shared/const/routes.ts'
+import type { LoginFormType } from '@/features/auth/types/LoginForm.schema.ts'
+import type { ErrorResponseType } from '@/shared/types/errorResponseType.ts'
+import { authApi } from '@/shared/api/auth.ts'
+import { useMutation } from '@tanstack/react-query'
 
 export const useLogin = () => {
   const login = useAuthStore(state => state.login)
-  const setToken = useAuthStore(state => state.setToken)
   const navigate = useNavigate()
 
-  return useMutation<UserType, string, LoginFormType>({
-    mutationFn: async (data) => {
+  return useMutation<void, string, LoginFormType>({
+    mutationFn: async data => {
       try {
-        const {data: tokenData} = await authApi.login(data);
-        setToken(tokenData.access_token);
-
-        const userData: UserType = await userApi.getInfoMe();
-        login(userData);
-
-        return userData;
+        const { data: tokenData } = await authApi.login(data)
+        login(tokenData.access_token)
       } catch (err) {
-        const error = err as AxiosError<ErrorResponseType>;
+        const error = err as AxiosError<ErrorResponseType>
 
-        if (error.response?.data?.detail === "LOGIN_BAD_CREDENTIALS") {
-          throw "Неверный email или пароль";
+        if (error.response?.data?.detail === 'LOGIN_BAD_CREDENTIALS') {
+          throw 'Неверный email или пароль'
         }
-        throw "Ошибка авторизации";
+        throw 'Ошибка авторизации'
       }
     },
 
     onSuccess: () => {
-      navigate(ROUTES.MY_PROFILE)  ;
+      navigate(ROUTES.PROFILE)
     },
-  });
+  })
 }

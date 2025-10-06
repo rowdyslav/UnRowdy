@@ -1,29 +1,29 @@
-import Card from "@/features/service/ui/Card.tsx";
-import type {
-  ServiceListProps
-} from "@/features/service/types/ServiceListProps.ts";
-import Spinner from "@/shared/ui/Spinner.tsx";
-import type {ProfileType} from "@/shared/types/profileType.ts";
+import Card from '@/features/service/ui/Card.tsx'
+import Spinner from '@/shared/ui/Spinner.tsx'
+import { useProfileStore } from '@/app/providers/profile/userStore.ts'
+import { useServices } from '@/features/service/hooks/useServices.ts'
+import ToAddCard from '@/features/service/ui/ToAddCard.tsx'
 
-const ServiceList = ({servicesData, isLoading, type}: ServiceListProps & ProfileType) => {
-  if (isLoading) {
-    return <div className='center'><Spinner/></div>
-  }
+const ServiceList = () => {
+  const isMyProfile = useProfileStore(state => state.isMyProfile)
+  const { data: servicesData, isLoading } = useServices()
+
+  if (isLoading) return <Spinner />
+
+  if (servicesData && servicesData.length === 0 && isMyProfile) return <ToAddCard />
 
   return (
     <>
       <ul className='grid grid-cols-3 gap-3 w-full'>
-        {servicesData.map((service, index) => (
-          <li key={index}>
-            <Card
-              name={service.name} price={service.price}
-              image_b64={service.image_b64} type={type}
-            />
-          </li>
-        ))}
+        {servicesData &&
+          servicesData.map((service, index) => (
+            <li key={index}>
+              <Card name={service.name} price={service.price} image_b64={service.image_b64} />
+            </li>
+          ))}
       </ul>
     </>
-  );
-};
+  )
+}
 
-export default ServiceList;
+export default ServiceList
