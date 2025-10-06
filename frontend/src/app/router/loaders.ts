@@ -31,4 +31,5 @@ export const myProfileLoader = async () => {
   const data = await userApi.getInfoMe()
 
   if (data.data) useProfileStore.getState().setMyProfile(data.data)
+  else redirect(ROUTES.HOME)
 }
