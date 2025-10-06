@@ -6,7 +6,7 @@ import HomePage from '@/pages/home/HomePage.tsx'
 import AddServicePage from '@/pages/addService/AddServicePage.tsx'
 import ProfilePage from '@/pages/profile/ProfilePage.tsx'
 import AuthPage from '@/pages/auth/AuthPage.tsx'
-import NotFoundUser from '@/shared/components/NotFound/NotFoundUser.tsx'
+import NotFoundUser from '@/shared/components/NotFoundUser.tsx'
 import Spinner from '@/shared/ui/Spinner.tsx'
 
 export const router = createBrowserRouter([
@@ -19,6 +19,7 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.PROFILE,
         element: <ProfilePage />,
+        errorElement: <NotFoundUser />,
         loader: myProfileLoader,
       },
       {

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import type { NavBadgeProps } from '@/shared/components/badgeButton/navBadgeProps.ts'
+import type { NavBadgeProps } from '@/shared/components/navBadge/types/navBadgeProps.ts'
 
 const NavBadge = ({ size = 'sm', label, to }: NavBadgeProps) => {
   const navigate = useNavigate()
@@ -25,9 +25,13 @@ const NavBadge = ({ size = 'sm', label, to }: NavBadgeProps) => {
     >
       <span
         style={{ fontSize: '20px' }}
-        className='material-symbols-outlined text-white absolute transition-opacity duration-300 group-hover:opacity-0 '
+        className='material-symbols-outlined text-white absolute transition-opacity duration-300 group-hover:opacity-0'
       >
-        {typeof to === 'number' ? 'arrow_back' : 'add'}
+        {typeof to === 'number' ? (
+          <img src='/public/icons/arrowLeft.svg' alt='' />
+        ) : (
+          <img src='/public/icons/add.svg' alt='' />
+        )}
       </span>
 
       <span className='text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300'>

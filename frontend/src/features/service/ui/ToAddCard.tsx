@@ -1,7 +1,7 @@
 import { ROUTES } from '@/shared/const/routes.ts'
 import { Link } from 'react-router-dom'
 
-const ToAdd = () => {
+const ToAddCard = () => {
   return (
     <div className='card-element w-1/3 center mx-auto flex-col gap-3 h-40 '>
       <h3 className='color-font text-2xl font-semibold center-inline'>Добавьте первую услугу</h3>
@@ -13,4 +13,4 @@ const ToAdd = () => {
   )
 }
 
-export default ToAdd
+export default ToAddCard

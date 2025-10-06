@@ -30,11 +30,7 @@ const Header = () => {
 
       {isAuthenticated ? (
         <Link to={ROUTES.PROFILE}>
-          <div style={{ fontVariationSettings: "'FILL' 0, 'wght' 600, 'GRAD' 0 , 'opsz' 48" }}>
-            <span className='material-symbols-outlined' style={{ fontSize: '50px' }}>
-              account_circle
-            </span>
-          </div>
+          <img src='/public/icons/accCircle2.svg' alt='' height={60} width={60} />
         </Link>
       ) : (
         <Link to={ROUTES.AUTH} className='button'>

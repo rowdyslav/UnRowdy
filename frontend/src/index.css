@@ -12,7 +12,7 @@ body {
   --color-font-light: #697586;
 
   --color-main-white: #FFF;
-  --color-main-grey: #FAFAFB;
+  --color-main-gray: #FAFAFB;
 
   --max-width-container: 1300px;
   --max-width-container-big: 1400px;
@@ -20,7 +20,7 @@ body {
 
 @layer components {
   .input {
-    @apply p-4 rounded-md border w-full border-[var(--color-border)] focus:outline-blue-500
+    @apply p-4 rounded-md border w-full border-[var(--color-border)] focus:outline-blue-500 bg-[var(--color-main-gray)] shadow-xs
   }
 
   .button-blue {
@@ -44,13 +44,18 @@ body {
     @apply flex items-center justify-center
   }
 
-  .add-service-grid {
-    @apply grid gap-x-3 justify-between grid-cols-[1fr_2fr]
+  .add-flex {
+    @apply flex flex-col gap-y-1
+  }
+
+  .add-img-input {
+    @apply cursor-pointer border-[var(--color-border)] hover:bg-[var(--color-main-gray)] hover:border-gray-200
+    border-dashed rounded-lg h-48 border-3 justify-center items-center flex flex-col duration-100
   }
 }
 
 @layer utilities {
-  .color-border-primary {
+  .color-border {
     border-color: var(--color-border)
   }
 
@@ -59,7 +64,7 @@ body {
   }
 
   .color-main-grey {
-    background-color: var(--color-main-grey)
+    background-color: var(--color-main-gray)
   }
 
   .color-font {

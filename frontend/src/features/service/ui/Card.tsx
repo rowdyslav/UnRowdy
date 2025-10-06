@@ -6,7 +6,7 @@ const Card = ({ name, price, image_b64 }: ServiceType) => {
 
   return (
     <article className='w-full card-element'>
-      <img src={`data:${image_b64}`} alt='/' className='max-h-69 w-full object-cover rounded-t-lg h-64' />
+      <img src={`data:${image_b64}`} alt='/' className='rounded-t-lg' />
 
       <div className='px-6 py-3 flex justify-between flex-col'>
         {/* Header */}

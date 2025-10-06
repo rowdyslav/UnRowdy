@@ -1,11 +1,8 @@
-import useRequestsOut from '@/features/friends/model/useRequestsOut.ts'
+import useRequestsOut from '@/features/friends/hooks/useRequestsOut.ts'
 import RequestOutCard from '@/features/friends/ui/RequestOutCard.tsx'
-import Spinner from '@/shared/ui/Spinner.tsx'
 
-const RequestFriends = () => {
-  const { data: sentRequests, isLoading } = useRequestsOut()
-
-  if (isLoading) return <Spinner />
+const RequestListOut = () => {
+  const { data: sentRequests } = useRequestsOut()
 
   if (!sentRequests || sentRequests.length === 0) return null
 
@@ -24,4 +21,4 @@ const RequestFriends = () => {
   )
 }
 
-export default RequestFriends
+export default RequestListOut

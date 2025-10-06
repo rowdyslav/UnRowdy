@@ -1,13 +1,18 @@
-import type { profileTabsProps } from '@/pages/profile/components/ProfileTabs/profileTabsType.ts'
-import { profileTabsData } from '@/pages/profile/components/ProfileTabs/profileTabsData.ts'
+import type { profileTabsProps, TabProfile, TabService } from '@/shared/components/tabs/TabsType.ts'
+import { tabsProfileData, tabsServiceData } from '@/shared/components/tabs/TabsProfileData.ts'
 
-const ProfileTabs = ({ activeTab, setActiveTab }: profileTabsProps) => {
-  const tabId = () => profileTabsData.indexOf(activeTab)
+const Tabs = ({ activeTab, setActiveTab, type }: profileTabsProps) => {
+  let data: TabProfile[] | TabService[]
+
+  if (type === 'профиль') data = tabsProfileData
+  else data = tabsServiceData
+
+  const tabId = () => data.indexOf(activeTab as never)
 
   return (
     <div className='container mb-8'>
       <div className='relative flex bg-gray-100 rounded-lg p-1 w-fit'>
-        {profileTabsData.map(tab => (
+        {data.map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -30,4 +35,4 @@ const ProfileTabs = ({ activeTab, setActiveTab }: profileTabsProps) => {
   )
 }
 
-export default ProfileTabs
+export default Tabs

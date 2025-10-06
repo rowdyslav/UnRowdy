@@ -2,16 +2,15 @@ import Card from '@/features/service/ui/Card.tsx'
 import Spinner from '@/shared/ui/Spinner.tsx'
 import { useProfileStore } from '@/app/providers/profile/userStore.ts'
 import { useServices } from '@/features/service/hooks/useServices.ts'
-import ToAdd from '@/features/service/components/ToAdd.tsx'
+import ToAddCard from '@/features/service/ui/ToAddCard.tsx'
 
 const ServiceList = () => {
-  const profile = useProfileStore(state => state.profile)
   const isMyProfile = useProfileStore(state => state.isMyProfile)
-  const { data: servicesData, isLoading } = useServices(profile?.id || '')
+  const { data: servicesData, isLoading } = useServices()
 
   if (isLoading) return <Spinner />
 
-  if (servicesData && servicesData.length === 0 && isMyProfile) return <ToAdd />
+  if (servicesData && servicesData.length === 0 && isMyProfile) return <ToAddCard />
 
   return (
     <>

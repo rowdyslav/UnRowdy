@@ -1,13 +1,9 @@
 import AddForm from '@/features/service/components/AddForm.tsx'
-import BadgeButton from '@/shared/components/badgeButton/BadgeButton.tsx'
 
 const AddServicePage = () => {
   return (
     <section className='container center flex flex-col gap-y-6'>
-      <div className='flex items-baseline justify-center gap-x-3'>
-        <BadgeButton to={-1} size={'sm'} label={'Отмена'} />
-        <h3 className='text-2xl font-bold color-font '>Добавление новой услуги</h3>
-      </div>
+      <h3 className='text-2xl font-bold color-font'>Добавление новой услуги</h3>
 
       <AddForm />
     </section>

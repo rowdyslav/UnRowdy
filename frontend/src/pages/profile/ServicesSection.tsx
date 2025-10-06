@@ -1,5 +1,5 @@
 import ServiceList from '@/features/service/components/ServiceList.tsx'
-import BadgeButtonNav from '@/shared/components/badgeButton/BadgeButton.tsx'
+import BadgeButtonNav from '@/shared/components/navBadge/NavBadge.tsx'
 import { ROUTES } from '@/shared/const/routes.ts'
 import { useProfileStore } from '@/app/providers/profile/userStore.ts'
 

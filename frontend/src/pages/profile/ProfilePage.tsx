@@ -1,17 +1,17 @@
-import type { TabNames } from '@/pages/profile/components/ProfileTabs/profileTabsType.ts'
-import ProfileTabs from '@/pages/profile/components/ProfileTabs/ProfileTabs.tsx'
+import type { TabProfile, TabService } from '@/shared/components/tabs/TabsType.ts'
+import Tabs from '@/shared/components/tabs/Tabs.tsx'
 import ServicesSection from '@/pages/profile/ServicesSection.tsx'
 import UserCardSection from '@/pages/profile/UserCardSection.tsx'
 import FriendsSection from '@/pages/profile/FriendsSection.tsx'
 import { useState } from 'react'
 
 const ProfilePage = () => {
-  const [activeTab, setActiveTab] = useState<TabNames>('Сервисы')
+  const [activeTab, setActiveTab] = useState<TabProfile | TabService>('Сервисы')
 
   return (
     <>
       <UserCardSection />
-      <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Tabs activeTab={activeTab} setActiveTab={setActiveTab} type={'профиль'} />
 
       {activeTab === 'Сервисы' && <ServicesSection />}
       {activeTab === 'Друзья' && <FriendsSection />}

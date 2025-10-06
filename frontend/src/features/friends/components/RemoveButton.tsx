@@ -1,4 +1,4 @@
-import { useRemove } from '@/features/friends/model/useRemove.ts'
+import { useRemove } from '@/features/friends/hooks/useRemove.ts'
 
 const AcceptButton = ({ id }: { id: string }) => {
   const { mutate: deleteFriend } = useRemove()

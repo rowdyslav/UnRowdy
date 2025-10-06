@@ -1,7 +1,7 @@
 import { friendsApi } from '@/shared/api/friends.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { UserType } from '@/shared/types/userType.ts'
-import { queryKeys } from '@/features/friends/model/queryKeys.ts'
+import { queryKeys } from '@/features/friends/types/queryKeys.ts'
 
 export const useAccept = () => {
   const queryClient = useQueryClient()

@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { friendsApi } from '@/shared/api/friends'
 import type { UserType } from '@/shared/types/userType'
-import { queryKeys } from '@/features/friends/model/queryKeys.ts'
+import { queryKeys } from '@/features/friends/types/queryKeys.ts'
 
-export const useRequestFriends = () => {
+export const useRequestIn = () => {
   return useQuery<UserType[]>({
     queryKey: queryKeys.request,
 

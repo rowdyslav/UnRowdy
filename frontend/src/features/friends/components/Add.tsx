@@ -1,4 +1,4 @@
-import { useAdd } from '@/features/friends/model/useAdd.ts'
+import { useAdd } from '@/features/friends/hooks/useAdd.ts'
 import { useForm } from 'react-hook-form'
 
 const Add = () => {
