@@ -4,7 +4,7 @@ from beanie import PydanticObjectId, Indexed
 from fastapi import Query
 from fastapi_users.schemas import BaseUser, BaseUserCreate, BaseUserUpdate
 from pydantic import BaseModel, Field, NonNegativeInt
-
+from typing import Optional
 class Pagination(BaseModel):
     """Параметры запроса для пагинации"""
 
@@ -21,10 +21,11 @@ class SharedUser(BaseModel):
 class SharedService(BaseModel):
     """Базовые поля Service"""
 
+
     name: Annotated[str, Field(max_length=20)]
-    description: str | None
-    price: int | None
-    image_b64: str | None
+    description: str | None = None
+    price: int | None = None
+    image_b64: str | None = None
 
 
 FriendType = Literal["active", "sent", "received"]
