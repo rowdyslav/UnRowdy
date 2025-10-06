@@ -1,11 +1,14 @@
 import type { ServiceType } from '@/shared/types/serviceType.ts'
 import { useProfileStore } from '@/app/providers/profile/userStore.ts'
+import {useNavigate} from "react-router-dom";
+import {ROUTES} from "@/shared/const/routes.ts";
 
-const Card = ({ name, price, image_b64 }: ServiceType) => {
+const Card = ({ name, price, image_b64, description }: ServiceType) => {
   const isMyProfile = useProfileStore(state => state.isMyProfile)
+  const navigate = useNavigate()
 
   return (
-    <article className='w-full card-element'>
+    <article className='w-full card-element' onClick={() => navigate(ROUTES.SERVICE)}>
       <img src={`data:${image_b64}`} alt='/' className='rounded-t-lg' />
 
       <div className='px-6 py-3 flex justify-between flex-col'>
@@ -13,7 +16,7 @@ const Card = ({ name, price, image_b64 }: ServiceType) => {
         <div className='flex justify-between flex-col'>
           <div>
             <h3 className='text-2xl font-semibold color-font'>{name}</h3>
-            <p className='text-sm color-font-light mt-1'>Создание серверов для майнкрафт</p>
+            <p className='text-sm color-font-light mt-1'>{description}</p>
           </div>
           {/*<span className="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">*/}
           {/*  Development*/}
@@ -29,7 +32,7 @@ const Card = ({ name, price, image_b64 }: ServiceType) => {
 
         {/* Price & Delivery */}
         <div className='flex justify-between items-center mt-4'>
-          <span className='text-xl font-bold color-font'>₽{price}</span>
+          <span className='text-xl font-bold color-font'>{price} ₽</span>
           {/*<span className="text-sm text-gray-500">Delivery: 2-4 weeks</span>*/}
         </div>
 

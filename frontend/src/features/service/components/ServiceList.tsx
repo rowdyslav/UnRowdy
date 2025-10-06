@@ -18,7 +18,7 @@ const ServiceList = () => {
         {servicesData &&
           servicesData.map((service, index) => (
             <li key={index}>
-              <Card name={service.name} price={service.price} image_b64={service.image_b64} />
+              <Card name={service.name} price={service.price} image_b64={service.image_b64} description={service.description}/>
             </li>
           ))}
       </ul>

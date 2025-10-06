@@ -11,6 +11,7 @@ export const serviceApi = {
   addService: (data: ServiceType) => {
     return api.post<void>('/users/me/services', {
       name: data.name,
+      description: data.description,
       price: data.price,
       image_b64: data.image_b64,
     })
