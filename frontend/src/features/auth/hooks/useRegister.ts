@@ -6,13 +6,13 @@ import { authApi } from '@/shared/api/auth.ts'
 import { useMutation } from '@tanstack/react-query'
 
 export const useRegister = () => {
-  const loginMutation = useLogin()
+  const { mutate: loginMutation } = useLogin()
 
   return useMutation<void, string, RegisterFormType>({
     mutationFn: async data => {
       try {
         await authApi.register(data)
-        await loginMutation.mutateAsync(data)
+        loginMutation(data)
       } catch (err) {
         const error = err as AxiosError<ErrorResponseType>
 

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import type { ServiceType } from '@/shared/types/serviceType.ts'
-import { serviceApi } from '@/shared/api/serviceApi.ts'
+import { serviceApi } from '@/shared/api/service.ts'
 import { useProfileStore } from '@/app/providers/profile/userStore.ts'
 import { queryKeys } from '@/features/service/types/queryKeys.ts'
 
@@ -12,7 +12,7 @@ export const useServices = () => {
     queryKey: [...queryKeys.services, profile?.id],
     queryFn: async () => {
       if (isMyProfile) {
-        const response = await serviceApi.getMyServices()
+        const response = await serviceApi.myServices()
         return response.data
       }
 
@@ -20,7 +20,7 @@ export const useServices = () => {
         throw new Error('Не удалось получить id пользователя')
       }
 
-      const response = await serviceApi.getServices(profile.id)
+      const response = await serviceApi.servicesByUserId(profile.id)
       return response.data
     },
     refetchOnWindowFocus: false,

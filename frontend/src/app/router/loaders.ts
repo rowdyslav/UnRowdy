@@ -4,6 +4,7 @@ import { ROUTES } from '@/shared/const/routes.ts'
 import { userApi } from '@/shared/api/user.ts'
 import { useProfileStore } from '@/app/providers/profile/userStore.ts'
 import { getDataByUsername } from '@/shared/lib/getDataByUsername.ts'
+import { serviceApi } from '@/shared/api/service.ts'
 
 export const protectedLoader = () => {
   const isAuthenticated = useAuthStore.getState().isAuthenticated
@@ -32,4 +33,10 @@ export const myProfileLoader = async () => {
 
   if (data.data) useProfileStore.getState().setMyProfile(data.data)
   else redirect(ROUTES.HOME)
+}
+
+export const serviceLoader = async (serviceId: string) => {
+  const data = await serviceApi.servicesById(serviceId)
+
+  if (data.data) return data.data
 }

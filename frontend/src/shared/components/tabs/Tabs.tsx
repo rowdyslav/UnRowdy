@@ -1,5 +1,5 @@
 import type { profileTabsProps, TabProfile, TabService } from '@/shared/components/tabs/TabsType.ts'
-import { tabsProfileData, tabsServiceData } from '@/shared/components/tabs/TabsProfileData.ts'
+import { tabsProfileData, tabsServiceData } from '@/shared/components/tabs/TabsData.ts'
 
 const Tabs = ({ activeTab, setActiveTab, type }: profileTabsProps) => {
   let data: TabProfile[] | TabService[]

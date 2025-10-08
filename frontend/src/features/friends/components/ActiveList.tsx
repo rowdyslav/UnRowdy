@@ -1,6 +1,6 @@
 import NoFriendsCard from '@/features/friends/ui/NoFriendsCard.tsx'
 import { useFriends } from '@/features/friends/hooks/useFriends.ts'
-import FriendCard from '@/features/friends/ui/Card.tsx'
+import FriendCard from '@/features/friends/ui/FriendCard.tsx'
 import Spinner from '@/shared/ui/Spinner.tsx'
 
 const ActiveList = () => {

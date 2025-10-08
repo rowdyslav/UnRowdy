@@ -1,38 +1,34 @@
-import axios from "axios";
-import {useAuthStore} from "@/app/providers/auth/authStore.ts";
-import {ROUTES} from "@/shared/const/routes.ts";
+import axios from 'axios'
+import { useAuthStore } from '@/app/providers/auth/authStore.ts'
 
 export const api = axios.create({
-  baseURL: "http://127.0.0.1:8000",
+  baseURL: 'http://127.0.0.1:8000',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
-});
+})
 
 // при наличии access_token подставляется заголовок Authorization: Bearer eyJhb...
-api.interceptors.request.use((config) => {
-  const token = useAuthStore.getState().token;
+api.interceptors.request.use(config => {
+  const token = useAuthStore.getState().token
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`
   }
-  return config;
-});
-
+  return config
+})
 
 const handleUnauthorized = () => {
-  const logout = useAuthStore.getState().logout;
-  logout();
-  window.location.href = ROUTES.AUTH;
-};
+  const logout = useAuthStore.getState().logout
+  logout()
+}
 
 //проверка жизни токена
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
+  response => response,
+  error => {
     if (error.response?.status === 401) {
-      handleUnauthorized();
+      handleUnauthorized()
     }
-    return Promise.reject(error);
-  }
-);
-
+    return Promise.reject(error)
+  },
+)

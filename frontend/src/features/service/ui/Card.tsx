@@ -1,22 +1,27 @@
 import type { ServiceType } from '@/shared/types/serviceType.ts'
 import { useProfileStore } from '@/app/providers/profile/userStore.ts'
-import {useNavigate} from "react-router-dom";
-import {ROUTES} from "@/shared/const/routes.ts";
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '@/shared/const/routes.ts'
 
-const Card = ({ name, price, image_b64, description }: ServiceType) => {
+const Card = ({ name, price, image_b64, description, id }: ServiceType) => {
   const isMyProfile = useProfileStore(state => state.isMyProfile)
   const navigate = useNavigate()
 
   return (
-    <article className='w-full card-element' onClick={() => navigate(ROUTES.SERVICE)}>
-      <img src={`data:${image_b64}`} alt='/' className='rounded-t-lg' />
+    <article className='w-full card-element'>
+      <img
+        src={`data:${image_b64}`}
+        alt='/'
+        className='rounded-t-lg cursor-pointer'
+        onClick={() => navigate(`${ROUTES.SERVICE}/${id}`)}
+      />
 
       <div className='px-6 py-3 flex justify-between flex-col'>
         {/* Header */}
         <div className='flex justify-between flex-col'>
           <div>
-            <h3 className='text-2xl font-semibold color-font'>{name}</h3>
-            <p className='text-sm color-font-light mt-1'>{description}</p>
+            <h3 className='text-3xl font-bold color-font'>{name}</h3>
+            <p className=' color-font-light mt-1'>{description}</p>
           </div>
           {/*<span className="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">*/}
           {/*  Development*/}
@@ -54,7 +59,7 @@ const Card = ({ name, price, image_b64, description }: ServiceType) => {
         {/* Buttons */}
         {isMyProfile && (
           <div className='flex justify-end'>
-            <button className='button'>Редактировать услугу</button>
+            <button className='button '>Редактировать услугу</button>
             {/*<button className="w-1/2 ml-2 px-4 py-2 text-sm bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition">*/}
             {/*  View Analytics*/}
             {/*</button>*/}

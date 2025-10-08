@@ -1,25 +1,24 @@
 import {
   ServiceFormSchema,
-  type ServiceFormType
+  type ServiceFormType,
 } from '@/features/service/types/ServiceForm.schema.ts'
 import ImageInput from '@/shared/components/imageInput/ImageInput.tsx'
 import NavButton from '@/shared/components/NavButton.tsx'
-import type {ServiceType} from '@/shared/types/serviceType.ts'
-import {useAdd} from '@/features/service/hooks/useAdd.ts'
-import {zodResolver} from '@hookform/resolvers/zod'
-import {FormProvider, useForm} from 'react-hook-form'
-import {fileToBase64} from '@/shared/utils/fileToBase64.ts'
-import {ROUTES} from "@/shared/const/routes.ts";
+import type { ServiceType } from '@/shared/types/serviceType.ts'
+import { useAdd } from '@/features/service/hooks/useAdd.ts'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormProvider, useForm } from 'react-hook-form'
+import { fileToBase64 } from '@/shared/utils/fileToBase64.ts'
 
 const AddForm = () => {
-  const methods = useForm<ServiceFormType>({resolver: zodResolver(ServiceFormSchema)})
+  const methods = useForm<ServiceFormType>({ resolver: zodResolver(ServiceFormSchema) })
 
   const {
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = methods
 
-  const {mutateAsync: addService} = useAdd()
+  const { mutateAsync: addService } = useAdd()
 
   const onSubmit = async (data: ServiceFormType) => {
     try {
@@ -33,7 +32,7 @@ const AddForm = () => {
 
       const payload: ServiceType = {
         name: data.name,
-        description: data.description,
+        description: data.description || '',
         price: data.price,
         image_b64: image_b64,
       }
@@ -47,16 +46,10 @@ const AddForm = () => {
   return (
     <FormProvider {...methods}>
       <div className='card-element hover:shadow-sm w-[85%] p-5'>
-        <form
-          className='grid gap-y-5' onSubmit={handleSubmit(onSubmit)}
-          id='service-form'
-        >
+        <form className='grid gap-y-5' onSubmit={handleSubmit(onSubmit)} id='service-form'>
           {/* НАЗВАНИЕ */}
           <div className='add-flex'>
-            <h3
-              className='text-lg font-bold color-font-light'
-            >Название
-            </h3>
+            <h3 className='text-lg font-bold color-font-light'>Название</h3>
             <input
               {...methods.register('name')}
               placeholder='Например, "Создание майнкрафт сервера"'
@@ -67,11 +60,8 @@ const AddForm = () => {
 
           {/* ОПИСАНИЕ */}
           <div className='add-flex'>
-            <h3
-              className='text-lg font-bold color-font-light'
-            >Описание
-            </h3>
-            <input
+            <h3 className='text-lg font-bold color-font-light'>Описание</h3>
+            <textarea
               {...methods.register('description')}
               placeholder='Например, "Создание майнкрафт сервера ДЕШЕВО И БЫСТРО!!!"'
               className='input py-2'
@@ -81,18 +71,15 @@ const AddForm = () => {
 
           {/* ИЗОБРАЖЕНИЕ */}
           <div className='add-flex'>
-            <h3
-              className='text-lg font-bold color-font-light'
-            >Обложка услуги
-            </h3>
-            <ImageInput register={methods.register} error={errors?.image}/>
+            <h3 className='text-lg font-bold color-font-light'>Обложка услуги</h3>
+            <ImageInput register={methods.register} error={errors?.image} />
           </div>
 
           {/* ЦЕНА */}
           <div className='add-flex'>
             <h3 className='text-lg font-bold color-font-light'>Цена</h3>
             <input
-              {...methods.register('price', {valueAsNumber: true})}
+              {...methods.register('price', { valueAsNumber: true })}
               placeholder='10000'
               className='input py-2'
               type='number'
@@ -104,7 +91,7 @@ const AddForm = () => {
       </div>
 
       <div className='flex w-[85%] gap-x-6 justify-end items-center'>
-        <NavButton to={ROUTES.SERVICE}/>
+        <NavButton to={-1} />
 
         <button type='submit' form='service-form' className='button-blue py-2'>
           Создать услугу
