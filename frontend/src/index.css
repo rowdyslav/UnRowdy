@@ -14,6 +14,7 @@ body {
   --color-main-white: #FFF;
   --color-main-gray: #FAFAFB;
 
+  --max-width-container-mini: 1000px;
   --max-width-container: 1300px;
   --max-width-container-big: 1400px;
 }
@@ -77,6 +78,11 @@ body {
 
   .container {
     max-width: var(--max-width-container);
+    margin-inline: auto;
+  }
+
+  .container-mini {
+    max-width: var(--max-width-container-mini);
     margin-inline: auto;
   }
 }
