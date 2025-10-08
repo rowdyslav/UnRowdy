@@ -34,22 +34,6 @@ FriendType = Literal["active", "sent", "received"]
 class UserRead(SharedUser, BaseUser[PydanticObjectId]):
     """Поля User для чтения"""
 
-    @classmethod
-    @overload
-    def from_base(cls, base_obj: SharedUser) -> Self:
-        ...
-
-    @classmethod
-    @overload
-    def from_base(cls, base_obj: list[SharedUser]) -> list[Self]:
-        ...
-
-    @classmethod
-    def from_base(cls, base_obj: SharedUser | list[SharedUser]) -> list[Self]:
-        if isinstance(base_obj, SharedUser):
-            return cls(**base_obj.model_dump())
-        return [cls.from_base(b) for b in base_obj]
-
 
 class UserCreate(SharedUser, BaseUserCreate):
     """Поля User для создания"""
@@ -66,22 +50,6 @@ class ServiceRead(SharedService):
 
     id: PydanticObjectId
     user: UserRead
-
-    @classmethod
-    @overload
-    def from_base(cls, base_obj: SharedService) -> Self:
-        ...
-
-    @classmethod
-    @overload
-    def from_base(cls, base_obj: list[SharedService]) -> list[Self]:
-        ...
-
-    @classmethod
-    def from_base(cls, base_obj: SharedService | list[SharedService]) -> list[Self]:
-        if isinstance(base_obj, SharedService):
-            return cls(**base_obj.model_dump())
-        return [cls.from_base(b) for b in base_obj]
 
 
 class ServiceCreate(SharedService):
