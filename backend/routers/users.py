@@ -110,7 +110,7 @@ async def read_me_friends(
     me: AuthorizedUser, friend_type: FriendType
 ) -> list[UserRead]:
     return [
-        UserRead.model_validate(await User.get(user_id))
+        await User.get(user_id)
         for user_id in me.friends_ids[friend_type]
     ]
 
@@ -152,6 +152,6 @@ async def read_one_friends(
         raise user_not_found
 
     return [
-        UserRead.model_validate(await User.get(user_id))
+        await User.get(user_id)
         for user_id in user.friends_ids[friend_type]
     ]
