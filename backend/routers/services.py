@@ -13,7 +13,9 @@ router = APIRouter(prefix="/services", tags=["Services"])
 
 @router.get("")
 async def read_many(pagination: PaginationQuery) -> list[ServiceRead]:
-    services = await Service.find_all(pagination.skip, pagination.limit).to_list()
+    services = await Service.find_all(
+        pagination.skip, pagination.limit, fetch_links=True
+    ).to_list()
     return [ServiceRead(**service.model_dump()) for service in services]
 
 
@@ -24,7 +26,7 @@ async def remove_many(pagination: PaginationQuery) -> None:
 
 @router.get("/{service_id}", responses=ErrorResponsesDict("not_found"))
 async def read_one(service_id: str) -> ServiceRead:
-    service = await Service.get(service_id)
+    service = await Service.get(service_id, fetch_links=True)
     if service is None:
         raise service_not_found
     return ServiceRead(**service.model_dump())

@@ -49,6 +49,7 @@ class ServiceRead(SharedService):
     """Поля Service для чтения"""
 
     id: PydanticObjectId
+    user: UserRead
 
 class ServiceCreate(SharedService):
     """Поля Service для создания"""
