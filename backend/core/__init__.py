@@ -10,7 +10,7 @@ from .errors.http import (
     user_not_found,
 )
 from .errors.utils import ErrorResponsesDict
-from .models import Service, User
+from .models import Service, ServiceCategory, User
 from .schemas import (
     FriendType,
     ServiceCreate,
@@ -29,6 +29,7 @@ __all__ = [
     "FriendType",
     "PaginationQuery",
     "Service",
+    "ServiceCategory",
     "ServiceCreate",
     "ServiceRead",
     "User",

@@ -19,6 +19,12 @@ class SharedUser(BaseModel):
     username: Annotated[str, Field(max_length=20), Indexed(unique=True)]
 
 
+class SharedServiceCategory(BaseModel):
+    """Базовые поля ServiceCategory"""
+
+    name: Annotated[str, Indexed(unique=True)]
+
+
 class SharedService(BaseModel):
     """Базовые поля Service"""
 
