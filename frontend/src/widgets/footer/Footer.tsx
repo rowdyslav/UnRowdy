@@ -4,7 +4,7 @@ import { ROUTES } from '@/shared/const/routes.ts'
 
 const Footer = () => {
   return (
-    <footer className='max-w-[var(--max-width-container-big)] mx-auto px-[15px] py-[65px]'>
+    <footer className='max-w-[var(--max-width-container-big)] mx-auto px-4 py-16'>
       <div className='flex justify-around border-b-gray-100 border-b pb-8'>
         <div>
           <Link className='text-[27px] font-bold color-font mb-4' to={ROUTES.HOME}>
@@ -21,7 +21,10 @@ const Footer = () => {
             <p className='mb-4 font-medium color-font'>{col.label}</p>
             <ul>
               {col.hrefs.map((item, index: number) => (
-                <li key={index} className='color-font-light duration-200 font-normal hover:text-blue-500'>
+                <li
+                  key={index}
+                  className='color-font-light duration-200 font-normal hover:text-blue-500'
+                >
                   <Link to={item.href}>{item.label}</Link>
                 </li>
               ))}

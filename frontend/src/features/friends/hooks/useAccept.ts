@@ -12,7 +12,7 @@ export const useAccept = () => {
     },
 
     onSuccess: (_, username) => {
-      queryClient.setQueryData<UserType[]>(queryKeys.request, old =>
+      queryClient.setQueryData<UserType[]>(queryKeys.received, old =>
         old ? old.filter(user => user.id !== username) : [],
       )
 

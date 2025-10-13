@@ -1,6 +1,6 @@
 const SearchSection = () => {
   return (
-    <section className='py-[80px] container text-center flex flex-col gap-y-4 items-center'>
+    <section className='py-[80px] container text-center section'>
       <h1 className='text-5xl color-font font-bold'>
         Найди лучшего <span className='text-blue-500'>фрилансера</span>
         <br />
@@ -8,8 +8,8 @@ const SearchSection = () => {
       </h1>
 
       <p className='text-xl max-w-2xl color-font-light'>
-        Свяжитесь с талантливыми профессионалами, которые воплотят ваши идеи в жизнь. Ознакомьтесь с тысячами
-        проверенных фрилансеров во всех категориях.
+        Свяжитесь с талантливыми профессионалами, которые воплотят ваши идеи в жизнь. Ознакомьтесь с
+        тысячами проверенных фрилансеров во всех категориях.
       </p>
     </section>
   )

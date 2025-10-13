@@ -13,7 +13,9 @@ export const useRemove = () => {
 
     onSuccess: (_, id) => {
       console.log(id)
-      queryClient.setQueryData<UserType[]>(queryKeys.myActive, old => (old ? old.filter(user => user.id !== id) : []))
+      queryClient.setQueryData<UserType[]>(queryKeys.myActive, old =>
+        old ? old.filter(user => user.id !== id) : [],
+      )
 
       void queryClient.invalidateQueries({ queryKey: queryKeys.myActive })
     },

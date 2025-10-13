@@ -7,7 +7,7 @@ const Header = () => {
   const isAuthenticated = useAuthStore(state => state.isAuthenticated)
 
   return (
-    <header className='max-w-[var(--max-width-container-big)] mx-auto px-[15px] flex justify-between h-[64px] items-center'>
+    <header className='container-big px-full flex justify-between h-[64px] px-4 w-full items-center bg-white'>
       <div className='flex items-center'>
         <Link className='text-2xl font-bold color-font' to={ROUTES.HOME}>
           UnRowdy

@@ -19,10 +19,12 @@ api.interceptors.request.use(config => {
 
 const handleUnauthorized = () => {
   const logout = useAuthStore.getState().logout
+
   logout()
 }
 
 //проверка жизни токена
+
 api.interceptors.response.use(
   response => response,
   error => {

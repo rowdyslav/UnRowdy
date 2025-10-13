@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 body {
@@ -11,8 +11,8 @@ body {
   --color-font: #344256;
   --color-font-light: #697586;
 
-  --color-main-white: #FFF;
-  --color-main-gray: #FAFAFB;
+  --color-main-white: #fff;
+  --color-main-gray: #fafafb;
 
   --max-width-container-mini: 1000px;
   --max-width-container: 1300px;
@@ -21,59 +21,62 @@ body {
 
 @layer components {
   .input {
-    @apply p-4 rounded-md border w-full border-[var(--color-border)] focus:outline-blue-500 bg-[var(--color-main-gray)] shadow-xs
+    @apply p-4 rounded-md border w-full border-gray-200 focus:outline-blue-500 bg-[var(--color-main-gray)] shadow-xs;
   }
 
   .button-blue {
-    @apply p-4 rounded-md bg-blue-500 opacity-75 duration-200 text-white font-medium cursor-pointer hover:opacity-100
+    @apply py-2 px-4 rounded-md bg-blue-500 opacity-75 duration-200 text-white font-medium cursor-pointer hover:opacity-100;
   }
 
   .button {
-    @apply py-2 px-4 rounded-md border border-[var(--color-border)] font-medium cursor-pointer transition-colors duration-300 text-[var(--color-font-light)] hover:bg-blue-500 hover:text-white
+    @apply py-2 px-4 rounded-md border border-gray-200 font-medium cursor-pointer transition-colors duration-300 text-[var(--color-font-light)] hover:bg-blue-500 hover:text-white;
   }
 
   .card-element {
-    @apply bg-white shadow-sm rounded-lg hover:shadow-lg duration-100 transition
+    @apply bg-white shadow-sm rounded-lg hover:shadow-lg duration-100 transition;
   }
 
+  .section {
+    @apply flex items-center justify-center flex-col gap-y-6;
+  }
 
   .center-inline {
-    @apply w-full flex justify-center
+    @apply w-full flex justify-center;
   }
 
   .center {
-    @apply flex items-center justify-center
+    @apply flex items-center justify-center;
   }
 
   .add-flex {
-    @apply flex flex-col gap-y-1
+    @apply flex flex-col;
   }
 
   .add-img-input {
     @apply cursor-pointer border-[var(--color-border)] hover:bg-[var(--color-main-gray)] hover:border-gray-200
-    border-dashed rounded-lg h-48 border-3 justify-center items-center flex flex-col duration-100
+    border-dashed rounded-lg h-48 border-3 justify-center items-center flex flex-col duration-100;
   }
 }
 
 @layer utilities {
   .color-border {
-    border-color: var(--color-border)
+    border-color: var(--color-border);
   }
 
   .color-main {
-    background-color: var(--color-main-white)
+    background-color: var(--color-main-white);
   }
 
   .color-main-grey {
-    background-color: var(--color-main-gray)
+    background-color: var(--color-main-gray);
   }
 
   .color-font {
-    color: var(--color-font)
+    color: var(--color-font);
   }
 
   .color-font-light {
-    color: var(--color-font-light)
+    color: var(--color-font-light);
   }
 
   .container {
@@ -85,6 +88,34 @@ body {
     max-width: var(--max-width-container-mini);
     margin-inline: auto;
   }
+
+  .container-big {
+    max-width: var(--max-width-container-big);
+    margin-inline: auto;
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translate(-50%, -30px);
+    opacity: 0;
+  }
+  30% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -30px);
+    opacity: 0;
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 3s ease forwards;
 }
 
 
@@ -95,6 +126,6 @@ input::-webkit-inner-spin-button {
 }
 
 /* для Firefox */
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }

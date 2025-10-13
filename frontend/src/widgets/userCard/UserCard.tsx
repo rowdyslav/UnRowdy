@@ -15,7 +15,7 @@ const UserCard = () => {
       </div>
 
       {isMyProfile && (
-        <div className='ml-auto pt-8'>
+        <div className='ml-auto my-auto'>
           <LogoutButton />
         </div>
       )}

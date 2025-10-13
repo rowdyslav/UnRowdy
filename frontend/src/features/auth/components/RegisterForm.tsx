@@ -14,25 +14,36 @@ const RegisterForm = () => {
   const { mutateAsync: registration, isPending, error, reset } = useRegister()
 
   const onSubmit = async (data: RegisterFormType) => {
-    try {
-      await registration(data)
-    } catch {
-      /* empty */
-    }
+    await registration(data)
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-y-7 justify-stretch' autoComplete='on'>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className='flex flex-col gap-y-7 justify-stretch'
+      autoComplete='on'
+    >
       {/*USERNAME*/}
       <div>
-        <input className='input' {...register('username')} placeholder='Username' autoComplete='given-name' />
+        <input
+          className='input'
+          {...register('username')}
+          placeholder='Username'
+          autoComplete='given-name'
+        />
         {/*ошибка валидации*/}
         <p className='text-red-500'>{errors?.username?.message}</p>
       </div>
 
       {/*EMAIL*/}
       <div>
-        <input {...register('email')} className='input' placeholder='Email' autoComplete='email' onInput={reset} />
+        <input
+          {...register('email')}
+          className='input'
+          placeholder='Email'
+          autoComplete='email'
+          onInput={reset}
+        />
         {/*ошибка валидации*/}
         <p className='text-red-500'>{errors?.email?.message}</p>
         {/*ошибка с бека*/}

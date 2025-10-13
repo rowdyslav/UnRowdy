@@ -1,13 +1,12 @@
 import { z } from 'zod'
 
 export const ServiceFormSchema = z.object({
-  name: z.string().min(5, { message: 'Минимум 5 символов' }),
+  name: z.string().min(3, { message: 'Минимум 3 символа' }),
   description: z.union([z.string(), z.null()]),
+  category: z.string().min(1, { message: 'Выберите категорию' }),
+  subcategory: z.string().min(1, { message: 'Выберите подкатегорию' }),
+  image_b64: z.string().nonempty('Загрузите изображение'),
   price: z.number('Укажите цену'),
-  image: z.union([
-    z.custom<FileList>(val => val instanceof FileList && val.length > 0, { message: 'Выберите изображение' }),
-    z.string(),
-  ]),
 })
 
 export type ServiceFormType = z.infer<typeof ServiceFormSchema>

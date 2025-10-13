@@ -1,8 +1,7 @@
-import RequestListIn from '@/features/friends/components/RequestListIn.tsx'
+import RequestList from '@/features/friends/components/RequestList.tsx'
 import { useProfileStore } from '@/app/providers/profile/userStore.ts'
 import ActiveList from '@/features/friends/components/ActiveList.tsx'
-import Add from '@/features/friends/components/Add.tsx'
-import RequestListOut from '@/features/friends/components/RequestListOut.tsx'
+import AddFriend from '@/features/friends/components/AddFriend.tsx'
 
 const FriendsSection = () => {
   const isMyProfile = useProfileStore(state => state.isMyProfile)
@@ -13,9 +12,9 @@ const FriendsSection = () => {
 
       {isMyProfile && (
         <>
-          <Add />
-          <RequestListIn />
-          <RequestListOut />
+          <AddFriend />
+          <RequestList type='sent' label='Отправленные заявки в друзья' />
+          <RequestList type='received' label='Полученные заявки в друзья' />
         </>
       )}
 

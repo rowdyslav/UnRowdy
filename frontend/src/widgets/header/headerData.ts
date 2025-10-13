@@ -1,16 +1,17 @@
+import type { RoutePath } from '@/shared/const/routes.ts'
+
 type headerDataType = {
-  label: string;
-  href: string;
+  label: string
+  href: RoutePath
 }
 
 export const headerData: headerDataType[] = [
   {
-    label: 'Как начать работу',
-    href: '/'
+    label: 'Услуги',
+    href: '/categories',
   },
   {
     label: 'Найти заказ',
-    href: '/'
+    href: '/',
   },
 ]
-

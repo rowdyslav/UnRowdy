@@ -1,4 +1,4 @@
-import ServiceList from '@/features/service/components/ServiceList.tsx'
+import ServiceProfileList from '@/features/service/components/ServiceProfileList.tsx'
 import BadgeButtonNav from '@/shared/components/navBadge/NavBadge.tsx'
 import { ROUTES } from '@/shared/const/routes.ts'
 import { useProfileStore } from '@/app/providers/profile/userStore.ts'
@@ -14,7 +14,7 @@ const ServicesSection = () => {
         {isMyProfile && <BadgeButtonNav size={'md'} label={'Добавить'} to={ROUTES.ADD_SERVICE} />}
       </div>
 
-      <ServiceList />
+      <ServiceProfileList />
     </section>
   )
 }

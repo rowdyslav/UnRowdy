@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import type { NavBadgeProps } from '@/shared/components/navBadge/types/navBadgeProps.ts'
+import type { NavBadgeProps } from '@/shared/components/navBadge/navBadgeProps.ts'
 
 const NavBadge = ({ size = 'sm', label, to }: NavBadgeProps) => {
   const navigate = useNavigate()
@@ -28,7 +28,7 @@ const NavBadge = ({ size = 'sm', label, to }: NavBadgeProps) => {
         className='material-symbols-outlined text-white absolute transition-opacity duration-300 group-hover:opacity-0'
       >
         {typeof to === 'number' ? (
-          <img src='/public/icons/arrowLeft.svg' alt='' />
+          <img src='/icons/arrows/arrowLeft.svg' alt='' />
         ) : (
           <img src='/public/icons/add.svg' alt='' />
         )}
