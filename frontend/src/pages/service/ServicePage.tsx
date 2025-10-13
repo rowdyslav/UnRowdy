@@ -1,21 +1,19 @@
 import { useLoaderData } from 'react-router-dom'
-import type { ServiceType } from '@/shared/types/serviceType.ts'
+import type { ServiceApiGetType } from '@/shared/types/serviceTypes.ts'
 import Service from '@/features/service/components/Service.tsx'
 import OrderCard from '@/features/service/components/OrderCard.tsx'
-import SellerCard from '@/widgets/sellerCard/SellerCard.tsx'
+import SellerCard from '@/pages/service/components/SellerCard.tsx'
 
 const ServicePage = () => {
-  const { name, description, price, image_b64 }: ServiceType = useLoaderData()
+  const { image_b64, name, price, description, user }: ServiceApiGetType = useLoaderData()
 
   return (
-    <section className='container center flex flex-col gap-y-6'>
-      <div className='grid grid-cols-[2.5fr_1fr] gap-x-6'>
-        <Service name={name} image_b64={image_b64} description={description} />
+    <section className='container-mini grid grid-cols-[2fr_1fr] gap-x-6'>
+      <Service name={name} image_b64={image_b64} description={description || null} />
 
-        <div className='flex flex-col gap-y-3'>
-          <OrderCard price={price} />
-          <SellerCard />
-        </div>
+      <div className='flex flex-col gap-y-3'>
+        <OrderCard price={price} />
+        <SellerCard username={user.username} id={user.id} />
       </div>
     </section>
   )

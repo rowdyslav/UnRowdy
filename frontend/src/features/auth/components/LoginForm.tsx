@@ -3,6 +3,7 @@ import { LoginFormSchema } from '@/features/auth/types/LoginForm.schema.ts'
 import { useLogin } from '@/features/auth/hooks/useLogin.ts'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import Field from '@/shared/components/Field.tsx'
 
 const LoginForm = () => {
   const {
@@ -14,34 +15,34 @@ const LoginForm = () => {
   const { mutateAsync: login, isPending, error, reset } = useLogin()
 
   const onSubmit = async (data: LoginFormType) => {
-    try {
-      await login(data)
-    } catch {
-      /* empty */
-    }
+    await login(data)
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-y-7 justify-stretch'>
       <div>
-        <input className='input' {...register('email')} placeholder='Email' autoComplete='email' onInput={reset} />
-        <p>{errors?.email?.message}</p>
-        {/*ошибка валидации*/}
+        <Field error={errors?.email?.message}>
+          <input
+            className='input'
+            {...register('email')}
+            placeholder='Email'
+            autoComplete='email'
+            onInput={reset}
+          />
+        </Field>
       </div>
 
       <div>
-        <input
-          {...register('password', { required: 'Введите пароль' })}
-          className='input'
-          placeholder='Password'
-          type='password'
-          autoComplete='current-password'
-          onInput={reset}
-        />
-        {/*ошибка с бека*/}
-        <p className='text-red-500'>{error}</p>
-        {/*ошибка валидации*/}
-        <p>{errors?.password?.message}</p>
+        <Field error={errors?.password?.message || error || null}>
+          <input
+            {...register('password', { required: 'Введите пароль' })}
+            className='input'
+            placeholder='Password'
+            type='password'
+            autoComplete='current-password'
+            onInput={reset}
+          />
+        </Field>
       </div>
 
       <button type='submit' className='button-blue'>

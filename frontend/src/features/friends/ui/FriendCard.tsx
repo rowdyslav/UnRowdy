@@ -1,11 +1,6 @@
-import ViewProfileButton from '@/features/friends/components/ViewProfileButton.tsx'
 import type { CardProps } from '@/features/friends/types/friendCardProps.ts'
-import DeleteButton from '@/features/friends/components/RemoveButton.tsx'
-import { useProfileStore } from '@/app/providers/profile/userStore.ts'
 
-const RequestCard = ({ name, id }: CardProps) => {
-  const isMyProfile = useProfileStore(state => state.isMyProfile)
-
+const RequestCard = ({ name, children }: CardProps) => {
   return (
     <article className='card-element p-4 flex justify-between items-center'>
       <div className='flex gap-x-2'>
@@ -17,10 +12,7 @@ const RequestCard = ({ name, id }: CardProps) => {
         </div>
       </div>
 
-      <div className='flex gap-x-2'>
-        <ViewProfileButton username={name} />
-        {isMyProfile && <DeleteButton id={id} />}
-      </div>
+      <div className='flex gap-x-2'>{children}</div>
     </article>
   )
 }

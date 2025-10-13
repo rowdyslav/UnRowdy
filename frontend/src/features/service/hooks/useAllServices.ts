@@ -1,9 +1,9 @@
-import type { ServiceType } from '@/shared/types/serviceType.ts'
+import type { ServiceApiGetType } from '@/shared/types/serviceTypes.ts'
 import { serviceApi } from '@/shared/api/service.ts'
 import { useQuery } from '@tanstack/react-query'
 
 export const useAllServices = () => {
-  return useQuery<ServiceType[]>({
+  return useQuery<ServiceApiGetType[]>({
     queryKey: ['services', 'all'],
 
     queryFn: async () => {

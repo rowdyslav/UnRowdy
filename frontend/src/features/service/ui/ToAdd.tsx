@@ -1,14 +1,11 @@
-import { ROUTES } from '@/shared/const/routes.ts'
-import { Link } from 'react-router-dom'
+import NavButton from '@/shared/components/navButton/NavButton.tsx'
 
 const ToAdd = () => {
   return (
-    <div className='card-element w-1/3 center mx-auto flex-col gap-3 h-40 '>
+    <div className='card-element w-1/3 center mx-auto flex-col gap-3 h-52'>
       <h3 className='color-font text-2xl font-semibold center-inline'>Добавьте первую услугу</h3>
 
-      <Link rel='stylesheet' className='button w-fit' to={ROUTES.ADD_SERVICE}>
-        Создать
-      </Link>
+      <NavButton label='Создать' to='/add' className='button w-fit' />
     </div>
   )
 }

@@ -17,12 +17,7 @@ export const authApi = {
   },
 
   register: (data: RegisterFormType) => {
-    return api.post('/auth/register', {
-      username: data.username,
-      email: data.email,
-      password: data.password,
-      is_superuser: true,
-    })
+    return api.post('/auth/register', { ...data, is_superuser: true })
   },
 
   logout: () => api.post('/auth/logout'),

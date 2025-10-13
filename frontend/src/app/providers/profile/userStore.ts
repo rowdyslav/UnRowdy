@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { ProfileStoreType } from '@/app/providers/profile/type.ts'
+import type { ProfileStoreType } from '@/app/providers/profile/types.ts'
 
 export const useProfileStore = create<ProfileStoreType>(set => ({
   profile: null,

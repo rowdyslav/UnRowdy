@@ -15,6 +15,8 @@ import AuthPage from '@/pages/auth/AuthPage.tsx'
 import NotFoundUser from '@/shared/components/NotFoundUser.tsx'
 import Spinner from '@/shared/ui/Spinner.tsx'
 import ServicePage from '@/pages/service/ServicePage.tsx'
+import CategoriesPage from '@/pages/categories/CategoriesPage.tsx'
+import CategoryPage from '@/pages/category/CategoryPage.tsx'
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +51,14 @@ export const router = createBrowserRouter([
         loader: async ({ params }) => {
           if (params.serviceId) return await serviceLoader(params.serviceId)
         },
+      },
+      {
+        path: ROUTES.CATEGORIES,
+        element: <CategoriesPage />,
+      },
+      {
+        path: `${ROUTES.CATEGORIES}/:category`,
+        element: <CategoryPage />,
       },
     ],
   },

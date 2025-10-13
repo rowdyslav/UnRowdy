@@ -1,21 +1,14 @@
 import { api } from '@/shared/api/axios.ts'
-import type { ServiceType } from '@/shared/types/serviceType.ts'
+import type { ServiceApiGetType, ServiceTypes } from '@/shared/types/serviceTypes.ts'
 
 export const serviceApi = {
-  myServices: () => api.get<ServiceType[]>('/users/me/services/'),
+  myServices: () => api.get<ServiceApiGetType[]>('/users/me/services/'),
 
-  servicesByUserId: (userId: string) => api.get<ServiceType[]>(`/users/${userId}/services`),
+  servicesByUserId: (userId: string) => api.get<ServiceApiGetType[]>(`/users/${userId}/services`),
 
-  servicesById: (serviceId: string) => api.get<ServiceType>(`/services/${serviceId}`),
+  servicesById: (serviceId: string) => api.get<ServiceApiGetType>(`/services/${serviceId}`),
 
-  getAllServices: () => api.get<ServiceType[]>('/services?limit=10&offset=0'),
+  getAllServices: () => api.get<ServiceApiGetType[]>('/services'),
 
-  addService: (data: ServiceType) => {
-    return api.post<void>('/users/me/services', {
-      name: data.name,
-      description: data.description,
-      price: data.price,
-      image_b64: data.image_b64,
-    })
-  },
+  addService: (data: ServiceTypes) => api.post<void>('/users/me/services', { ...data }),
 }

@@ -1,4 +1,6 @@
+import type { ReactNode } from 'react'
+
 export type CardProps = {
   name: string
-  id: string
+  children?: ReactNode
 }

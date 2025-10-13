@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import type { ServiceType } from '@/shared/types/serviceType.ts'
+import type { ServiceApiGetType } from '@/shared/types/serviceTypes.ts'
 import { serviceApi } from '@/shared/api/service.ts'
 import { useProfileStore } from '@/app/providers/profile/userStore.ts'
 import { queryKeys } from '@/features/service/types/queryKeys.ts'
@@ -8,7 +8,7 @@ export const useServices = () => {
   const profile = useProfileStore(state => state.profile)
   const isMyProfile = useProfileStore(state => state.isMyProfile)
 
-  return useQuery<ServiceType[], Error>({
+  return useQuery<ServiceApiGetType[], Error>({
     queryKey: [...queryKeys.services, profile?.id],
     queryFn: async () => {
       if (isMyProfile) {
