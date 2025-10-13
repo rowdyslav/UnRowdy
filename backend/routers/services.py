@@ -13,10 +13,9 @@ router = APIRouter(prefix="/services", tags=["Services"])
 
 @router.get("")
 async def read_many(pagination: PaginationQuery) -> list[ServiceRead]:
-    services = await Service.find_all(
+    return await Service.find_all(
         pagination.skip, pagination.limit, fetch_links=True
     ).to_list()
-    return services
 
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)
