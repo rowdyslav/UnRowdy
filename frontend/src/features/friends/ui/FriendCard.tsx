@@ -1,8 +1,8 @@
 import type { CardProps } from '@/features/friends/types/friendCardProps.ts'
 
-const RequestCard = ({ name, children }: CardProps) => {
+const RequestCard = ({ name, children, classname }: CardProps) => {
   return (
-    <article className='card-element p-4 flex justify-between items-center'>
+    <article className={`card-element p-4 flex justify-between items-center ${classname}`}>
       <div className='flex gap-x-2'>
         <img src='/public/icons/accCircle2.svg' alt='' height={50} width={50} />
 

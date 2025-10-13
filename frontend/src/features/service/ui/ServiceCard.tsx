@@ -1,23 +1,25 @@
-import { ROUTES } from '@/shared/const/routes.ts'
-import { useNavigate } from 'react-router-dom'
-import type { CardProps } from '@/features/service/types/CardProfileProps.ts'
+import {ROUTES} from '@/shared/const/routes.ts'
+import {useNavigate} from 'react-router-dom'
+import type {CardProps} from '@/features/service/types/CardProfileProps.ts'
 
-const ServiceCard = ({ name, price, image_b64, description, id, user }: CardProps) => {
+const ServiceCard = ({name, price, image_b64, description, id, user, type}: CardProps) => {
   const navigate = useNavigate()
 
   return (
     <article
-      className='w-full card-element cursor-pointer pb-2'
+      className='w-full card-element cursor-pointer pb-2 flex flex-col justify-between'
       onClick={() => navigate(`${ROUTES.SERVICE}/${id}`)}
     >
-      <img src={`data:${image_b64}`} alt='/' className='rounded-t-lg  h-48 w-full object-cover' />
+      <img src={`data:${image_b64}`} alt='/' className='rounded-t-lg h-48 w-full object-cover'/>
 
       <div className='px-6 flex justify-between flex-col'>
         {/* Header */}
-        <div className='flex gap-x-1 content-center items-center py-2'>
-          <img src='/public/icons/accountCircle.svg' alt='' width={40} height={40} />
-          <p className='text-xl font-semibold color-font-light'>{user.username}</p>
-        </div>
+        {type === 'noneProfile' && (
+          <div className='flex gap-x-1 content-center items-center'>
+            <img src='/public/icons/accountCircle.svg' alt='' width={40} height={40}/>
+            <p className='text-xl font-semibold color-font-light'>{user.username}</p>
+          </div>
+        )}
 
         <div className='flex justify-between flex-col'>
           <h3 className='text-3xl font-bold color-font'>{name}</h3>

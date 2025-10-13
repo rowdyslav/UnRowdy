@@ -1,5 +1,3 @@
-import type { ServiceApiGetType, ServiceTypes } from '@/shared/types/serviceTypes.ts'
+import type { ServiceApiGetType } from '@/shared/types/serviceTypes.ts'
 
-export type CardProfileProps = ServiceTypes
-
-export type CardProps = ServiceApiGetType
+export type CardProps = ServiceApiGetType & {type: 'profile' | 'noneProfile'}

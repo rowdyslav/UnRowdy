@@ -10,13 +10,13 @@ const RequestList = ({ type, label }: RequestListProps) => {
   if (!requestsData || requestsData.length === 0) return null
 
   return (
-    <div className='p-4'>
+    <div>
       <h4 className='color-font text-2xl font-medium mb-6'>{label}</h4>
 
       <ul>
         {requestsData.map(user => (
           <li key={user.id}>
-            <FriendCard name={user.username}>
+            <FriendCard name={user.username} classname='bg-blue-50'>
               <ViewProfileButton username={user.username} />
               {type === 'received' && <AcceptButton id={user.id} />}
             </FriendCard>

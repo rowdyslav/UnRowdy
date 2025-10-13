@@ -14,7 +14,7 @@ export const Skeleton = ({
   animation = 'pulse',
 }: SkeletonProps) => {
   const baseClasses = `
-  bg-gray-200 rounded-md
+  bg-gray-100 rounded-md
   ${variant === 'circular' ? 'rounded-full' : ''}
   ${variant === 'rectangular' ? 'rounded-none' : ''}
   ${animation === 'pulse' ? 'animate-pulse' : ''}

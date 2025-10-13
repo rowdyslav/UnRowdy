@@ -1,9 +1,14 @@
-import Spinner from '@/shared/ui/Spinner.tsx'
-import type { ServiceListProps } from '@/features/service/types/serviceListProps.ts'
+import type {ServiceListProps} from '@/features/service/types/serviceListProps.ts'
 import ServiceCard from '@/features/service/ui/ServiceCard.tsx'
+import {Skeleton} from "@/shared/ui/Skeleton.tsx";
 
-const ServiceProfileList = ({ isLoading, servicesData }: ServiceListProps) => {
-  if (isLoading) return <Spinner />
+const ServiceList = ({isLoading, servicesData, children, type}: ServiceListProps) => {
+
+  if (isLoading) return (
+    <ul className='grid grid-cols-3 gap-3 w-full'>
+      <Skeleton className='h-52'/><Skeleton className='h-52'/><Skeleton className='h-52'/>
+    </ul>
+  )
 
   return (
     <ul className='grid grid-cols-3 gap-3 w-full'>
@@ -17,11 +22,13 @@ const ServiceProfileList = ({ isLoading, servicesData }: ServiceListProps) => {
               description={service.description}
               id={service.id}
               user={service.user}
+              type={type}
             />
           </li>
         ))}
+      {children}
     </ul>
   )
 }
 
-export default ServiceProfileList
+export default ServiceList

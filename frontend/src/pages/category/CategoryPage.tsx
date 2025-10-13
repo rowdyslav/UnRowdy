@@ -16,7 +16,7 @@ const CategoryPage = () => {
 
       <div className='grid grid-cols-[1fr_4fr] gap-x-6'>
         <CategoryFilter register={register} />
-        <ServiceList servicesData={servicesData || undefined} isLoading={isLoading} />
+        <ServiceList servicesData={servicesData} isLoading={isLoading} type='noneProfile'/>
       </div>
     </section>
   )
