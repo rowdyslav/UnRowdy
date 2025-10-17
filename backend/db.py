@@ -11,36 +11,35 @@ from env import MONGO_DATABASE_NAME, MONGO_URL
 client = AsyncIOMotorClient(MONGO_URL, uuidRepresentation="standard")
 db = client[MONGO_DATABASE_NAME]
 
+SERVICE_CATEGORIES_NAMES = {
+    "IT": ("Веб-разработка", "Мобильная разработка"),
+    "Дизайн": ("Графический дизайн", "UX/UI дизайн"),
+    "Маркетинг": ("SMM", "Контекстная реклама"),
+    "Музыка": ("Написание песен", "Звукорежиссура"),
+}
+
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     await init_beanie(database=db, document_models=[User, Service, ServiceCategory])
-    if await ServiceCategory.count() > 0:
+
+    a = [[k, *v] for k, v in SERVICE_CATEGORIES_NAMES]
+    if set(sum(a)) == {sc.name for sc in await ServiceCategory.find_all()}:
         yield
-    categories = [
-        ServiceCategory(name=n)
-        for n in [
-            "IT",
-            "Дизайн",
-            "Маркетинг",
-            "Музыка",
-        ]
+
+    categories = [ServiceCategory(name=n) for n in SERVICE_CATEGORIES_NAMES]
+    ids = (await ServiceCategory.insert_many(categories)).inserted_ids
+    for i in range(len(ids)):
+        categories[i].id = PydanticObjectId(ids[i])
+
+    subcategories = [
+        ServiceCategory(name=n, parent=p)
+        for subnames, p in zip(
+            SERVICE_CATEGORIES_NAMES.values(),
+            categories,
+            strict=False,
+        )
+        for n in subnames
     ]
-    insert_results = await ServiceCategory.insert_many(categories)
-    for i in range(len(insert_results.inserted_ids)):
-        categories[i].id = PydanticObjectId(insert_results.inserted_ids[i])
-    subcategories = []
-    for nn, p in zip(
-        [
-            ("Веб-разработка", "Мобильная разработка"),
-            ("Графический дизайн", "UX/UI дизайн"),
-            ("SMM", "Контекстная реклама"),
-            ("Написание песен", "Звукорежиссура"),
-        ],
-        categories,
-        strict=False,
-    ):
-        subcategories.append(ServiceCategory(name=nn[0], parent=p))
-        subcategories.append(ServiceCategory(name=nn[1], parent=p))
     await ServiceCategory.insert_many(subcategories)
     yield
