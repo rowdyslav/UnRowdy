@@ -51,11 +51,16 @@ class UserUpdate(SharedUser, BaseUserUpdate):
     username: Annotated[str, Field(max_length=20)] | None
 
 
+class ServiceCategoryRead(SharedServiceCategory):
+    """Поля ServiceCategory для чтения"""
+
+
 class ServiceRead(SharedService):
     """Поля Service для чтения"""
 
     id: PydanticObjectId
     user: UserRead
+    category: ServiceCategoryRead
 
 
 class ServiceCreate(SharedService):

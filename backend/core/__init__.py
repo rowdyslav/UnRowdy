@@ -39,7 +39,6 @@ __all__ = [
     "UserRead",
     "UserUpdate",
     "already_friend_or_request",
-    "bad_friends_type",
     "friend_request_yourself",
     "service_category_not_found",
     "service_not_found",
