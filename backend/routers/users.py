@@ -16,9 +16,11 @@ from core import (
     UserUpdate,
     already_friend_or_request,
     friend_request_yourself,
+    service_category_not_found,
     user_no_friend_or_request,
     user_not_found,
 )
+from core.models import ServiceCategory
 
 router = APIRouter(prefix="/users", tags=["Users"])
 router.include_router(FASTAPI_USERS.get_users_router(UserRead, UserUpdate))
@@ -39,10 +41,20 @@ async def read_me_services(me: AuthorizedUser) -> list[ServiceRead]:
 
 @router.post("/me/services/", status_code=status.HTTP_201_CREATED)
 async def add_me_services(me: AuthorizedUser, service_in: ServiceCreate) -> ServiceRead:
-    service = Service(user=me, **service_in.model_dump(exclude_unset=True))
+    category = await ServiceCategory.get(service_in.category_id)
+    if category is None:
+        raise service_category_not_found
+
+    service = Service(
+        user=me,
+        category=category,
+        **service_in.model_dump(exclude={"category_id"}, exclude_unset=True),
+    )
     await service.insert()
+
     me.services.append(service)
     await me.save()
+
     return service
 
 
@@ -109,10 +121,7 @@ async def edit_me_friends(me: AuthorizedUser, user_id: PydanticObjectId) -> User
 async def read_me_friends(
     me: AuthorizedUser, friend_type: FriendType
 ) -> list[UserRead]:
-    return [
-        await User.get(user_id)
-        for user_id in me.friends_ids[friend_type]
-    ]
+    return [await User.get(user_id) for user_id in me.friends_ids[friend_type]]
 
 
 @router.delete(
@@ -151,7 +160,4 @@ async def read_one_friends(
     if user is None:
         raise user_not_found
 
-    return [
-        await User.get(user_id)
-        for user_id in user.friends_ids[friend_type]
-    ]
+    return [await User.get(user_id) for user_id in user.friends_ids[friend_type]]

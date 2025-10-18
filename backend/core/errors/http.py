@@ -16,4 +16,7 @@ user_no_friend_or_request = HTTPException(
 )
 
 
-service_not_found = HTTPException(404, "Желание не найдено!")
+service_not_found = HTTPException(404, "Услуга не найдена!")
+
+
+service_category_not_found = HTTPException(404, "Категория услуги не найдена!")

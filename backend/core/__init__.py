@@ -4,6 +4,7 @@ from .deps import AuthorizedUser, PaginationQuery, UserQuery
 from .errors.http import (
     already_friend_or_request,
     friend_request_yourself,
+    service_category_not_found,
     service_not_found,
     user_already_existed,
     user_no_friend_or_request,
@@ -40,6 +41,7 @@ __all__ = [
     "already_friend_or_request",
     "bad_friends_type",
     "friend_request_yourself",
+    "service_category_not_found",
     "service_not_found",
     "user_already_existed",
     "user_no_friend_or_request",

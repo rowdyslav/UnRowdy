@@ -60,3 +60,5 @@ class ServiceRead(SharedService):
 
 class ServiceCreate(SharedService):
     """Поля Service для создания"""
+
+    category_id: PydanticObjectId
