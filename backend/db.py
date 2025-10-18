@@ -23,8 +23,14 @@ SERVICE_CATEGORIES_NAMES = {
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     await init_beanie(database=db, document_models=[User, Service, ServiceCategory])
 
-    a = [[k, *v] for k, v in SERVICE_CATEGORIES_NAMES]
-    if set(sum(a)) == {sc.name for sc in await ServiceCategory.find_all()}:
+    all_names = {
+        name
+        for names_row in [(k, *v) for k, v in SERVICE_CATEGORIES_NAMES.items()]
+        for name in names_row
+    }
+    existing_names = {sc.name for sc in await ServiceCategory.find_all().to_list()}
+
+    if all_names == existing_names:
         yield
 
     categories = [ServiceCategory(name=n) for n in SERVICE_CATEGORIES_NAMES]
@@ -33,13 +39,12 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         categories[i].id = PydanticObjectId(ids[i])
 
     subcategories = [
-        ServiceCategory(name=n, parent=p)
-        for subnames, p in zip(
-            SERVICE_CATEGORIES_NAMES.values(),
-            categories,
-            strict=False,
+        ServiceCategory(name=subname, parent=parent)
+        for subnames, parent in zip(
+            SERVICE_CATEGORIES_NAMES.values(), categories, strict=False
         )
-        for n in subnames
+        for subname in subnames
     ]
     await ServiceCategory.insert_many(subcategories)
+
     yield
