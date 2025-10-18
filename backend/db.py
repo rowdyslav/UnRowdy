@@ -23,7 +23,7 @@ SERVICE_CATEGORIES_NAMES = {
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     await init_beanie(database=db, document_models=[User, Service, ServiceCategory])
 
-    a = [[k, *v] for k, v in SERVICE_CATEGORIES_NAMES]
+    a = [[k, *v] for k, v in SERVICE_CATEGORIES_NAMES.items()]
     if set(sum(a)) == {sc.name for sc in await ServiceCategory.find_all()}:
         yield
 
