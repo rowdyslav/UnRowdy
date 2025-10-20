@@ -5,12 +5,16 @@ export type ServiceTypes = {
   description: string | null
   price: number
   image_b64: string
+  category: { name: string }
   id?: string
 }
 
-export type ServiceApiPostType = Omit<ServiceTypes, 'id'> & {
-  category?: string
-  subcategory?: string
+export type ServiceApiPostType = {
+  name: string
+  description: string | null
+  price: number
+  image_b64: string
+  category_id: string
 }
 
 export type ServiceApiGetType = ServiceTypes & { user: UserType }

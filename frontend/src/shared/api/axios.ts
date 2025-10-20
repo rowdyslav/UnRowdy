@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useAuthStore } from '@/app/providers/auth/authStore.ts'
+import { useNotificationStore } from '@/app/providers/Notification/NotificationStore.ts'
 
 export const api = axios.create({
   baseURL: 'http://127.0.0.1:8000',
@@ -18,9 +19,8 @@ api.interceptors.request.use(config => {
 })
 
 const handleUnauthorized = () => {
-  const logout = useAuthStore.getState().logout
-
-  logout()
+  useAuthStore.getState().logout()
+  useNotificationStore.getState().showError('Требуется повторный вход')
 }
 
 //проверка жизни токена

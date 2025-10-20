@@ -5,11 +5,11 @@ import OrderCard from '@/features/service/components/OrderCard.tsx'
 import SellerCard from '@/pages/service/components/SellerCard.tsx'
 
 const ServicePage = () => {
-  const { image_b64, name, price, description, user }: ServiceApiGetType = useLoaderData()
+  const { user, price, ...serviceProps }: ServiceApiGetType = useLoaderData()
 
   return (
     <section className='container-mini grid grid-cols-[2fr_1fr] gap-x-6'>
-      <Service name={name} image_b64={image_b64} description={description || null} />
+      <Service {...serviceProps} />
 
       <div className='flex flex-col gap-y-3'>
         <OrderCard price={price} />

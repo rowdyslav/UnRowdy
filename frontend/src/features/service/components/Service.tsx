@@ -1,22 +1,23 @@
 import type { ServiceProps } from '@/features/service/types/serviceProps.ts'
 
-const Service = ({ name, image_b64, description }: ServiceProps) => {
+const Service = ({ name, image_b64, description, category }: ServiceProps) => {
   return (
     <article className='w-full card-element'>
       <img src={`data:${image_b64}`} alt='/' className='rounded-t-lg w-full' />
 
       <div className='px-6 py-3 flex justify-between flex-col'>
-        <h3 className='text-2xl font-bold color-font mb-4'>{name}</h3>
+        <div className='flex items-center justify-between mb-4'>
+          <h3 className='text-3xl font-bold color-font'>{name}</h3>
 
+          <p className='text-sm border border-gray-200 w-fit mt-2 py-0.5 px-1.5 rounded-lg font-medium '>
+            {category.name}
+          </p>
+        </div>
         <h3 className='text-2xl font-bold color-font'>Описание услуги</h3>
 
-        {description ? (
-          <p className='color-font-light text-xl mt-1'>{description}</p>
-        ) : (
-          <p className='color-font-light text-xl mt-1 italic'>
-            На данный момент описание отсутствует
-          </p>
-        )}
+        <p className={`color-font-light text-xl ${description ? '' : 'italic'}`}>
+          {description ? description : 'На данный момент описание отсутствует'}
+        </p>
       </div>
     </article>
   )

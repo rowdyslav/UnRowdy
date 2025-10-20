@@ -6,9 +6,11 @@ const NoFriendsCard = () => {
 
   return (
     <div className='card-element center-inline p-3 color-font-light'>
-      {isMyProfile
-        ? 'В данный момент у вас нет друзей :('
-        : `В данный момент у пользователя ${profile?.username} нет друзей :(`}
+      <p>
+        {isMyProfile
+          ? 'В данный момент у вас нет друзей :('
+          : `В данный момент у пользователя ${profile?.username} нет друзей :(`}
+      </p>
     </div>
   )
 }

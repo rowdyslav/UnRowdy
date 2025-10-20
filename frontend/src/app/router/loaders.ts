@@ -9,7 +9,6 @@ import { serviceApi } from '@/shared/api/service.ts'
 export const protectedLoader = () => {
   const isAuthenticated = useAuthStore.getState().isAuthenticated
   if (!isAuthenticated) return redirect(ROUTES.HOME)
-  return null
 }
 
 export const publicLoader = () => {

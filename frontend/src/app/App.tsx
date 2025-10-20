@@ -1,15 +1,17 @@
 import { RouterProvider } from 'react-router-dom'
 import { router } from '@/app/router/AppRouter.tsx'
 import { ReactQueryProvider } from '@/app/providers/ReactQueryProvider.tsx'
-import { NotificationProvider } from '@/app/providers/Notification/NotificationContext.tsx'
+import { Notification } from '@/shared/components/Notification.tsx'
 
 function App() {
   return (
-    <NotificationProvider>
+    <>
+      <Notification />
+
       <ReactQueryProvider>
         <RouterProvider router={router} />
       </ReactQueryProvider>
-    </NotificationProvider>
+    </>
   )
 }
 

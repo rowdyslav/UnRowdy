@@ -1,77 +1,31 @@
-import type { CategoriesProps } from '@/features/categories/types/pickerType.ts'
-import CategoryCard from '@/features/categories/ui/CategoryCard.tsx'
+import SubCategoriesList from '@/features/categories/components/SubCategoriesList.tsx'
+import type { CategoriesType } from '@/shared/types/categoriesType.ts'
+import { Skeleton } from '@/shared/ui/Skeleton.tsx'
+import { Fragment } from 'react'
 
-const dat: datType[] = [
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'ИИ технологии',
-    cat: [
-      {
-        label: 'Генерация текстов',
-        count: 133,
-      },
-      {
-        label: 'Генерация картинок',
-        count: 1243,
-      },
-      {
-        label: 'Генерация стихов',
-        count: 3,
-      },
-      {
-        label: 'Генерация песен',
-        count: 3,
-      },
-    ],
-  },
-]
-
-export type datType = {
-  label: string
-  cat: catType[]
-}
-
-export type catType = {
-  label: string
-  count: number
-}
-
-const CategoriesList = ({ activeCategory }: CategoriesProps) => {
-  const selectCategory =
-    activeCategory === 'Все категории' ? dat : dat.filter(data => data.label === activeCategory)
+const CategoriesList = ({ data, isLoading }: { data: CategoriesType[]; isLoading: boolean }) => {
+  if (isLoading)
+    return (
+      <div>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <Fragment key={index}>
+            <Skeleton className='w-1/4 h-14 mb-4' />
+            <ul className='grid grid-cols-3 gap-4 mb-12'>
+              {Array.from({ length: 2 }).map((_, index) => (
+                <Skeleton key={index} className='w-full h-36' />
+              ))}
+            </ul>
+          </Fragment>
+        ))}
+      </div>
+    )
 
   return (
     <div>
-      <h3 className='color-font text-4xl font-bold mb-6'>
-        {activeCategory === 'Все категории' ? 'Все категории' : ''}
-      </h3>
-
-      {selectCategory.map((category, index) => (
-        <div key={index}>
-          <h3 className='color-font text-3xl font-semibold  mb-6'>{category.label}</h3>
-          <ul className='grid grid-cols-3 gap-4 mb-12'>
-            {category.cat.map(underCat => (
-              <li key={underCat.label}>
-                {<CategoryCard label={underCat.label} count={underCat.count} />}
-              </li>
-            ))}
-          </ul>
+      {data.map(category => (
+        <div key={category.name} id={category.name}>
+          <h3 className='color-font text-3xl font-semibold mb-6'>{category.name}</h3>
+          <SubCategoriesList parentId={category._id} />
         </div>
       ))}
     </div>

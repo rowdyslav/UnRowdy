@@ -6,7 +6,7 @@ import ServiceList from '@/features/service/components/ServiceList.tsx'
 
 const CategoryPage = () => {
   const params = useParams()
-  const { data: servicesData, isLoading } = useAllServices()
+  const { data: servicesData = [], isLoading } = useAllServices()
 
   const { register } = useForm<{ searchQuery: string }>()
 
@@ -16,7 +16,7 @@ const CategoryPage = () => {
 
       <div className='grid grid-cols-[1fr_4fr] gap-x-6'>
         <CategoryFilter register={register} />
-        <ServiceList servicesData={servicesData} isLoading={isLoading} type='noneProfile'/>
+        <ServiceList servicesData={servicesData} isLoading={isLoading} type='noneProfile' />
       </div>
     </section>
   )

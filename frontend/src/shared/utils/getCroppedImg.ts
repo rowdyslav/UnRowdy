@@ -29,5 +29,5 @@ export const getCroppedImg = async (
     pixelCrop.height,
   )
 
-  return canvas.toDataURL('image/jpeg') // или png
+  return canvas.toDataURL('image/jpeg')
 }

@@ -1,11 +1,14 @@
-export type NotificationContextValue = {
-  showSuccess: (message: string) => void
-  showError: (message: string) => void
-}
+type NotificationType = 'success' | 'error' | null
 
-export type NotificationType = 'success' | 'error' | null
-
-export type NotificationState = {
+export interface NotificationStoreType {
   type: NotificationType
-  message: string
+  content: string | null
+  timeoutId: NodeJS.Timeout | null
+
+  clearNotification: () => void
+
+  showNotification: (message: string, type: NotificationType) => void
+
+  showSuccess: (content: string) => void
+  showError: (content: string) => void
 }

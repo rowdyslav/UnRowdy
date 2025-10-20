@@ -1,8 +1,7 @@
-import type { catType } from '@/features/categories/components/CategoriesList.tsx'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '@/shared/const/routes.ts'
 
-const CategoryCard = ({ label }: catType) => {
+const CategoryCard = ({ label }: { label: string }) => {
   return (
     <Link
       to={`${ROUTES.CATEGORIES}/${label}`}

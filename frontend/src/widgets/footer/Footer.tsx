@@ -33,7 +33,7 @@ const Footer = () => {
         ))}
       </div>
       <div className='pt-8 flex justify-between '>
-        <p className='color-font-light '>© 2025 unRowdy. All rights reserved.</p>
+        <p className='color-font-light '>© 2025 unRowdy. Все права защищены</p>
         <Link to={'/'} className='color-font-light duration-200 hover:text-blue-500'>
           Политика обслуживания
         </Link>

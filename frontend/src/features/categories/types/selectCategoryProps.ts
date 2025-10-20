@@ -1,6 +1,6 @@
-import type { catType, datType } from '@/features/categories/components/CategoriesList.tsx'
+import type { CategoriesType } from '@/shared/types/categoriesType.ts'
 
 export type SelectProps = {
-  name: 'category' | 'subcategory'
-  data: datType[] | catType[]
+  name: 'subcategory' | 'category'
+  data: CategoriesType[]
 }

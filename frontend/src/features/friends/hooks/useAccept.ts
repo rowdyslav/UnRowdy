@@ -19,9 +19,5 @@ export const useAccept = () => {
       void queryClient.invalidateQueries({ queryKey: queryKeys.myActive })
       void queryClient.invalidateQueries({ queryKey: queryKeys.sent })
     },
-
-    onError: err => {
-      console.error('Ошибка при отправке запроса в друзья:', err)
-    },
   })
 }

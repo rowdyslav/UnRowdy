@@ -1,4 +1,4 @@
-import FriendCard from '@/features/friends/ui/FriendCard.tsx'
+import UserCard from '@/widgets/userCard/UserCard.tsx'
 import ViewProfileButton from '@/shared/components/ViewProfileButton.tsx'
 import AcceptButton from '@/features/friends/components/AcceptButton.tsx'
 import useRequests from '@/features/friends/hooks/useRequests.ts'
@@ -16,10 +16,10 @@ const RequestList = ({ type, label }: RequestListProps) => {
       <ul>
         {requestsData.map(user => (
           <li key={user.id}>
-            <FriendCard name={user.username} classname='bg-blue-50'>
+            <UserCard name={user.username} className='bg-blue-50'>
               <ViewProfileButton username={user.username} />
               {type === 'received' && <AcceptButton id={user.id} />}
-            </FriendCard>
+            </UserCard>
           </li>
         ))}
       </ul>

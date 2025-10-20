@@ -3,6 +3,7 @@ import * as React from 'react'
 import { useCallback, useRef, useState } from 'react'
 import { useController, useFormContext } from 'react-hook-form'
 import { getCroppedImg } from '@/shared/utils/getCroppedImg.ts'
+import { fileToBase64 } from '@/shared/utils/fileToBase64.ts'
 
 const ImageInput = ({ name }: { name: string }) => {
   const { control } = useFormContext()
@@ -26,17 +27,17 @@ const ImageInput = ({ name }: { name: string }) => {
     [],
   )
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
-    const reader = new FileReader()
-    reader.onload = () => {
-      const result = reader.result as string
-      setImageSrc(result)
-      field.onChange(result)
+    try {
+      const base64 = await fileToBase64(file)
+      setImageSrc(base64)
+      field.onChange(base64)
+    } catch (error) {
+      console.error('Error converting file:', error)
     }
-    reader.readAsDataURL(file)
   }
 
   const handleSaveCropped = async () => {

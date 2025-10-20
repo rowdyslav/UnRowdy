@@ -1,7 +1,7 @@
-import type { ServiceApiPostType, ServiceTypes } from '@/shared/types/serviceTypes.ts'
-import type { datType } from '@/features/categories/components/CategoriesList.tsx'
 import SelectCategory from '@/features/categories/components/SelectCategory.tsx'
+import { useCategories } from '@/features/categories/hooks/useCategories.ts'
 import { useAddService } from '@/features/service/hooks/useAddService.ts'
+import type { ServiceApiPostType } from '@/shared/types/serviceTypes.ts'
 import NavButton from '@/shared/components/navButton/NavButton.tsx'
 import { FormProvider, useForm, useWatch } from 'react-hook-form'
 import ImageInput from '@/shared/components/ImageInput.tsx'
@@ -11,319 +11,31 @@ import {
   type ServiceFormType,
 } from '@/features/service/types/ServiceForm.schema.ts'
 import Field from '@/shared/components/Field.tsx'
-import { useEffect } from 'react'
-
-const dat: datType[] = [
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'Разработка и IT',
-    cat: [
-      {
-        label: 'Разработка сайтов',
-        count: 123,
-      },
-      {
-        label: 'Мобильные приложения',
-        count: 1323,
-      },
-      {
-        label: 'Телеграмм бот',
-        count: 1443,
-      },
-    ],
-  },
-  {
-    label: 'ИИ технологии',
-    cat: [
-      {
-        label: 'Генерация текстов',
-        count: 133,
-      },
-      {
-        label: 'Генерация картинок',
-        count: 1243,
-      },
-      {
-        label: 'Генерация стихов',
-        count: 3,
-      },
-      {
-        label: 'Генерация песен',
-        count: 3,
-      },
-    ],
-  },
-]
 
 const AddService = () => {
   const methods = useForm<ServiceFormType>({
     resolver: zodResolver(ServiceFormSchema),
-    defaultValues: {
-      image_b64: '',
-      category: '',
-    },
-  })
-
-  const selectedCategory = useWatch({
-    control: methods.control,
-    name: 'category',
+    defaultValues: { image_b64: '', category: '', subcategory: '' },
   })
 
   const {
     handleSubmit,
     formState: { errors },
+    control,
+    register,
     setValue,
   } = methods
 
-  useEffect(() => {
-    setValue('subcategory', '')
-  }, [setValue, selectedCategory])
+  const selectedCategory = useWatch({ control, name: 'category' })
 
+  const { data: categoriesData = [] } = useCategories()
+  const { data: subcategoriesData = [] } = useCategories(selectedCategory)
   const { mutateAsync: addService } = useAddService()
 
-  const onSubmit = async (formData: ServiceApiPostType) => {
-    const payload: ServiceTypes = {
-      name: formData.name,
-      description: formData.description,
-      image_b64: formData.image_b64,
-      price: formData.price,
+  const onSubmit = async ({ category, ...payloadData }: ServiceFormType) => {
+    const payload: ServiceApiPostType = {
+      ...payloadData,
+      category_id: payloadData.subcategory || category,
     }
 
     await addService(payload)
@@ -336,7 +48,7 @@ const AddService = () => {
           {/* НАЗВАНИЕ */}
           <Field label='Название' error={errors.name?.message}>
             <input
-              {...methods.register('name')}
+              {...register('name')}
               placeholder='Например, "Создание майнкрафт сервера"'
               className='input py-2'
             />
@@ -345,7 +57,7 @@ const AddService = () => {
           {/* ОПИСАНИЕ */}
           <Field label='Описание' error={errors.description?.message}>
             <textarea
-              {...methods.register('description')}
+              {...register('description')}
               placeholder='Например, "Создание сервера дешево и быстро!"'
               className='input py-2'
             />
@@ -354,15 +66,17 @@ const AddService = () => {
           {/* КАТЕГОРИИ */}
           <div className='grid grid-cols-2 gap-4'>
             <Field label='Категория' error={errors.category?.message}>
-              <SelectCategory name='category' data={dat} />
+              <SelectCategory
+                data={categoriesData}
+                {...register('category', {
+                  onChange: () => setValue('subcategory', ''),
+                })}
+              />
             </Field>
 
             <div className={`${!selectedCategory ? 'opacity-50 pointer-events-none' : ''}`}>
               <Field label='Подкатегория' error={errors.subcategory?.message}>
-                <SelectCategory
-                  name='subcategory'
-                  data={dat.find(data => data.label === selectedCategory)?.cat || []}
-                />
+                <SelectCategory name='subcategory' data={subcategoriesData} />
               </Field>
             </div>
           </div>
@@ -375,7 +89,7 @@ const AddService = () => {
           {/* ЦЕНА */}
           <Field label='Цена' error={errors.price?.message}>
             <input
-              {...methods.register('price', { valueAsNumber: true })}
+              {...register('price', { valueAsNumber: true })}
               placeholder='10000'
               className='input py-2'
               type='number'

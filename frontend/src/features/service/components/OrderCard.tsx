@@ -1,6 +1,4 @@
-import type { OrderCardProps } from '@/features/service/types/orderCardProps.ts'
-
-const OrderCard = ({ price }: OrderCardProps) => {
+const OrderCard = ({ price }: { price: number }) => {
   return (
     <div className='card-element p-6 flex flex-col gap-y-3 h-fit'>
       <h4 className='text-blue-500 text-3xl font-medium text-center'>{price}₽</h4>

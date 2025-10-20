@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { serviceApi } from '@/shared/api/service.ts'
 import type { ServiceApiPostType } from '@/shared/types/serviceTypes.ts'
-import { useNavigate } from 'react-router-dom'
 import { queryKeys } from '@/features/service/types/queryKeys.ts'
-import { useNotification } from '@/shared/hooks/useNotification.ts'
+import { useNotificationStore } from '@/app/providers/Notification/NotificationStore.ts'
+import { useNavigate } from 'react-router-dom'
 
 export const useAddService = () => {
   const queryClient = useQueryClient()
+  const showSuccess = useNotificationStore(state => state.showSuccess)
   const navigate = useNavigate()
-  const { showSuccess } = useNotification()
 
   return useMutation<void, Error, ServiceApiPostType>({
     mutationFn: async data => {
@@ -17,12 +17,12 @@ export const useAddService = () => {
 
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: queryKeys.services })
-      showSuccess('Услуга успешно создана')
       navigate(-1)
+      showSuccess('Услуга успешно создана')
     },
 
-    onError: e => {
-      console.log(e)
+    onError: err => {
+      console.error('Error create new service:', err)
     },
   })
 }

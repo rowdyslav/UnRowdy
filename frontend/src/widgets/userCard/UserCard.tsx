@@ -1,24 +1,18 @@
-import LogoutButton from '@/features/auth/components/LogoutButton.tsx'
-import { useProfileStore } from '@/app/providers/profile/userStore.ts'
+import type { CardProps } from '@/features/friends/types/friendCardProps.ts'
 
-const UserCard = () => {
-  const isMyProfile = useProfileStore(state => state.isMyProfile)
-  const profile = useProfileStore(state => state.profile)
-
+const UserCard = ({ name, children, className }: CardProps) => {
   return (
-    <article className='card-element p-6 flex gap-x-4'>
-      <img src='/public/icons/accCircle2.svg' alt='' height={100} width={100} />
+    <article className={`card-element p-4 flex justify-between items-center ${className}`}>
+      <div className='flex gap-x-2 items-center h-full'>
+        <img src='/icons/accCircle2.svg' alt='' className='h-4/5 w-4/5' />
 
-      <div className='flex flex-col gap-y-2'>
-        {profile && <p className='text-3xl font-bold color-font'>{profile.username}</p>}
-        {profile && <p className='color-font-light text-lg'>Очень крутой разработчик</p>}
+        <div className='flex flex-col'>
+          {name && <p className='text-xl font-bold color-font'>{name}</p>}
+          {name && <p className='color-font-light text-nowrap'>Очень крутой разработчик</p>}
+        </div>
       </div>
 
-      {isMyProfile && (
-        <div className='ml-auto my-auto'>
-          <LogoutButton />
-        </div>
-      )}
+      <div className='flex gap-x-2'>{children}</div>
     </article>
   )
 }

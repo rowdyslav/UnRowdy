@@ -1,3 +1,3 @@
 export const queryKeys = {
-  services: ['services'] as const,
-}
+  services: ['services'],
+} as const

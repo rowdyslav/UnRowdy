@@ -1,15 +1,14 @@
 import CategoryPicker from '@/features/categories/components/CategoryPicker.tsx'
 import CategoryList from '@/features/categories/components/CategoriesList.tsx'
-import { useState } from 'react'
+import { useCategories } from '@/features/categories/hooks/useCategories.ts'
 
 const CategoriesPage = () => {
-  const [activeCategory, setActiveCategory] = useState<string>('Все категории')
+  const { data: categoriesData, isLoading } = useCategories()
 
   return (
     <section className='container grid grid-cols-[1fr_3.4fr] gap-x-10'>
-      <CategoryPicker activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
-
-      <CategoryList activeCategory={activeCategory} />
+      <CategoryPicker data={categoriesData || []} isLoading={isLoading} />
+      <CategoryList data={categoriesData || []} isLoading={isLoading} />
     </section>
   )
 }

@@ -24,6 +24,6 @@ export const useServices = () => {
       return response.data
     },
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 20,
   })
 }

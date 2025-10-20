@@ -1,17 +1,24 @@
+import { getFriendErrorMessage } from '@/features/friends/utils/getFriendErrorMessage.ts'
+import { useNotificationStore } from '@/app/providers/Notification/NotificationStore.ts'
 import { useAdd } from '@/features/friends/hooks/useAdd.ts'
 import { useForm } from 'react-hook-form'
 
 const AddFriend = () => {
   const { register, handleSubmit, reset } = useForm<{ username: string }>()
   const { mutate: addFriend, reset: resetError } = useAdd()
+  const showSuccess = useNotificationStore(state => state.showSuccess)
+  const showError = useNotificationStore(state => state.showError)
 
   const onSubmit = async (data: { username: string }) => {
-    try {
-      addFriend(data.username)
-      reset()
-    } catch (e) {
-      console.log(e)
-    }
+    addFriend(data.username, {
+      onSuccess: () => {
+        showSuccess('Заявка успешно отправлена!')
+        reset()
+      },
+      onError: err => {
+        showError(getFriendErrorMessage(err))
+      },
+    })
   }
 
   return (
