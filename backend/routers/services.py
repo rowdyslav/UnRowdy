@@ -4,6 +4,7 @@ from core import (
     ErrorResponsesDict,
     PaginationQuery,
     Service,
+    ServiceQuery,
     ServiceRead,
     service_not_found,
 )
@@ -12,10 +13,16 @@ router = APIRouter(prefix="/services", tags=["Services"])
 
 
 @router.get("")
-async def read_many(pagination: PaginationQuery) -> list[ServiceRead]:
-    return await Service.find_all(
-        pagination.skip, pagination.limit, fetch_links=True
-    ).to_list()
+async def read_many(pagination: PaginationQuery, q: ServiceQuery) -> list[ServiceRead]:
+    cn = q.category_name
+    services = Service.find(
+        q.model_dump(exclude={"category_name"}, exclude_none=True),
+        skip=pagination.skip,
+        limit=pagination.limit,
+    )
+    if cn is not None:
+        services = services.find(Service.category.name == cn, fetch_links=True)
+    return await services.to_list()
 
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)

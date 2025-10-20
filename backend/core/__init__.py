@@ -1,6 +1,6 @@
 """Параметры, ошибки, модели, схемы и UserManager"""
 
-from .deps import AuthorizedUser, PaginationQuery, UserQuery
+from .deps import AuthorizedUser, PaginationQuery, ServiceQuery, UserQuery
 from .errors.http import (
     already_friend_or_request,
     friend_request_yourself,
@@ -15,8 +15,10 @@ from .models import Service, ServiceCategory, User
 from .schemas import (
     FriendType,
     ServiceCreate,
+    ServiceFind,
     ServiceRead,
     UserCreate,
+    UserFind,
     UserRead,
     UserUpdate,
 )
@@ -32,9 +34,12 @@ __all__ = [
     "Service",
     "ServiceCategory",
     "ServiceCreate",
+    "ServiceFind",
+    "ServiceQuery",
     "ServiceRead",
     "User",
     "UserCreate",
+    "UserFind",
     "UserQuery",
     "UserRead",
     "UserUpdate",

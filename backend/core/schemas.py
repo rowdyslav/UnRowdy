@@ -1,9 +1,14 @@
-from typing import Annotated, Literal
+from typing import Annotated, Literal, get_type_hints
 
 from beanie import Indexed, PydanticObjectId
 from fastapi import Query
 from fastapi_users.schemas import BaseUser, BaseUserCreate, BaseUserUpdate
-from pydantic import BaseModel, Field, NonNegativeInt
+from pydantic import BaseModel, Field, NonNegativeInt, create_model
+
+optional_model = lambda model: create_model(
+    f"{model.__name__}Find",
+    **{k: (v | None, None) for k, v in get_type_hints(model).items()},
+)
 
 
 class Pagination(BaseModel):
@@ -51,6 +56,11 @@ class UserUpdate(SharedUser, BaseUserUpdate):
     username: Annotated[str, Field(max_length=20)] | None
 
 
+@optional_model
+class UserFind(SharedUser):
+    """Поля User для поиска"""
+
+
 class ServiceCategoryRead(SharedServiceCategory):
     """Поля ServiceCategory для чтения"""
 
@@ -67,3 +77,10 @@ class ServiceCreate(SharedService):
     """Поля Service для создания"""
 
     category_id: PydanticObjectId
+
+
+@optional_model
+class ServiceFind(SharedService):
+    """Поля Service для поиска"""
+
+    category_name: str
