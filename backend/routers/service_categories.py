@@ -3,16 +3,16 @@ from fastapi import APIRouter
 
 from core import ServiceCategory
 
-router = APIRouter(prefix="/services", tags=["Services"])
+router = APIRouter(prefix="/services", tags=["ServiceCategories"])
 
 
 @router.get("/categories/")
-async def read_service_categories() -> list[ServiceCategory]:
+async def read_many() -> list[ServiceCategory]:
     return await ServiceCategory.find({"parent": None}).to_list()
 
 
 @router.get("/categories/{category_id}")
-async def read_service_category_subcategories(
+async def read_one_subcategories(
     category_id: PydanticObjectId,
 ) -> list[ServiceCategory]:
     return await ServiceCategory.find(
