@@ -5,5 +5,5 @@ export const getFriendErrorMessage = (err: AxiosError) => {
     case 409:
       return 'Заявка уже отправлена или пользователь ваш друг'
   }
-  return 'Неизвестная ошибка'
+  return 'Не удалось найти пользователя'
 }

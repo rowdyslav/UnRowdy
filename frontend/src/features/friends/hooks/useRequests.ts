@@ -11,7 +11,6 @@ const useRequests = (type: 'sent' | 'received') => {
       const response = await friendsApi.getMyFriends(type)
       return response.data
     },
-    staleTime: 1000 * 60 * 3,
   })
 }
 
