@@ -19,15 +19,15 @@ async def read_many(pagination: PaginationQuery, q: ServiceQuery) -> list[Servic
     services = Service.find_all(pagination.skip, pagination.limit)
     if (cn := q.category_name) is not None:
         services = services.find(Service.category.name == cn, fetch_links=True)
-        if k := q.keywords.split():
-            services = services.find(
-                Or(
-                    *[RegEx(Service.name, kw, "i") for kw in k],
-                    *[RegEx(Service.description, kw, "i") for kw in k],
-                ),
-            )
+    if k := q.keywords.split():
+        services = services.find(
+            Or(
+                *[RegEx(Service.name, kw, "i") for kw in k],
+                *[RegEx(Service.description, kw, "i") for kw in k],
+            ),
+        )
     return await services.find(
-        q.max_price >= Service.price >= q.min_price, fetch_links=True
+        q.max_price >= Service.price, Service.price >= q.min_price, fetch_links=True
     ).to_list()
 
 
