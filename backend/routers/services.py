@@ -1,3 +1,4 @@
+from beanie.operators import Or, RegEx
 from fastapi import APIRouter, status
 
 from core import (
@@ -14,15 +15,19 @@ router = APIRouter(prefix="/services", tags=["Services"])
 
 @router.get("")
 async def read_many(pagination: PaginationQuery, q: ServiceQuery) -> list[ServiceRead]:
-    cn = q.category_name
-    services = Service.find(
-        q.model_dump(exclude={"category_name"}, exclude_none=True),
-        skip=pagination.skip,
-        limit=pagination.limit,
-    )
-    if cn is not None:
+    services = Service.find_all(pagination.skip, pagination.limit)
+    if (cn := q.category_name) is not None:
         services = services.find(Service.category.name == cn, fetch_links=True)
-    return await services.to_list()
+        if k := q.keywords.split():
+            services = services.find(
+                Or(
+                    *[RegEx(Service.name, kw, "i") for kw in k],
+                    *[RegEx(Service.description, kw, "i") for kw in k],
+                ),
+            )
+    return await services.find(
+        q.max_price >= Service.price >= q.min_price, fetch_links=True
+    ).to_list()
 
 
 @router.delete("", status_code=status.HTTP_204_NO_CONTENT)

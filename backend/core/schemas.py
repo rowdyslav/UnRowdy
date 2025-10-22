@@ -5,8 +5,10 @@ from fastapi import Query
 from fastapi_users.schemas import BaseUser, BaseUserCreate, BaseUserUpdate
 from pydantic import BaseModel, Field, NonNegativeInt, create_model
 
+FriendType = Literal["active", "sent", "received"]
+
 optional_model = lambda model: create_model(
-    f"{model.__name__}Find",
+    f"{model.__name__}",
     **{k: (v | None, None) for k, v in get_type_hints(model).items()},
 )
 
@@ -24,10 +26,33 @@ class SharedUser(BaseModel):
     username: Annotated[str, Field(max_length=20), Indexed(unique=True)]
 
 
+class UserRead(SharedUser, BaseUser[PydanticObjectId]):
+    """User для чтения"""
+
+
+class UserCreate(SharedUser, BaseUserCreate):
+    """User для создания"""
+
+
+class UserUpdate(SharedUser, BaseUserUpdate):
+    """User для обновления"""
+
+    username: Annotated[str, Field(max_length=20)] | None
+
+
+@optional_model
+class UserFind(SharedUser):
+    """User для поиска"""
+
+
 class SharedServiceCategory(BaseModel):
     """Базовые поля ServiceCategory"""
 
     name: Annotated[str, Indexed(unique=True)]
+
+
+class ServiceCategoryRead(SharedServiceCategory):
+    """ServiceCategory для чтения"""
 
 
 class SharedService(BaseModel):
@@ -39,34 +64,17 @@ class SharedService(BaseModel):
     image_b64: str | None = None
 
 
-FriendType = Literal["active", "sent", "received"]
+class ServiceFind(BaseModel):
+    """Специальные поля Service для поиска"""
 
-
-class UserRead(SharedUser, BaseUser[PydanticObjectId]):
-    """Поля User для чтения"""
-
-
-class UserCreate(SharedUser, BaseUserCreate):
-    """Поля User для создания"""
-
-
-class UserUpdate(SharedUser, BaseUserUpdate):
-    """Поля User для обновления"""
-
-    username: Annotated[str, Field(max_length=20)] | None
-
-
-@optional_model
-class UserFind(SharedUser):
-    """Поля User для поиска"""
-
-
-class ServiceCategoryRead(SharedServiceCategory):
-    """Поля ServiceCategory для чтения"""
+    category_name: str | None = None
+    keywords: str = ""
+    min_price: int = 1
+    max_price: int | None = 0x7FFFFFFFFFFFFFFF
 
 
 class ServiceRead(SharedService):
-    """Поля Service для чтения"""
+    """Service для чтения"""
 
     id: PydanticObjectId
     user: UserRead
@@ -74,13 +82,6 @@ class ServiceRead(SharedService):
 
 
 class ServiceCreate(SharedService):
-    """Поля Service для создания"""
+    """Service для создания"""
 
     category_id: PydanticObjectId
-
-
-@optional_model
-class ServiceFind(SharedService):
-    """Поля Service для поиска"""
-
-    category_name: str
