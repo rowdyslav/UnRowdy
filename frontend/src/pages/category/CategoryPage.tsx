@@ -6,7 +6,7 @@ import { FilterEnum } from '@/features/categories/types/filterEnum.ts'
 import { useEffect } from 'react'
 
 const CategoryPage = () => {
-  const { category } = useParams()
+  const { category_name } = useParams()
   const [searchParams] = useSearchParams()
 
   const keywords = searchParams.get(FilterEnum.keywords)
@@ -18,7 +18,7 @@ const CategoryPage = () => {
     isLoading,
     refetch,
   } = useAllServices({
-    category,
+    category_name,
     keywords,
     min_price,
     max_price,
@@ -30,7 +30,7 @@ const CategoryPage = () => {
 
   return (
     <section className='container '>
-      <h2 className='color-font text-4xl font-semibold mb-6'>{category}</h2>
+      <h2 className='color-font text-4xl font-semibold mb-6'>{category_name}</h2>
 
       <div className='grid grid-cols-[1fr_4fr] gap-x-6'>
         <CategoryFilter />
