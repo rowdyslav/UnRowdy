@@ -17,6 +17,7 @@ from .schemas import (
     ServiceCreate,
     ServiceFind,
     ServiceRead,
+    ServiceUpdate,
     UserCreate,
     UserFind,
     UserRead,

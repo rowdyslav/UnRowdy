@@ -34,10 +34,9 @@ class UserCreate(SharedUser, BaseUserCreate):
     """User для создания"""
 
 
+@optional_model
 class UserUpdate(SharedUser, BaseUserUpdate):
     """User для обновления"""
-
-    username: Annotated[str, Field(max_length=20)] | None
 
 
 @optional_model
@@ -85,3 +84,8 @@ class ServiceCreate(SharedService):
     """Service для создания"""
 
     category_id: PydanticObjectId
+
+
+@optional_model
+class ServiceUpdate(SharedService):
+    """Service для обновления"""

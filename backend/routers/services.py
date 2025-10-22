@@ -7,6 +7,7 @@ from core import (
     Service,
     ServiceQuery,
     ServiceRead,
+    ServiceUpdate,
     service_not_found,
 )
 
@@ -41,6 +42,14 @@ async def read_one(service_id: str) -> ServiceRead:
     if service is None:
         raise service_not_found
     return service
+
+
+@router.get("/{service_id}", responses=ErrorResponsesDict("not_found"))
+async def update_one(service_id: str, u: ServiceUpdate) -> ServiceRead:
+    service = await Service.get(service_id, fetch_links=True)
+    if service is None:
+        raise service_not_found
+    return await service.set(u.model_dump(exclude_none=True))
 
 
 @router.delete(
