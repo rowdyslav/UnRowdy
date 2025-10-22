@@ -1,17 +1,17 @@
 import * as React from 'react'
 
-const Field = ({
-  label,
-  error,
-  children,
-}: {
+interface FieldProps {
   label?: string
   error?: string | null
   children: React.ReactNode
-}) => (
+}
+
+const Field = ({ label, error, children }: FieldProps) => (
   <div className='add-flex'>
-    <h3 className='text-lg font-bold color-font-light'>{label}</h3>
-    {children}
+    <label className='text-lg font-bold color-font-light'>
+      {label}
+      {children}
+    </label>
     {error && <p className='text-center text-red-400'>{error}</p>}
   </div>
 )

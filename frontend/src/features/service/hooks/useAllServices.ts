@@ -1,16 +1,15 @@
-import type {ServiceApiGetType} from '@/shared/types/serviceTypes.ts'
-import {serviceApi} from '@/shared/api/service.ts'
-import {useQuery} from '@tanstack/react-query'
-import type {FilterServiceType} from "@/shared/types/filterServiceType.ts";
+import type { ServiceApiGetType } from '@/shared/types/serviceTypes.ts'
+import { serviceApi } from '@/shared/api/service.ts'
+import { useQuery } from '@tanstack/react-query'
+import type { FilterQueryTypes } from '@/features/categories/types/Filter.schema.ts'
 
-export const useAllServices = ({category_name}: FilterServiceType) => {
+export const useAllServices = (data: FilterQueryTypes & { category?: string }) => {
   return useQuery<ServiceApiGetType[]>({
-    queryKey: ['services', 'all', category_name],
+    queryKey: ['services', 'all', data.category, data.keywords],
 
     queryFn: async () => {
-      const response = await serviceApi.getAllServices(category_name)
+      const response = await serviceApi.getAllServices({ ...data })
       return response.data
     },
-    staleTime: 0
   })
 }

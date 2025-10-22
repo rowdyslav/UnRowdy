@@ -11,7 +11,7 @@ export type ServiceTypes = {
 
 export type ServiceApiPostType = {
   name: string
-  description: string | null
+  description?: string
   price: number
   image_b64: string
   category_id: string

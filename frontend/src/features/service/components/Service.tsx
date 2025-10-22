@@ -7,7 +7,7 @@ const Service = ({ name, image_b64, description, category }: ServiceProps) => {
 
       <div className='px-6 py-3 flex justify-between flex-col'>
         <div className='flex items-center justify-between mb-4'>
-          <h3 className='text-5xl font-bold color-font'>{name}</h3>
+          <h3 className='text-4xl font-bold color-font'>{name}</h3>
 
           <p className='text-sm border border-gray-200 w-fit mt-2 py-0.5 px-1.5 rounded-lg font-medium '>
             {category.name}

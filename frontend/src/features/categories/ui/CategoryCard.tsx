@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom'
 import { ROUTES } from '@/shared/const/routes.ts'
 
 const CategoryCard = ({ label }: { label: string }) => {
+  const encodedLabel = encodeURIComponent(label)
+  
   return (
     <Link
-      to={`${ROUTES.CATEGORIES}/${label}`}
+      to={`${ROUTES.CATEGORIES}/${encodedLabel}`}
       className='card-element group p-8 hover:shadow-md hover:border-blue-400  center flex-col
      border border-neutral-200'
     >

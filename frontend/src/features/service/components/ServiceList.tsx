@@ -6,9 +6,9 @@ const ServiceList = ({ isLoading, servicesData, children, type }: ServiceListPro
   if (isLoading)
     return (
       <ul className='grid grid-cols-3 gap-3 w-full'>
-        <Skeleton className='h-52' />
-        <Skeleton className='h-52' />
-        <Skeleton className='h-52' />
+        <Skeleton className='h-[340px]' />
+        <Skeleton className='h-[340px]' />
+        <Skeleton className='h-[340px]' />
       </ul>
     )
 
