@@ -17,14 +17,6 @@ export const footerCol1Data: colDataType[] = [
     label: 'Рынок талантов',
     href: '/',
   },
-  {
-    label: 'Ссылка',
-    href: '/',
-  },
-  {
-    label: 'Ссылка',
-    href: '/',
-  },
 ]
 
 export const footerCol2Data: colDataType[] = [
@@ -36,14 +28,6 @@ export const footerCol2Data: colDataType[] = [
     label: 'Создать профиль',
     href: '/',
   },
-  {
-    label: 'ссылка',
-    href: '/',
-  },
-  {
-    label: 'ссылка',
-    href: '/',
-  },
 ]
 
 export const footerCol3Data: colDataType[] = [
@@ -53,14 +37,6 @@ export const footerCol3Data: colDataType[] = [
   },
   {
     label: 'Создать профиль',
-    href: '/',
-  },
-  {
-    label: 'ссылка',
-    href: '/',
-  },
-  {
-    label: 'ссылка',
     href: '/',
   },
 ]

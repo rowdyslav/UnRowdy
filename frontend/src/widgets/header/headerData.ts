@@ -10,8 +10,4 @@ export const headerData: headerDataType[] = [
     label: 'Услуги',
     href: '/categories',
   },
-  {
-    label: 'Найти заказ',
-    href: '/',
-  },
 ]
