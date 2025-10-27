@@ -19,9 +19,9 @@ async def read_many(
     r: Response, pagination: PaginationQuery, q: ServiceQuery
 ) -> list[ServiceRead]:
     services = Service.find(Service.category.name == q.category_name, fetch_links=True)
-    r.headers["Category-MaxPrice"] = max(
-        await services.to_list(), key=lambda x: x.price
-    ).price
+    r.headers["Category-MaxPrice"] = str(
+        max(await services.to_list(), key=lambda x: x.price).price
+    )
 
     if k := q.keywords.split():
         services = services.find(
