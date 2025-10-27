@@ -21,7 +21,7 @@ async def read_many(
     services = Service.find(Service.category.name == q.category_name, fetch_links=True)
     r.headers["Category-MaxPrice"] = max(
         await services.to_list(), key=lambda x: x.price
-    )
+    ).price
 
     if k := q.keywords.split():
         services = services.find(
