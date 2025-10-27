@@ -66,7 +66,7 @@ class SharedService(BaseModel):
 class ServiceFind(BaseModel):
     """Специальные поля Service для поиска"""
 
-    category_name: str | None = None
+    category_name: str
     keywords: str = ""
     min_price: int = 1
     max_price: int | None = 0x7FFFFFFFFFFFFFFF

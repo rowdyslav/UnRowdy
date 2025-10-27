@@ -1,5 +1,5 @@
 from beanie.operators import Or, RegEx
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Response, status
 
 from core import (
     ErrorResponsesDict,
@@ -15,19 +15,29 @@ router = APIRouter(prefix="/services", tags=["Services"])
 
 
 @router.get("")
-async def read_many(pagination: PaginationQuery, q: ServiceQuery) -> list[ServiceRead]:
-    services = Service.find_all(pagination.skip, pagination.limit)
-    if (cn := q.category_name) is not None:
-        services = services.find(Service.category.name == cn, fetch_links=True)
+async def read_many(
+    r: Response, pagination: PaginationQuery, q: ServiceQuery
+) -> list[ServiceRead]:
+    services = Service.find(Service.category.name == q.category_name, fetch_links=True)
+    r.headers["Category-MaxPrice"] = max(services, key=lambda x: x.price)
+
     if k := q.keywords.split():
         services = services.find(
             Or(
-                *[RegEx(Service.name, kw, "i") for kw in k],
-                *[RegEx(Service.description, kw, "i") for kw in k],
+                *[
+                    RegEx(f, kw, "i")
+                    for kw in k
+                    for f in [Service.name, Service.description]
+                ],
             ),
         )
+
     return await services.find(
-        q.max_price >= Service.price, Service.price >= q.min_price, fetch_links=True
+        q.max_price >= Service.price,
+        Service.price >= q.min_price,
+        skip=pagination.skip,
+        limit=pagination.limit,
+        fetch_links=True,
     ).to_list()
 
 
