@@ -1,6 +1,6 @@
 import { headerData } from '@/widgets/header/headerData.ts'
 import { Link } from 'react-router-dom'
-import { ROUTES } from '@/shared/const/routes.ts'
+import { ROUTES } from '@/shared/routes/routes.ts'
 import { useAuthStore } from '@/app/providers/auth/authStore.ts'
 
 const Header = () => {

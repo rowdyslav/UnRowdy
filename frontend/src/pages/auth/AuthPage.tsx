@@ -1,8 +1,8 @@
-import type { authTabNames } from '@/pages/auth/components/AuthTabs/AuthTabsProps.ts'
-import RegisterForm from '@/features/auth/components/RegisterForm.tsx'
-import AuthTabs from '@/pages/auth/components/AuthTabs/AuthTabs.tsx'
+import type { authTabNames } from '@/pages/auth/ui/AuthTabs/AuthTabsProps'
+import RegisterForm from '@/features/auth/ui/RegisterForm.tsx'
+import AuthTabs from '@/pages/auth/ui/AuthTabs/AuthTabs'
 import BadgeButton from '@/shared/components/navBadge/NavBadge.tsx'
-import LoginForm from '@/features/auth/components/LoginForm.tsx'
+import LoginForm from '@/features/auth/ui/LoginForm.tsx'
 import { Activity, useState } from 'react'
 
 const AuthPage = () => {

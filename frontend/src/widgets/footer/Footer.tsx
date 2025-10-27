@@ -1,6 +1,6 @@
 import { footerData, type footerDataType } from '@/widgets/footer/footerData.ts'
 import { Link } from 'react-router-dom'
-import { ROUTES } from '@/shared/const/routes.ts'
+import { ROUTES } from '@/shared/routes/routes.ts'
 
 const Footer = () => {
   return (

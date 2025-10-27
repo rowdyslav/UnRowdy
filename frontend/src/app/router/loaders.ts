@@ -1,10 +1,10 @@
 import { useAuthStore } from '@/app/providers/auth/authStore.ts'
 import { redirect } from 'react-router-dom'
-import { ROUTES } from '@/shared/const/routes.ts'
+import { ROUTES } from '@/shared/routes/routes.ts'
 import { userApi } from '@/shared/api/user.ts'
 import { useProfileStore } from '@/app/providers/profile/userStore.ts'
 import { getDataByUsername } from '@/shared/lib/getDataByUsername.ts'
-import { serviceApi } from '@/shared/api/service.ts'
+import { serviceApi } from '@/shared/api/service/serviceApi.ts'
 
 export const protectedLoader = () => {
   const isAuthenticated = useAuthStore.getState().isAuthenticated
@@ -35,7 +35,7 @@ export const myProfileLoader = async () => {
 }
 
 export const serviceLoader = async (serviceId: string) => {
-  const data = await serviceApi.servicesById(serviceId)
+  const data = await serviceApi.byId(serviceId)
 
   if (data.data) return data.data
 }

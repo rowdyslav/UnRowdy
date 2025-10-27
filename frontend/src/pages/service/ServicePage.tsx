@@ -1,8 +1,8 @@
 import { useLoaderData } from 'react-router-dom'
-import type { ServiceApiGetType } from '@/shared/types/serviceTypes.ts'
-import Service from '@/features/service/components/Service.tsx'
-import OrderCard from '@/features/service/components/OrderCard.tsx'
-import SellerCard from '@/pages/service/components/SellerCard.tsx'
+import Service from '@/entities/service/ui/service/Service.tsx'
+import OrderCard from '@/pages/service/ui/OrderCard.tsx'
+import SellerCard from '@/pages/service/ui/SellerCard.tsx'
+import type { ServiceApiGetType } from '@/shared/api/service/types.ts'
 
 const ServicePage = () => {
   const { user, price, ...serviceProps }: ServiceApiGetType = useLoaderData()

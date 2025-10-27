@@ -1,0 +1,23 @@
+import { friendsApi } from '@/shared/api/friends.ts'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import type { UserType } from '@/shared/types/userType.ts'
+import { queryKeys } from '@/features/friends/config/queryKeys.ts'
+
+export const useAccept = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation<void, Error, string>({
+    mutationFn: async id => {
+      await friendsApi.addFriend(id)
+    },
+
+    onSuccess: (_, username) => {
+      queryClient.setQueryData<UserType[]>(queryKeys.received, old =>
+        old ? old.filter(user => user.id !== username) : [],
+      )
+
+      void queryClient.invalidateQueries({ queryKey: queryKeys.myActive })
+      void queryClient.invalidateQueries({ queryKey: queryKeys.sent })
+    },
+  })
+}

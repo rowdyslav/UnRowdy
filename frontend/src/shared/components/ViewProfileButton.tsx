@@ -1,4 +1,4 @@
-import { ROUTES } from '@/shared/const/routes.ts'
+import { ROUTES } from '@/shared/routes/routes.ts'
 import { Link } from 'react-router-dom'
 
 const ViewProfileButton = ({ username }: { username: string }) => {

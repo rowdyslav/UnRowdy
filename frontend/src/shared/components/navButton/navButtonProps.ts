@@ -1,4 +1,4 @@
-import type { RoutePath } from '@/shared/const/routes.ts'
+import type { RoutePath } from '@/shared/routes/routes.ts'
 
 export type NavButtonProps =
   | {

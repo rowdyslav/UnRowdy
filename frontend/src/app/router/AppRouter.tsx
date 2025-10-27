@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
-import { ROUTES } from '@/shared/const/routes.ts'
+import { ROUTES } from '@/shared/routes/routes.ts'
 import Layout from '@/app/layouts/mainLayout.tsx'
 import {
   myProfileLoader,

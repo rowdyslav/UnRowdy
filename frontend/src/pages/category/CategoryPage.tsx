@@ -1,40 +1,27 @@
-import { useParams, useSearchParams } from 'react-router-dom'
-import { useAllServices } from '@/features/service/hooks/useAllServices.ts'
-import CategoryFilter from '@/features/categories/components/CategoryFilter.tsx'
-import ServiceList from '@/features/service/components/ServiceList.tsx'
-import { FilterEnum } from '@/features/categories/types/filterEnum.ts'
-import { useEffect } from 'react'
+import FilterCategory from '@/features/filterCategory/ui/filterCategory.tsx'
+import ServiceList from '@/entities/service/ui/serviceList/ServiceList.tsx'
+import { useAllServices } from '@/entities/service/api/useAllServices.ts'
+import { useGetCategoryFilters } from '@/features/filterCategory/model/useGetCategoryFilters.ts'
+import ServicesSkeleton from '@/shared/ui/Services.Skeleton.tsx'
 
 const CategoryPage = () => {
-  const { category_name } = useParams()
-  const [searchParams] = useSearchParams()
+  const { filters } = useGetCategoryFilters()
+  const { data: servicesData = [], isLoading } = useAllServices({ ...filters })
 
-  const keywords = searchParams.get(FilterEnum.keywords)
-  const min_price = searchParams.get(FilterEnum.min_price)
-  const max_price = searchParams.get(FilterEnum.max_price)
-
-  const {
-    data: servicesData,
-    isLoading,
-    refetch,
-  } = useAllServices({
-    category_name,
-    keywords,
-    min_price,
-    max_price,
-  })
-
-  useEffect(() => {
-    void refetch()
-  }, [keywords, min_price, max_price, refetch])
+  const maxPrice = 5000
 
   return (
     <section className='container '>
-      <h2 className='color-font text-4xl font-semibold mb-6'>{category_name}</h2>
+      <h2 className='color-font text-4xl font-semibold mb-6'>{filters.category_name}</h2>
 
       <div className='grid grid-cols-[1fr_4fr] gap-x-6'>
-        <CategoryFilter />
-        <ServiceList servicesData={servicesData || []} isLoading={isLoading} type='noneProfile' />
+        <FilterCategory maxPrice={maxPrice} />
+
+        {isLoading ? (
+          <ServicesSkeleton count={6} />
+        ) : (
+          <ServiceList servicesData={servicesData} type='noneProfile' />
+        )}
       </div>
     </section>
   )

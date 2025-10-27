@@ -1,4 +1,4 @@
-import AddService from '@/features/service/components/AddService.tsx'
+import AddService from '@/features/service/ui/AddService.tsx'
 
 const AddPage = () => {
   return (
