@@ -19,10 +19,10 @@ const ProfileServices = () => {
         {isMyProfile && <BadgeButtonNav size={'md'} label={'Добавить'} to={ROUTES.ADD_SERVICE} />}
       </div>
 
-      {servicesData?.length === 0 && isMyProfile && <ToAdd />}
+      {servicesData?.length === 0 && !isLoading && isMyProfile && <ToAdd />}
       {servicesData?.length === 0 && !isMyProfile && <NoServiceCard />}
 
-      {isLoading ? (
+      {isLoading && isMyProfile? (
         <ServicesSkeleton count={3} />
       ) : (
         <ServiceList servicesData={servicesData} type='profile' />

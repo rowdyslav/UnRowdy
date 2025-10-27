@@ -15,8 +15,8 @@ import AuthPage from '@/pages/auth/AuthPage.tsx'
 import NotFoundUser from '@/shared/components/NotFoundUser.tsx'
 import Spinner from '@/shared/ui/Spinner.tsx'
 import ServicePage from '@/pages/service/ServicePage.tsx'
-import CategoriesPage from '@/pages/categories/CategoriesPage.tsx'
-import CategoryPage from '@/pages/category/CategoryPage.tsx'
+import CataloguePage from '@/pages/catalogue/CataloguePage.tsx'
+import ServicesPage from '@/pages/services/ServicesPage.tsx'
 
 export const router = createBrowserRouter([
   {
@@ -54,11 +54,11 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.CATEGORIES,
-        element: <CategoriesPage />,
+        element: <CataloguePage />,
       },
       {
         path: `${ROUTES.CATEGORIES}/:category_name`,
-        element: <CategoryPage />,
+        element: <ServicesPage />,
       },
     ],
   },

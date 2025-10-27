@@ -2,7 +2,7 @@ import { useCategories } from '@/entities/categories/api/useCategories.ts'
 import CategoriesSkeleton from '@/shared/ui/Categories.Skeleton.tsx'
 import SubCategoriesList from '@/entities/categories/ui/SubCategoriesList.tsx'
 
-const CategoriesPage = () => {
+const CataloguePage = () => {
   const { data: categoriesData = [], isLoading } = useCategories()
 
   return (
@@ -43,4 +43,4 @@ const CategoriesPage = () => {
   )
 }
 
-export default CategoriesPage
+export default CataloguePage

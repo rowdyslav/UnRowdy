@@ -1,4 +1,4 @@
-import ProfileServices from '@/pages/profile/ui/profileServices.tsx'
+import ProfileServicesSection from '@/pages/profile/ui/profileServices.tsx'
 import type { TabProfile } from '@/pages/profile/ui/profileTabs/TabsType.ts'
 import FriendsSection from '@/pages/profile/ui/FriendsSection.tsx'
 import Tabs from '@/pages/profile/ui/profileTabs/Tabs.tsx'
@@ -21,7 +21,7 @@ const ProfilePage = () => {
       </section>
 
       <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-      {activeTab === 'Услуги' && <ProfileServices />}
+      {activeTab === 'Услуги' && <ProfileServicesSection />}
       {activeTab === 'Друзья' && <FriendsSection />}
     </>
   )

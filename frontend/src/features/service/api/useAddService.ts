@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/entities/service/config/queryKeys.ts'
-import { useNotificationStore } from '@/app/providers/Notification/NotificationStore.ts'
+import { useNotificationStore } from '@/app/providers/notification/NotificationStore.ts'
 import { useNavigate } from 'react-router-dom'
 import { serviceApi } from '@/shared/api/service/serviceApi.ts'
 import type { ServiceApiPostType } from '@/shared/api/service/types.ts'

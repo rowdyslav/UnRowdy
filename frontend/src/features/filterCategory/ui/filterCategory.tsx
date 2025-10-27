@@ -34,7 +34,7 @@ const FilterCategory = ({ maxPrice }: { maxPrice: number }) => {
     setValue('max_price', values[1].toString())
   }
 
-  const prices = [Number(watch('min_price')), Number(watch('max_price'))]
+  const prices = [Number(watch('min_price')), Number(watch('max_price')) || maxPrice]
 
   return (
     <div className='card-element p-4 shadow-sm h-fit sticky top-4'>

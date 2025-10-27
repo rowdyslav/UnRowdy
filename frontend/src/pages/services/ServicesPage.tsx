@@ -4,7 +4,7 @@ import { useAllServices } from '@/entities/service/api/useAllServices.ts'
 import { useGetCategoryFilters } from '@/features/filterCategory/model/useGetCategoryFilters.ts'
 import ServicesSkeleton from '@/shared/ui/Services.Skeleton.tsx'
 
-const CategoryPage = () => {
+const ServicesPage = () => {
   const { filters } = useGetCategoryFilters()
   const { data: servicesData = [], isLoading } = useAllServices({ ...filters })
 
@@ -27,4 +27,4 @@ const CategoryPage = () => {
   )
 }
 
-export default CategoryPage
+export default ServicesPage

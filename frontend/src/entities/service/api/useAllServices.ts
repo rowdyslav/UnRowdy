@@ -16,7 +16,8 @@ export const useAllServices = (data: FilterQueryTypes & { category_name?: string
 
     queryFn: async () => {
       const response = await serviceApi.all({ ...data })
-      return response.data
+      const maxPrice: string = response.headers['category-maxprice']
+      return {response.data, maxPrice}
     },
   })
 }

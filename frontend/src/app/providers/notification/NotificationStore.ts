@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { NotificationStoreType } from '@/app/providers/Notification/types.ts'
+import type { NotificationStoreType } from '@/app/providers/notification/types.ts'
 
 export const useNotificationStore = create<NotificationStoreType>((set, get) => ({
   type: null,
