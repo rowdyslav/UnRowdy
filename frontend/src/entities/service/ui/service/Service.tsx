@@ -1,9 +1,9 @@
-import type { ServiceProps } from '@/entities/service/ui/service/serviceProps.ts'
+import type {ServiceProps} from '@/entities/service/ui/service/serviceProps.ts'
 
-const Service = ({ name, image_b64, description, category }: ServiceProps) => {
+const Service = ({name, image_b64, description, category}: ServiceProps) => {
   return (
     <article className='w-full card-element'>
-      <img src={`data:${image_b64}`} alt='/' className='rounded-t-lg w-full' />
+      <img src={`data:${image_b64}`} alt='/' className='rounded-t-lg w-full'/>
 
       <div className='px-6 py-3 flex justify-between flex-col'>
         <div className='flex items-center justify-between mb-4'>
