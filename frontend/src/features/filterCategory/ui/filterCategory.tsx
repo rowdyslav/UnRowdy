@@ -3,13 +3,13 @@ import FilterSlider from '@/features/filterCategory/ui/filterSlider.tsx'
 import {
   type FilterQueryTypes,
   FilterSchema,
-} from '@/features/filterCategory/model/Filter.schema.ts'
+} from '@/features/filterCategory/model/types/Filter.schema.ts'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSearchParams } from 'react-router-dom'
 import Field from '@/shared/components/Field.tsx'
 import { useForm } from 'react-hook-form'
 
-const FilterCategory = ({ maxPrice }: { maxPrice: number }) => {
+const FilterCategory = ({ maxPrice }: { maxPrice: number | undefined }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { register, handleSubmit, setValue, watch } = useForm<FilterQueryTypes>({
     resolver: zodResolver(FilterSchema),
@@ -34,7 +34,7 @@ const FilterCategory = ({ maxPrice }: { maxPrice: number }) => {
     setValue('max_price', values[1].toString())
   }
 
-  const prices = [Number(watch('min_price')), Number(watch('max_price')) || maxPrice]
+  const prices = [Number(watch('min_price')), Number(watch('max_price')) || maxPrice || 10000]
 
   return (
     <div className='card-element p-4 shadow-sm h-fit sticky top-4'>
@@ -58,13 +58,17 @@ const FilterCategory = ({ maxPrice }: { maxPrice: number }) => {
             {...register('max_price')}
             min={0}
             type='number'
-            placeholder={`До ${maxPrice}`}
+            placeholder={`До ${maxPrice || ''}`}
             className='input p-2 text-lg font-bold color-font-light'
           />
         </div>
 
         <div className='px-2'>
-          <FilterSlider maxPrice={maxPrice} onSliderChange={handleSliderChange} prices={prices} />
+          <FilterSlider
+            maxPrice={maxPrice || undefined}
+            onSliderChange={handleSliderChange}
+            prices={prices}
+          />
         </div>
 
         <button className='button-blue p-2 w-full' type='submit'>

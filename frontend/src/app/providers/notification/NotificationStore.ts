@@ -8,19 +8,14 @@ export const useNotificationStore = create<NotificationStoreType>((set, get) => 
 
   clearNotification: () => {
     const { timeoutId } = get()
-
-    if (timeoutId) {
-      clearTimeout(timeoutId)
-    }
+    if (timeoutId) clearTimeout(timeoutId)
     set({ type: null, content: null, timeoutId: null })
   },
 
   showNotification: (content, type) => {
     const { clearNotification } = get()
     clearNotification()
-
     const timeoutId = setTimeout(clearNotification, 3000)
-
     set({ type, content, timeoutId })
   },
 

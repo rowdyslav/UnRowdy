@@ -1,4 +1,4 @@
-import type { FilterQueryTypes } from '@/features/filterCategory/model/Filter.schema.ts'
+import type { FilterQueryTypes } from '@/features/filterCategory/model/types/Filter.schema.ts'
 import type { ServiceApiGetType, ServiceApiPostType } from '@/shared/api/service/types.ts'
 import { api } from '@/shared/api/axios.ts'
 

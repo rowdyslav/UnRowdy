@@ -6,7 +6,7 @@ import { friendsApi } from '@/shared/api/friends.ts'
 import type { AxiosError } from 'axios'
 import { useNotificationStore } from '@/app/providers/notification/NotificationStore.ts'
 
-export const useAdd = () => {
+export const useAddFriend = () => {
   const queryClient = useQueryClient()
   const showError = useNotificationStore(state => state.showError)
   const showSuccess = useNotificationStore(state => state.showSuccess)

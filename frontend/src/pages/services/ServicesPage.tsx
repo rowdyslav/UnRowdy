@@ -6,21 +6,19 @@ import ServicesSkeleton from '@/shared/ui/Services.Skeleton.tsx'
 
 const ServicesPage = () => {
   const { filters } = useGetCategoryFilters()
-  const { data: servicesData = [], isLoading } = useAllServices({ ...filters })
-
-  const maxPrice = 5000
+  const { data: servicesData, isLoading } = useAllServices({ ...filters })
 
   return (
     <section className='container '>
       <h2 className='color-font text-4xl font-semibold mb-6'>{filters.category_name}</h2>
 
       <div className='grid grid-cols-[1fr_4fr] gap-x-6'>
-        <FilterCategory maxPrice={maxPrice} />
+        <FilterCategory maxPrice={servicesData?.maxPrice} />
 
         {isLoading ? (
           <ServicesSkeleton count={6} />
         ) : (
-          <ServiceList servicesData={servicesData} type='noneProfile' />
+          <ServiceList servicesData={servicesData?.data || []} type='noneProfile' />
         )}
       </div>
     </section>

@@ -1,9 +1,9 @@
-import { useAdd } from '@/features/friends/api/useAdd.ts'
+import { useAddFriend } from '@/features/friends/api/useAddFriend.ts'
 import { useForm } from 'react-hook-form'
 
 const AddFriend = () => {
   const { register, handleSubmit, reset } = useForm<{ username: string }>()
-  const { mutate: addFriend, reset: resetError } = useAdd()
+  const { mutate: addFriend, reset: resetError } = useAddFriend()
 
   const onSubmit = async (data: { username: string }) => {
     try {
