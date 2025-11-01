@@ -28,7 +28,7 @@ const AddService = () => {
 
   const onSubmit = async (formData: ServiceFormType) => {
     if (formData.crop_dirty) {
-      confirm('Продолжить без сохранения новой обрезки?', async () => {
+      confirm('Продолжить без сохранения обрезки фото?', async () => {
         await handleRealSubmit(formData)
       })
       return
