@@ -6,7 +6,7 @@ import { getCroppedImg } from '@/shared/utils/getCroppedImg.ts'
 import { fileToBase64 } from '@/shared/utils/fileToBase64.ts'
 
 const ImageInput = ({ name }: { name: string }) => {
-  const { control } = useFormContext()
+  const { control, setValue } = useFormContext()
   const { field } = useController({ name, control })
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -23,6 +23,7 @@ const ImageInput = ({ name }: { name: string }) => {
   const onCropComplete = useCallback(
     (_: unknown, area: { height: number; width: number; x: number; y: number } | null) => {
       setCroppedAreaPixels(area)
+      setValue('crop_dirty', true, { shouldDirty: false, shouldTouch: false })
     },
     [],
   )
@@ -35,6 +36,7 @@ const ImageInput = ({ name }: { name: string }) => {
       const base64 = await fileToBase64(file)
       setImageSrc(base64)
       field.onChange(base64)
+      setValue('crop_dirty', false)
     } catch (error) {
       console.error('Error converting file:', error)
     }
@@ -44,6 +46,7 @@ const ImageInput = ({ name }: { name: string }) => {
     if (imageSrc && croppedAreaPixels) {
       const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels)
       field.onChange(croppedImage)
+      setValue('crop_dirty', false)
     }
   }
 

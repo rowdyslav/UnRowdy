@@ -1,38 +1,42 @@
+import {ServiceFormSchema, type ServiceFormType,} from '@/features/service/model/ServiceForm.schema.ts'
 import SelectCategory from '@/entities/categories/ui/selectCategory/SelectCategory.tsx'
-import { useCategories } from '@/entities/categories/api/useCategories.ts'
-import { useAddService } from '@/features/service/api/useAddService.ts'
+import {useCategories} from '@/entities/categories/api/useCategories.ts'
+import {useConfirmStore} from "@/app/providers/confirm/confirmStore.ts";
+import {useAddService} from '@/features/service/api/useAddService.ts'
+import type {ServiceApiPostType} from '@/shared/api/service/types.ts'
 import NavButton from '@/shared/components/navButton/NavButton.tsx'
-import { FormProvider, useForm, useWatch } from 'react-hook-form'
+import {FormProvider, useForm, useWatch} from 'react-hook-form'
 import ImageInput from '@/shared/components/ImageInput.tsx'
-import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  ServiceFormSchema,
-  type ServiceFormType,
-} from '@/features/service/model/ServiceForm.schema.ts'
+import {zodResolver} from '@hookform/resolvers/zod'
 import Field from '@/shared/components/Field.tsx'
-import type { ServiceApiPostType } from '@/shared/api/service/types.ts'
 
 const AddService = () => {
   const methods = useForm<ServiceFormType>({
     resolver: zodResolver(ServiceFormSchema),
-    defaultValues: { image_b64: '', category: '', subcategory: '', description: null },
+    defaultValues: {image_b64: '', category: '', subcategory: '', description: '', crop_dirty: false},
   })
 
-  const {
-    handleSubmit,
-    formState: { errors },
-    control,
-    register,
-    setValue,
-  } = methods
+  const {handleSubmit, formState: {errors}, control, register, setValue} = methods
 
-  const selectedCategory = useWatch({ control, name: 'category' })
+  const selectedCategory = useWatch({control, name: 'category'})
 
-  const { data: categoriesData = [] } = useCategories()
-  const { data: subcategoriesData = [] } = useCategories(selectedCategory)
-  const { mutateAsync: addService } = useAddService()
+  const {data: categoriesData = []} = useCategories()
+  const {data: subcategoriesData = []} = useCategories(selectedCategory)
+  const {mutateAsync: addService} = useAddService()
 
-  const onSubmit = async ({ category, ...payloadData }: ServiceFormType) => {
+  const confirm = useConfirmStore(state => state.confirm)
+
+  const onSubmit = async (formData: ServiceFormType) => {
+    if (formData.crop_dirty) {
+      confirm('Продолжить без сохранения новой обрезки?', async () => {
+        await handleRealSubmit(formData)
+      })
+      return
+    }
+    await handleRealSubmit(formData)
+  }
+
+  const handleRealSubmit = async ({category, ...payloadData}: ServiceFormType) => {
     const payload: ServiceApiPostType = {
       ...payloadData,
       category_id: payloadData.subcategory || category,
@@ -76,20 +80,22 @@ const AddService = () => {
 
             <div className={`${!selectedCategory ? 'opacity-50 pointer-events-none' : ''}`}>
               <Field label='Подкатегория' error={errors.subcategory?.message}>
-                <SelectCategory name='subcategory' data={subcategoriesData} />
+                <SelectCategory name='subcategory' data={subcategoriesData}/>
               </Field>
             </div>
           </div>
 
           {/* ИЗОБРАЖЕНИЕ */}
-          <Field label='Обложка услуги' error={errors.image_b64?.message}>
-            <ImageInput name='image_b64' />
-          </Field>
+          <div className='add-flex'>
+            <h4 className='text-lg font-bold color-font-light'>Обложка услуги</h4>
+            <ImageInput name='image_b64'/>
+            <p className='text-center text-red-400'>{errors?.image_b64?.message}</p>
+          </div>
 
           {/* ЦЕНА */}
           <Field label='Цена' error={errors.price?.message}>
             <input
-              {...register('price', { valueAsNumber: true })}
+              {...register('price', {valueAsNumber: true})}
               placeholder='10000'
               className='input py-2'
               type='number'
@@ -100,7 +106,7 @@ const AddService = () => {
       </div>
 
       <div className='flex w-[70%] gap-x-6 justify-end items-center'>
-        <NavButton to='back' label='Назад' className='button' />
+        <NavButton to='back' label='Назад' className='button'/>
 
         <button type='submit' form='service-form' className='button-blue py-2'>
           Создать услугу

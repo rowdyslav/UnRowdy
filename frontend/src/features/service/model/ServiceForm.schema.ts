@@ -6,6 +6,7 @@ export const ServiceFormSchema = z.object({
   category: z.string().min(1, { message: 'Выберите категорию' }),
   subcategory: z.string().min(1, { message: 'Выберите подкатегорию' }),
   image_b64: z.string().nonempty('Загрузите изображение'),
+  crop_dirty: z.boolean(),
   price: z.number('Укажите цену'),
 })
 
