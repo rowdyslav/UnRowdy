@@ -3,12 +3,12 @@ from contextlib import asynccontextmanager
 
 from beanie import PydanticObjectId, init_beanie
 from fastapi import FastAPI
-from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo import AsyncMongoClient
 
 from core import Service, ServiceCategory, User
 from env import MONGO_DATABASE_NAME, MONGO_URL
 
-client = AsyncIOMotorClient(MONGO_URL, uuidRepresentation="standard")
+client = AsyncMongoClient(MONGO_URL, uuidRepresentation="standard")
 db = client[MONGO_DATABASE_NAME]
 
 SERVICE_CATEGORIES_NAMES = {

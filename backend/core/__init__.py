@@ -1,6 +1,7 @@
 """Параметры, ошибки, модели, схемы и UserManager"""
 
-from .deps import AuthorizedUser, PaginationQuery, ServiceQuery, UserQuery
+from .auth import login_manager
+from .deps import AuthForm, AuthorizedUser, PaginationQuery, ServiceQuery, UserQuery
 from .errors.http import (
     already_friend_or_request,
     friend_request_yourself,
@@ -13,6 +14,7 @@ from .errors.http import (
 from .errors.utils import ErrorResponsesDict
 from .models import Service, ServiceCategory, User
 from .schemas import (
+    BearerToken,
     FriendType,
     ServiceCreate,
     ServiceFind,
@@ -23,12 +25,11 @@ from .schemas import (
     UserRead,
     UserUpdate,
 )
-from .user_manager import AUTH_BACKEND, FASTAPI_USERS
 
 __all__ = [
-    "AUTH_BACKEND",
-    "FASTAPI_USERS",
+    "AuthForm",
     "AuthorizedUser",
+    "BearerToken",
     "ErrorResponsesDict",
     "FriendType",
     "PaginationQuery",
@@ -47,6 +48,7 @@ __all__ = [
     "UserUpdate",
     "already_friend_or_request",
     "friend_request_yourself",
+    "login_manager",
     "service_category_not_found",
     "service_not_found",
     "user_already_existed",

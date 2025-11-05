@@ -1,13 +1,16 @@
 from beanie import BackLink, Document, Link, PydanticObjectId
-from fastapi_users.db import BeanieBaseUser
+from passlib.context import CryptContext
 from pydantic import Field
 
 from .schemas import FriendType, SharedService, SharedServiceCategory, SharedUser
 
+pwd_ctx = CryptContext(schemes=["argon2", "bcrypt"])
 
-class User(SharedUser, BeanieBaseUser, Document):
+
+class User(SharedUser, Document):
     """Модель пользователя"""
 
+    hashed_password: str
     services: list[Link["Service"]] = []
     friends_ids: dict[FriendType, list[PydanticObjectId]] = {
         "active": [],
@@ -15,8 +18,19 @@ class User(SharedUser, BeanieBaseUser, Document):
         "received": [],
     }
 
-    class Settings(BeanieBaseUser.Settings):
+    class Settings:
         name = "users"
+
+    async def hash_password(self, plain_password: str) -> None:
+        self.hashed_password = pwd_ctx.hash(plain_password)
+        await self.save()
+
+    async def verify_password(self, password: str) -> bool:
+        valid, new_hash = pwd_ctx.verify_and_update(password, self.hashed_password)
+        if new_hash is not None:
+            self.hashed_password = new_hash
+            await self.save()
+        return valid
 
 
 class ServiceCategory(SharedServiceCategory, Document):

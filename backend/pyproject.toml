@@ -5,11 +5,14 @@ authors = [{ name = "rowdyslav", email = "rowdyslav@gmail.com" }]
 requires-python = ">=3.13"
 dependencies = [
     "fastapi[standard]",
+    "fastapi-login",
     "pydantic",
+    "pymongo",
     "beanie",
+    "passlib",
+    "argon2-cffi",
     "environs",
     "icecream",
-    "fastapi-users[beanie]",
 ]
 
 [dependency-groups]

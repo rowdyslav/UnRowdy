@@ -2,7 +2,6 @@ from beanie import PydanticObjectId
 from fastapi import APIRouter, status
 
 from core import (
-    FASTAPI_USERS,
     AuthorizedUser,
     ErrorResponsesDict,
     FriendType,
@@ -13,7 +12,6 @@ from core import (
     User,
     UserQuery,
     UserRead,
-    UserUpdate,
     already_friend_or_request,
     friend_request_yourself,
     service_category_not_found,
@@ -23,7 +21,6 @@ from core import (
 from core.models import ServiceCategory
 
 router = APIRouter(prefix="/users", tags=["Users"])
-router.include_router(FASTAPI_USERS.get_users_router(UserRead, UserUpdate))
 
 
 @router.get("")
@@ -31,6 +28,11 @@ async def read_many(pagination: PaginationQuery, q: UserQuery) -> list[UserRead]
     return await User.find(
         q.model_dump(), skip=pagination.skip, limit=pagination.limit
     ).to_list()
+
+
+@router.get("/me/", responses=ErrorResponsesDict("unauthorized"))
+async def read_me(me: AuthorizedUser) -> UserRead:
+    return me
 
 
 @router.get("/me/services/", responses=ErrorResponsesDict("unauthorized"))

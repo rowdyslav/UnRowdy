@@ -2,7 +2,6 @@ from typing import Annotated, Literal, get_type_hints
 
 from beanie import Indexed, PydanticObjectId
 from fastapi import Query
-from fastapi_users.schemas import BaseUser, BaseUserCreate, BaseUserUpdate
 from pydantic import BaseModel, Field, NonNegativeInt, create_model
 
 FriendType = Literal["active", "sent", "received"]
@@ -11,6 +10,12 @@ optional_model = lambda model: create_model(
     f"{model.__name__}",
     **{k: (v | None, None) for k, v in get_type_hints(model).items()},
 )
+
+
+class BearerToken(BaseModel):
+    """Токен авторизации"""
+
+    access_token: str
 
 
 class Pagination(BaseModel):
@@ -23,19 +28,22 @@ class Pagination(BaseModel):
 class SharedUser(BaseModel):
     """Базовые поля User"""
 
+    email: Annotated[str, Indexed(unique=True)]
     username: Annotated[str, Field(max_length=20), Indexed(unique=True)]
 
 
-class UserRead(SharedUser, BaseUser[PydanticObjectId]):
+class UserRead(SharedUser):
     """User для чтения"""
 
+    id: PydanticObjectId
 
-class UserCreate(SharedUser, BaseUserCreate):
+
+class UserCreate(SharedUser):
     """User для создания"""
 
 
 @optional_model
-class UserUpdate(SharedUser, BaseUserUpdate):
+class UserUpdate(SharedUser):
     """User для обновления"""
 
 

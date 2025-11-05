@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from typing import Literal
 
-from fastapi_users.router.common import ErrorModel
+from pydantic import BaseModel
 
 HttpErrorName = Literal[
     "bad_request",
@@ -47,6 +47,12 @@ HttpErrorName = Literal[
 ]
 
 
+class HttpError(BaseModel):
+    """Схема для HTTP-ошибок"""
+
+    detail: str | dict
+
+
 class ErrorResponsesDict(dict):
     """Словарь для FastAPI.APIRouter.responses, где ключи — названия HTTP-ошибок.
 
@@ -62,4 +68,4 @@ class ErrorResponsesDict(dict):
                 continue
             if status.value < 400:
                 continue
-            self[status.value] = {"model": ErrorModel}
+            self[status.value] = {"model": HttpError}
