@@ -1,4 +1,5 @@
 import type {ServiceProps} from '@/entities/service/ui/service/serviceProps.ts'
+import ShareButton from "@/shared/components/ShareButton.tsx";
 
 const Service = ({name, image_b64, description, category}: ServiceProps) => {
   return (
@@ -9,9 +10,12 @@ const Service = ({name, image_b64, description, category}: ServiceProps) => {
         <div className='flex items-center justify-between mb-4'>
           <h3 className='text-4xl font-bold color-font'>{name}</h3>
 
-          <p className='text-sm border border-gray-200 w-fit mt-2 py-0.5 px-1.5 rounded-lg font-medium '>
-            {category.name}
-          </p>
+          <div className='flex gap-x-2 items-end'>
+            <p className='text-sm border border-gray-200 w-fit mt-2 py-0.5 px-1.5 rounded-lg font-medium '>
+              {category.name}
+            </p>
+            <ShareButton/>
+          </div>
         </div>
         <h3 className='text-3xl font-bold color-font'>Описание услуги</h3>
 

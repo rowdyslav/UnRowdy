@@ -4,19 +4,14 @@ import type { NotificationStoreType } from '@/app/providers/notification/types.t
 export const useNotificationStore = create<NotificationStoreType>((set, get) => ({
   type: null,
   content: null,
-  timeoutId: null,
 
   clearNotification: () => {
-    const { timeoutId } = get()
-    if (timeoutId) clearTimeout(timeoutId)
-    set({ type: null, content: null, timeoutId: null })
+    set({ type: null, content: null })
   },
 
   showNotification: (content, type) => {
-    const { clearNotification } = get()
-    clearNotification()
-    const timeoutId = setTimeout(clearNotification, 3000)
-    set({ type, content, timeoutId })
+    setTimeout(get().clearNotification, 3000)
+    set({ type, content })
   },
 
   showSuccess: content => get().showNotification(content, 'success'),

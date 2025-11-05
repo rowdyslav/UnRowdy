@@ -1,5 +1,3 @@
-import ShareButton from "@/shared/components/shareButton/ShareButton.tsx";
-
 const OrderCard = ({price}: { price: number }) => {
   return (
     <div className='card-element p-6 flex flex-col gap-y-3 h-fit'>
@@ -10,7 +8,6 @@ const OrderCard = ({price}: { price: number }) => {
 
       <button className='button-blue py-2'>Заказать</button>
       <button className='button py-2'>Написать продавцу</button>
-      <ShareButton/>
     </div>
   )
 }

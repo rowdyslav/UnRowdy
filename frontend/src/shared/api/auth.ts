@@ -1,7 +1,7 @@
-import type { TokenType } from '@/shared/types/tokenType.ts'
-import { api } from '@/shared/api/axios.ts'
-import type { LoginFormType } from '@/features/auth/model/LoginForm.schema.ts'
-import type { RegisterFormType } from '@/features/auth/model/RegisterForm.schema.ts'
+import type {TokenType} from '@/shared/types/tokenType.ts'
+import {api} from '@/shared/api/axios.ts'
+import type {LoginFormType} from '@/features/auth/model/LoginForm.schema.ts'
+import type {RegisterFormType} from '@/features/auth/model/RegisterForm.schema.ts'
 
 export const authApi = {
   login: (data: LoginFormType) => {
@@ -17,7 +17,12 @@ export const authApi = {
   },
 
   register: (data: RegisterFormType) => {
-    return api.post('/auth/register', { ...data, is_superuser: true })
+    const formData = new URLSearchParams()
+    formData.append('username', data.email)
+    formData.append('password', data.password)
+    formData.append('actually_username', data.username)
+
+    return api.post('/auth/register', formData)
   },
 
   logout: () => api.post('/auth/logout'),
