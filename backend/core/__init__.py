@@ -38,6 +38,7 @@ __all__ = [
     "ServiceFind",
     "ServiceQuery",
     "ServiceRead",
+    "ServiceUpdate",
     "User",
     "UserCreate",
     "UserFind",
