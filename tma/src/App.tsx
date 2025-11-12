@@ -6,8 +6,8 @@ const Profile = () => {
 
   return (
     <div className="p-4">
-      <h1>Привет, {user?.first_name ?? 'пользователь'}!</h1>
-      <p>ID: {user?.id}</p>
+      <h1 className='text-red-500'>Привет, {user?.first_name ?? 'пользователь'}!</h1>
+      <p>ID: {user?.id} {user?.last_name}</p>
       <p>Username: @{user?.username}</p>
     </div>
   );
