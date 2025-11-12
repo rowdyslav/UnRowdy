@@ -1,28 +1,25 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-
-import { init, miniApp } from '@telegram-apps/sdk';
+import {createRoot} from 'react-dom/client';
+import './index.css';
+import App from './App';
+import {init, miniApp} from '@telegram-apps/sdk';
 
 const initializeTelegramSDK = async () => {
   try {
     await init();
+    await miniApp.ready()
 
-    if (miniApp.ready.isAvailable()) {
-      await miniApp.ready();
-      console.log('Mini App готово');
-    }
-
+    console.log('Mini App готово');
   } catch (error) {
-    console.error('Ошибка инициализации:', error);
+    console.error('Ошибка инициализации Telegram SDK:', error);
   }
 };
 
-initializeTelegramSDK();
+const runApp = async () => {
+  await initializeTelegramSDK();
+  const rootElement = document.getElementById('root');
+  if (!rootElement) throw new Error('Корневой элемент #root не найден');
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+  createRoot(rootElement).render(<App/>);
+};
+
+runApp();

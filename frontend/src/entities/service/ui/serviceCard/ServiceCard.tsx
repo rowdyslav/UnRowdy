@@ -37,9 +37,7 @@ const ServiceCard = ({ name, price, image_b64, id, user, type }: CardProps) => {
 
         {/* Price & Delivery */}
         <div className='flex justify-between items-center mt-4'>
-          <span className='text-xl font-bold color-font'>
-            {new Intl.NumberFormat('ru-RU').format(price)}₽
-          </span>
+          <span className='text-xl font-bold color-font'>{price}₽</span>
           {/*<span className="text-sm text-gray-500">Delivery: 2-4 weeks</span>*/}
         </div>
       </div>
