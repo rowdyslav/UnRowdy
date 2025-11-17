@@ -9,7 +9,7 @@ export const useCategories = (parentId?: string) => {
     queryFn: async () => {
       const response = await (parentId
         ? categoriesApi.getSubCategories(parentId)
-        : categoriesApi.getCategories)
+        : categoriesApi.getCategories())
       return response.data
     },
     refetchOnWindowFocus: false,
