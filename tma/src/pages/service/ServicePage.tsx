@@ -1,12 +1,14 @@
-import SwipeHint from '@/share/components/SwipeHint.tsx';
-import SERVICE_DATA from '@/share/testServiceData.ts';
 import Flicking from '@egjs/react-flicking';
-import {useState} from 'react';
+import {useService} from "@/entities/service/api/useServices.ts";
 import Service from "@/entities/service/ui/Service.tsx";
 
-const ServiceTape = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const handleChange = () => setCurrentIndex(e => e + 1);
+interface TapeProps {
+  idCategory: string
+  nameCategory: string
+}
+
+const ServicePage = ({nameCategory}: TapeProps) => {
+  const {data} = useService({category_name: nameCategory})
 
   return (
     <div className="w-full h-[100vh] overflow-hidden select-none">
@@ -14,7 +16,6 @@ const ServiceTape = () => {
         align="center"
         circular={true}
         horizontal={false}
-        onChanged={handleChange}
         renderOnlyVisible={true}
         defaultIndex={0}
         duration={300}
@@ -30,16 +31,15 @@ const ServiceTape = () => {
         interruptable={true}
         moveType={['strict', {count: 1}]}
       >
-        {SERVICE_DATA.map((card) => (
-          <div key={card.id} className="w-full h-full">
-            <Service card={card}/>
-          </div>
-        ))}
+        {data && (
+          data.map((card) => (
+            <div key={card.id} className="w-full h-full">
+              <Service {...card}/>
+            </div>
+          )))}
       </Flicking>
-
-      <SwipeHint show={currentIndex === 0}/>
     </div>
   );
 };
 
-export default ServiceTape;
+export default ServicePage;
