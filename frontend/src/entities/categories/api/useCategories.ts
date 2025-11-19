@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import type { CategoriesType } from '@/shared/types/categoriesType.ts'
+import type { CategoryType } from '@/shared/types/categoryType.ts'
 import { categoriesApi } from '@/shared/api/categories.ts'
 
 export const useCategories = (parentId?: string) => {
-  return useQuery<CategoriesType[]>({
+  return useQuery<CategoryType[]>({
     queryKey: ['categories', parentId],
 
     queryFn: async () => {

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { serviceApi } from '@/shared/api/service/serviceApi.ts'
 import { useProfileStore } from '@/app/providers/profile/userStore.ts'
 import { queryKeys } from '@/entities/service/config/queryKeys.ts'
+
 import type { ServiceApiGetType } from '@/shared/api/service/types.ts'
 
 export const useServices = () => {

@@ -1,4 +1,4 @@
-import type {UserType} from "@/shared/types/userType.ts";
+import type { UserType } from '@/shared/types/userType.ts'
 
 export interface ServiceApiPostType {
   name: string
@@ -16,4 +16,10 @@ export interface ServiceApiGetType {
   category: { name: string }
   id: string
   user: UserType
+}
+
+export interface FilterTypes {
+  keywords?: string | null
+  min_price?: string | null
+  max_price?: string | null
 }

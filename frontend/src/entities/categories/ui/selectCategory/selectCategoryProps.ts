@@ -1,6 +1,6 @@
-import type { CategoriesType } from '@/shared/types/categoriesType.ts'
+import type { CategoryType } from '@/shared/types/categoryType.ts'
 
 export type SelectProps = {
   name: 'subcategory' | 'category'
-  data: CategoriesType[]
+  data: CategoryType[]
 }

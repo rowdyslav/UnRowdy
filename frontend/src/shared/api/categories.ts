@@ -1,9 +1,9 @@
 import { api } from '@/shared/api/axios.ts'
-import type { CategoriesType } from '@/shared/types/categoriesType.ts'
+import type { CategoryType } from '@/shared/types/categoryType.ts'
 
 export const categoriesApi = {
-  getCategories: () => api.get<CategoriesType[]>('/services/categories/'),
+  getCategories: () => api.get<CategoryType[]>('/services/categories/'),
 
   getSubCategories: (categoryId: string) =>
-    api.get<CategoriesType[]>(`/services/categories/${categoryId}`),
+    api.get<CategoryType[]>(`/services/categories/${categoryId}`),
 }
