@@ -1,5 +1,11 @@
 import type {UserType} from "@/share/types/userType.ts";
 
+export interface FilterTypes {
+  keywords?: string | null
+  min_price?: string | null
+  max_price?: string | null
+}
+
 export interface ServiceType {
   name: string
   description: string | null
@@ -9,4 +15,3 @@ export interface ServiceType {
   id: string
   user: UserType
 }
-

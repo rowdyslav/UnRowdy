@@ -1,5 +1,5 @@
 import {api} from "@/share/api/axios.ts";
-import type {CategoryType} from "@/entities/category/types/categoryType.ts";
+import type {CategoryType} from "@/share/api/categories/categoryType.ts";
 
 export const categoriesApi = {
   getCategories: () => api.get<CategoryType[]>('/services/categories/'),

@@ -1,14 +1,15 @@
-interface CategoryProps {
-  label: string,
-  setId: (_id: string) => void,
-  _id: string
-  setNameCategory: (label: string) => void
-}
+import type {CategoryProps} from "@/entities/category/ui/CategoryProps.ts";
+import {useAppContext} from "@/app/providers/AppContext.tsx";
 
-const Category = ({label, setId, _id, setNameCategory}: CategoryProps) => {
+const Category = ({label, _id, isSubCategory}: CategoryProps) => {
+  const {setNameCategory, setIdSubCategory, goNext} = useAppContext()
+
   const handleClick = () => {
-    setId(_id)
-    setNameCategory(label)
+    if (isSubCategory) {
+      setIdSubCategory(_id)
+      setNameCategory(label)
+    }
+    goNext()
   }
 
   return (

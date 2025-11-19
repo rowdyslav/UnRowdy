@@ -9,7 +9,13 @@ interface TelegramWebApp {
   openTelegramLink: (string) => void
   initDataUnsafe?: {
     user?: TelegramWebAppUser
-  };
+  }
+  BackButton?: {
+    show(): void
+    hide(): void
+    onClick(callback: () => void): void;
+    offClick(callback?: () => void): void
+  }
 }
 
 interface TelegramWebAppUser {

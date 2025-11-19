@@ -1,5 +1,8 @@
-const ProfilePage = ({goNext}: {goNext: () => void}) => {
+import {useAppContext} from "@/app/providers/AppContext.tsx";
+
+const ProfilePage = () => {
   const user = window.Telegram?.WebApp.initDataUnsafe?.user
+  const {goNext} = useAppContext()
 
   return (
     <div className="w-full h-[90vh] rounded-xl flex flex-col items-center justify-center bg-blue-300 text-center p-4">

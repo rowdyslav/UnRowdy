@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {serviceApi} from "@/share/api/service/serviceApi.ts";
-import type {ServiceType} from "@/entities/service/types/serviceTypes.ts";
+import type {ServiceType} from "@/share/api/service/serviceType.ts";
 
 interface UseServiceParams {
   category_name: string;

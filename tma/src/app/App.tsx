@@ -4,6 +4,7 @@ import "@egjs/react-flicking/dist/flicking.css";
 import CategoriesPage from "@/pages/categories/CategoriesPage.tsx";
 import ProfilePage from "@/pages/profile/ProfilePage.tsx";
 import ServicePage from "@/pages/service/ServicePage.tsx";
+import { AppContext } from "./providers/AppContext";
 
 const App = () => {
   const [idSubCategory, setIdSubCategory] = useState<string>('')
@@ -13,7 +14,26 @@ const App = () => {
   const goNext = () => flickingRef.current?.next();   // движение влево (вперёд)
   const goPrev = () => flickingRef.current?.prev();
 
+  const idPage = flickingRef.current?.index
+  const tg = window.Telegram?.WebApp
+
+  if (idPage === 0) {
+    tg?.BackButton?.show()
+    tg?.BackButton?.onClick(goPrev)
+  } else {
+    tg?.BackButton?.offClick()
+    console.log(idPage)
+  }
+
   return (
+    <AppContext.Provider
+      value={{
+        goNext,
+        setIdSubCategory,
+        idSubCategory,
+        setNameCategory
+      }}
+    >
       <div className="w-full h-screen">
         <Flicking
           align="prev"
@@ -25,19 +45,19 @@ const App = () => {
           horizontal={true}
         >
           <div className="w-full h-[90vh]">
-            <ProfilePage goNext={goNext}/>
+            <ProfilePage/>
           </div>
 
           <div className="w-full h-[90vh] px-4 py-2">
-            <CategoriesPage _id={''} setIdSubCategory={setIdSubCategory} goNext={goNext} setNameCategory={setNameCategory}/>
+            <CategoriesPage isSubCategories={false}/>
           </div>
 
           <div className="w-full h-[90vh] px-4 py-2">
-            <CategoriesPage _id={idSubCategory} goNext={goNext} setIdSubCategory={setIdSubCategory} setNameCategory={setNameCategory}/>
+            <CategoriesPage isSubCategories={true}/>
           </div>
 
           <div className="w-full h-[90vh] px-4 py-2">
-            <ServicePage idCategory={idSubCategory} nameCategory={nameCategory}/>
+            <ServicePage nameCategory={nameCategory}/>
           </div>
         </Flicking>
 
@@ -51,6 +71,7 @@ const App = () => {
           </button>
         </div>
       </div>
+    </AppContext.Provider>
     )
 }
 

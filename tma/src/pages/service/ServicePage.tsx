@@ -2,12 +2,7 @@ import Flicking from '@egjs/react-flicking';
 import {useService} from "@/entities/service/api/useServices.ts";
 import Service from "@/entities/service/ui/Service.tsx";
 
-interface TapeProps {
-  idCategory: string
-  nameCategory: string
-}
-
-const ServicePage = ({nameCategory}: TapeProps) => {
+const ServicePage = ({nameCategory}: {nameCategory: string}) => {
   const {data} = useService({category_name: nameCategory})
 
   return (

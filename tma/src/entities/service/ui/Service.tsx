@@ -1,6 +1,6 @@
 import AuthorInfo from "@/share/components/AuthorInfo.tsx";
 import OpenChatButton from "@/share/components/OpenChatButton.tsx";
-import type {ServiceType} from "@/entities/service/types/serviceTypes.ts";
+import type {ServiceType} from "@/share/api/service/serviceType.ts";
 
 const Service = ({image_b64, name, description, price, category, user}: ServiceType) => (
 

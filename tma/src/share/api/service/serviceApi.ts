@@ -1,6 +1,5 @@
-import type {FilterTypes} from "@/share/api/service/types.ts";
 import {api} from "@/share/api/axios.ts";
-import type {ServiceType} from "@/entities/service/types/serviceTypes.ts";
+import type {FilterTypes, ServiceType} from "@/share/api/service/serviceType.ts";
 
 export const serviceApi = {
   all: (data: FilterTypes & { category_name?: string }) => {

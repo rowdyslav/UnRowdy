@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import {categoriesApi} from "@/share/api/categories.ts";
-import type {CategoryType} from "@/entities/category/types/categoryType.ts";
+import {categoriesApi} from "@/share/api/categories/categories.ts";
+import type {CategoryType} from "@/share/api/categories/categoryType.ts";
 
 interface useCategoriesReturn {
   isLoading: boolean;
