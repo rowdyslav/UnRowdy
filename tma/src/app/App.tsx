@@ -1,7 +1,7 @@
 import CategoriesPage from "@/pages/categories/CategoriesPage.tsx";
 import ServicePage from "@/pages/service/ServicePage.tsx";
 import ProfilePage from "@/pages/profile/ProfilePage.tsx";
-import { AppContext } from "./providers/AppContext";
+import {AppContext} from "./providers/AppContext";
 import "@egjs/react-flicking/dist/flicking.css";
 import Flicking from "@egjs/react-flicking";
 import {useRef, useState} from "react";
@@ -24,6 +24,8 @@ const App = () => {
     tg?.BackButton?.offClick()
     console.log(idPage)
   }
+
+  console.log(nameCategory)
 
   return (
     <AppContext.Provider
@@ -72,7 +74,7 @@ const App = () => {
         </div>
       </div>
     </AppContext.Provider>
-    )
+  )
 }
 
 export default App;

@@ -22,26 +22,26 @@ const CategoriesPage = ({isSubCategories}: { isSubCategories: boolean}) => {
         bounce={10}
         preventClickOnDrag={true}
         disableOnInit={false}
-        panelsPerView={10}
+        panelsPerView={1}
         className="h-full w-full"
         preventDefaultOnDrag={false}
         interruptable={true}
-        moveType={["freeScroll"]}
+        moveType={["snap"]}
       >
         {categoriesData && categoriesData.map((category) => (
-          <div key={category._id} className='w-full h-[10vh] px-4 py-2'>
+          <div key={category._id} className='w-full h-[100vh] px-4 py-2'>
             <Category label={category.name} _id={category._id} isSubCategory={isSubCategories}/>
           </div>
         ))}
 
         {categoriesData && categoriesData.map((category) => (
-          <div key={category._id} className='w-full h-[10vh] px-4 py-2'>
+          <div key={category._id} className='w-full h-[100vh] px-4 py-2'>
             <Category label={category.name} _id={category._id} isSubCategory={isSubCategories}/>
           </div>
         ))}
 
         {categoriesData && categoriesData.map((category) => (
-          <div key={category._id} className='w-full h-[10vh] px-4 py-2'>
+          <div key={category._id} className='w-full h-[100vh] px-4 py-2'>
             <Category label={category.name} _id={category._id} isSubCategory={isSubCategories}/>
           </div>
         ))}
