@@ -1,10 +1,10 @@
-import {useRef, useState} from "react";
-import Flicking from "@egjs/react-flicking";
-import "@egjs/react-flicking/dist/flicking.css";
 import CategoriesPage from "@/pages/categories/CategoriesPage.tsx";
-import ProfilePage from "@/pages/profile/ProfilePage.tsx";
 import ServicePage from "@/pages/service/ServicePage.tsx";
+import ProfilePage from "@/pages/profile/ProfilePage.tsx";
 import { AppContext } from "./providers/AppContext";
+import "@egjs/react-flicking/dist/flicking.css";
+import Flicking from "@egjs/react-flicking";
+import {useRef, useState} from "react";
 
 const App = () => {
   const [idSubCategory, setIdSubCategory] = useState<string>('')

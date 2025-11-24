@@ -6,15 +6,15 @@ import {useAppContext} from "@/app/providers/AppContext.tsx";
 
 const CategoriesPage = ({isSubCategories}: { isSubCategories: boolean}) => {
   const {idSubCategory} = useAppContext()
-  const {data: categoriesData} = useCategories({_id: idSubCategory})
+  const {data: categoriesData} = useCategories({_id: isSubCategories ? idSubCategory : ''})
 
   return (
-    <div className="w-full h-[90vh] overflow-hidden select-none">
+    <div className="w-full h-[100vh] overflow-hidden select-none">
       <Flicking
         align="prev"
         circular={true}
         horizontal={false}
-        renderOnlyVisible={false}
+        renderOnlyVisible={true}
         defaultIndex={0}
         duration={100}
         inputType={['touch', 'mouse']}
@@ -26,40 +26,22 @@ const CategoriesPage = ({isSubCategories}: { isSubCategories: boolean}) => {
         className="h-full w-full"
         preventDefaultOnDrag={false}
         interruptable={true}
-        moveType={["snap"]}
+        moveType={["freeScroll"]}
       >
         {categoriesData && categoriesData.map((category) => (
-          <div key={category._id} className='w-full h-full px-4 py-2'>
+          <div key={category._id} className='w-full h-[10vh] px-4 py-2'>
             <Category label={category.name} _id={category._id} isSubCategory={isSubCategories}/>
           </div>
         ))}
 
         {categoriesData && categoriesData.map((category) => (
-          <div key={category._id} className='w-full h-full px-4 py-2'>
-            <Category label={category.name} _id={category._id}  isSubCategory={isSubCategories}/>
-          </div>
-        ))}
-
-        {categoriesData && categoriesData.map((category) => (
-          <div key={category._id} className='w-full h-full px-4 py-2'>
+          <div key={category._id} className='w-full h-[10vh] px-4 py-2'>
             <Category label={category.name} _id={category._id} isSubCategory={isSubCategories}/>
           </div>
         ))}
 
         {categoriesData && categoriesData.map((category) => (
-          <div key={category._id} className='w-full h-full px-4 py-2'>
-            <Category label={category.name} _id={category._id} isSubCategory={isSubCategories}/>
-          </div>
-        ))}
-
-        {categoriesData && categoriesData.map((category) => (
-          <div key={category._id} className='w-full h-full px-4 py-2'>
-            <Category label={category.name} _id={category._id} isSubCategory={isSubCategories}/>
-          </div>
-        ))}
-
-        {categoriesData && categoriesData.map((category) => (
-          <div key={category._id} className='w-full h-full px-4 py-2'>
+          <div key={category._id} className='w-full h-[10vh] px-4 py-2'>
             <Category label={category.name} _id={category._id} isSubCategory={isSubCategories}/>
           </div>
         ))}

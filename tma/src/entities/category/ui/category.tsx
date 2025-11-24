@@ -5,7 +5,7 @@ const Category = ({label, _id, isSubCategory}: CategoryProps) => {
   const {setNameCategory, setIdSubCategory, goNext} = useAppContext()
 
   const handleClick = () => {
-    if (isSubCategory) {
+    if (!isSubCategory) {
       setIdSubCategory(_id)
       setNameCategory(label)
     }
