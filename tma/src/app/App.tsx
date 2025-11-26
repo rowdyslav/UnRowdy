@@ -1,6 +1,6 @@
 import CategoriesPage from "@/pages/categories/CategoriesPage.tsx";
 import ServicePage from "@/pages/service/ServicePage.tsx";
-import ProfilePage from "@/pages/profile/ProfilePage.tsx";
+import MainPage from "@/pages/main/MainPage.tsx";
 import {AppContext} from "./providers/AppContext";
 import "@egjs/react-flicking/dist/flicking.css";
 import Flicking from "@egjs/react-flicking";
@@ -47,7 +47,7 @@ const App = () => {
           horizontal={true}
         >
           <div className="w-full h-[90vh]">
-            <ProfilePage/>
+            <MainPage/>
           </div>
 
           <div className="w-full h-[90vh] px-4 py-2">

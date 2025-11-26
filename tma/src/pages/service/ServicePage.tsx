@@ -3,7 +3,7 @@ import {useService} from "@/entities/service/api/useServices.ts";
 import Service from "@/entities/service/ui/Service.tsx";
 
 const ServicePage = ({nameCategory}: { nameCategory: string }) => {
-  const {data} = useService({category_name: nameCategory, max_price: '10000'})
+  const {data} = useService({category_name: nameCategory, max_price: ''})
 
   return (
     <div className="w-full h-[100vh] overflow-hidden select-none">

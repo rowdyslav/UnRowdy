@@ -18,7 +18,7 @@ const Category = ({label, _id, isSubCategory}: CategoryProps) => {
       onClick={handleClick}
     >
       <img src='/src/share/assets/coding.webp' alt={label} className='mb-4 rounded-lg select-none pointer-events-none'/>
-      <p>{label}</p>
+      <p className='text-4xl font-bold'>{label}</p>
       <p className='text-sm'>{isSubCategory ? "Подкатегория": ""}</p>
     </div>
   );
