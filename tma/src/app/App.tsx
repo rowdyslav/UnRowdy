@@ -1,31 +1,48 @@
 import CategoriesPage from "@/pages/categories/CategoriesPage.tsx";
 import ServicePage from "@/pages/service/ServicePage.tsx";
 import MainPage from "@/pages/main/MainPage.tsx";
-import {AppContext} from "./providers/AppContext";
+import { AppContext } from "./providers/AppContext";
 import "@egjs/react-flicking/dist/flicking.css";
 import Flicking from "@egjs/react-flicking";
-import {useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 
 const App = () => {
-  const [idSubCategory, setIdSubCategory] = useState<string>('')
-  const [nameCategory, setNameCategory] = useState<string>('')
+  const [idSubCategory, setIdSubCategory] = useState<string>('');
+  const [nameCategory, setNameCategory] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(0);
 
   const flickingRef = useRef<Flicking>(null);
-  const goNext = () => flickingRef.current?.next();   // движение влево (вперёд)
+  const goNext = () => flickingRef.current?.next();
   const goPrev = () => flickingRef.current?.prev();
 
-  const idPage = flickingRef.current?.index
-  const tg = window.Telegram?.WebApp
+  const tg = window.Telegram?.WebApp;
 
-  if (idPage === 0) {
-    tg?.BackButton?.show()
-    tg?.BackButton?.onClick(goPrev)
-  } else {
-    tg?.BackButton?.offClick()
-    console.log(idPage)
-  }
+  useEffect(() => {
+    const handleMove = () => {
+      const newIndex = flickingRef.current?.index || 0;
+      setCurrentPage(newIndex);
+    };
 
-  console.log(nameCategory)
+    flickingRef.current?.on("changed", handleMove);
+
+    return () => {
+      flickingRef.current?.off("changed", handleMove);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!tg) return;
+
+    if (currentPage > 0) {
+      tg.BackButton.show();
+      tg.BackButton.onClick(goPrev);
+    } else {
+      tg.BackButton.hide();
+      tg.BackButton.offClick(goPrev);
+    }
+
+    return () => tg.BackButton.offClick(goPrev);
+  }, [currentPage, tg, goPrev]);
 
   return (
     <AppContext.Provider
@@ -36,7 +53,7 @@ const App = () => {
         setNameCategory
       }}
     >
-      <div className="w-full h-screen">
+      <div className="w-full h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100">
         <Flicking
           align="prev"
           ref={flickingRef}
@@ -46,35 +63,25 @@ const App = () => {
           inputType={[]}
           horizontal={true}
         >
-          <div className="w-full h-[90vh]">
+          <div className="w-full h-[100vh]">
             <MainPage/>
           </div>
 
-          <div className="w-full h-[90vh] px-4 py-2">
+          <div className="w-full h-[100vh]">
             <CategoriesPage isSubCategories={false}/>
           </div>
 
-          <div className="w-full h-[90vh] px-4 py-2">
+          <div className="w-full h-[100vh]">
             <CategoriesPage isSubCategories={true}/>
           </div>
 
-          <div className="w-full h-[90vh] px-4 py-2">
+          <div className="w-full h-[100vh] px-4 py-2">
             <ServicePage nameCategory={nameCategory}/>
           </div>
         </Flicking>
-
-        <div className="absolute z-20 right-20 flex gap-3 mt-4 justify-center">
-          <button onClick={goPrev} className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">
-            Назад
-          </button>
-
-          <button onClick={goNext} className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">
-            Вперёд
-          </button>
-        </div>
       </div>
     </AppContext.Provider>
-  )
-}
+  );
+};
 
 export default App;

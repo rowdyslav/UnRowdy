@@ -1,18 +1,21 @@
-const OpenChatButton = ({username}: {username: string}) => {
+const OpenChatButton = ({ username, message }: { username: string; message?: string }) => {
 
-  const handleClick = ({username}: {username: string}) => {
-    if (window.Telegram?.WebApp) window.Telegram.WebApp.openTelegramLink(`https://t.me/${username}`);
-    else window.open(`https://t.me/${username}`, "_blank");
-  }
+  const handleClick = () => {
+    const encodedMessage =`Здравствуйте, я бы хотел узнать об услуге ${message}`
+    const url = `https://t.me/${username}${encodedMessage ? `?text=${encodedMessage}` : ""}`;
+
+    if (window.Telegram?.WebApp) window.Telegram.WebApp.openTelegramLink(url);
+    else window.open(url, "_blank");
+  };
 
   return (
     <button
-      onClick={() => handleClick({username})}
+      onClick={handleClick}
       className="bg-green-500 text-white py-2 px-4 rounded-lg"
     >
       Открыть чат с продавцом
     </button>
-  )
-}
+  );
+};
 
-export default OpenChatButton
+export default OpenChatButton;

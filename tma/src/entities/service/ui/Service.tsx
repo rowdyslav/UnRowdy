@@ -30,7 +30,7 @@ const Service = ({image_b64, name, description, price, category, user}: ServiceT
         <div className="text-3xl font-extrabold text-blue-600 mt-2">{price}₽</div>
       </div>
 
-      <OpenChatButton username={user.email}/>
+      <OpenChatButton username={user.email} message={name}/>
     </div>
   </div>
 );
