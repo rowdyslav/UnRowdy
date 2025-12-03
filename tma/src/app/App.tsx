@@ -75,7 +75,7 @@ const App = () => {
             <CategoriesPage isSubCategories={true}/>
           </div>
 
-          <div className="w-full h-[100vh] px-4 py-2">
+          <div className="w-full h-[100vh] ">
             <ServicePage nameCategory={nameCategory}/>
           </div>
         </Flicking>

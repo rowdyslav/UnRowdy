@@ -12,7 +12,7 @@ const Service = ({image_b64, name, description, price, category, user}: ServiceT
         <img
           src={`data:${image_b64}`}
           alt="Изображение услуги"
-          className=" h-64 object-cover"
+          className="h-64 w-80"
         />
       </div>
 
