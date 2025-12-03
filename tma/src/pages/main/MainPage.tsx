@@ -1,16 +1,17 @@
-import { useAppContext } from "@/app/providers/AppContext.tsx";
-import OpenChatButton from "@/share/components/OpenChatButton.tsx";
+import {useAppContext} from "@/app/providers/AppContext.tsx";
 
 const MainPage = () => {
   const user = window.Telegram?.WebApp.initDataUnsafe?.user;
-  const { goNext } = useAppContext();
+  const {goNext} = useAppContext();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100 relative overflow-hidden">
       {/* Декоративные элементы */}
       <div className="absolute top-10 -left-20 w-64 h-64 bg-blue-200/30 rounded-full blur-2xl"></div>
       <div className="absolute bottom-10 -right-20 w-80 h-80 bg-blue-300/20 rounded-full blur-2xl"></div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl"></div>
+      <div
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl"
+      ></div>
 
       <div className="relative z-10 flex flex-col min-h-screen px-6 py-8">
         <header className="flex justify-between items-center mb-12">
@@ -19,7 +20,9 @@ const MainPage = () => {
 
         <main className="flex-1 flex flex-col justify-center items-center text-center">
           <div className="mb-14">
-            <div className="w-24 h-24 bg-white/80 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm border-2 border-blue-200 shadow-lg">
+            <div
+              className="w-24 h-24 bg-white/80 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm border-2 border-blue-200 shadow-lg"
+            >
               {user?.photo_url ? (
                 <img
                   src={user.photo_url}
@@ -38,9 +41,10 @@ const MainPage = () => {
             <p className="text-gray-600 text-lg">Рады видеть вас снова</p>
           </div>
 
-          <div className="bg-white/80 backdrop-blur-lg rounded-3xl p-8 w-full max-w-sm border border-blue-100 shadow-xl">
+          <div
+            className="bg-white/80 backdrop-blur-lg rounded-3xl p-8 w-full max-w-sm border border-blue-100 shadow-xl"
+          >
             <div className="mb-6">
-              <OpenChatButton username="rowdyslav" message='попа'/>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
                 Найдём нужную услугу
               </h3>
@@ -57,7 +61,7 @@ const MainPage = () => {
             >
               <span>Выбрать категорию</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/>
               </svg>
             </button>
           </div>

@@ -27,7 +27,7 @@ const Category = ({ label, _id, isSubCategory }: CategoryProps) => {
           className="
             w-full h-full object-cover rounded-2xl shadow-xl
             transition-transform duration-300
-            hover:scale-[1.005]"
+            hover:scale-[1.005]" draggable="false"
         />
       </div>
 
