@@ -1,8 +1,3 @@
-https://medium.com/@azeemteli/python-gui-programming-the-ultimate-guide-to-building-beautiful-apps-4ba45185d51f?source=email-dcd644c12e96-1760225077455-digest.reader-eb8e1bd46a6c-4ba45185d51f----0-109------------------a1e24ca8_4604_46f1_9bd6_a14131133fb5-1
-https://medium.com/@pythonworldx/10-python-anti-patterns-that-are-killing-your-code-quality-928327ff9a6c?source=email-dcd644c12e96-1757718893643-digest.reader-ffcf9c43f8e9-928327ff9a6c----6-98------------------6c2ae413_1025_4644_a197_f9960fafd15f-1
-https://medium.com/@ujjawalr/5-dockerfile-tricks-that-separate-senior-developers-from-juniors-bcd9846d8b7f?source=email-dcd644c12e96-1757718893643-digest.reader--bcd9846d8b7f----7-109------------------6c2ae413_1025_4644_a197_f9960fafd15f-1
-https://medium.com/@devrimozcay/python-is-dying-and-nobody-wants-to-admit-it-4260f774117a?source=email-dcd644c12e96-1757718893643-digest.reader-1c377a233996-4260f774117a----0-109------------------6c2ae413_1025_4644_a197_f9960fafd15f-1
-
 # UnRowdy Product Overview
 
 UnRowdy is a web application built with a Python-based full-stack architecture. The application appears to be a personal management or service-tracking system with user authentication and service management features.
