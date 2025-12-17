@@ -58,7 +58,7 @@ const MainPage = () => {
               active:scale-101 transition-all duration-200 shadow-lg hover:shadow-blue-200 flex
               items-center justify-center gap-2"
             >
-              <span>Выбрать категорию</span>
+              <span>Начнём</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/>
               </svg>

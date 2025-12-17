@@ -1,8 +1,8 @@
 const OpenChatButton = ({ username, message }: { username: string; message?: string }) => {
 
   const handleClick = () => {
-    const encodedMessage =`Здравствуйте, я бы хотел узнать об услуге ${message}`
-    const url = `https://t.me/${username}${encodedMessage ? `?text=${encodedMessage}` : ""}`;
+    const encodedMessage =`Добрый день, я бы хотел узнать об услуге ${message}`
+    const url = `https://t.me/${"akimovivhik"}${encodedMessage ? `?text=${encodedMessage}` : ""}`;
 
     if (window.Telegram?.WebApp) window.Telegram.WebApp.openTelegramLink(url);
     else window.open(url, "_blank");

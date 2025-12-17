@@ -4,15 +4,15 @@ import type {ServiceType} from "@/share/api/service/serviceType.ts";
 
 const Service = ({image_b64, name, description, price, category, user}: ServiceType) => (
 
-  <div className="flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4 h-[100vh]">
+  <div className="flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 h-full">
     <div
-      className="bg-white shadow-xl rounded-2xl w-full max-w-xl p-6 flex flex-col gap-y-8"
+      className="bg-white items-center justify-center w-full p-6 flex flex-col gap-y-8 h-full"
     >
-      <div className="overflow-hidden rounded-xl shadow-sm">
+      <div className="overflow-hidden">
         <img
           src={`data:${image_b64}`}
           alt="Изображение услуги"
-          className="h-64 w-80"
+          className="h-64 w-80 rounded-xl"
         />
       </div>
 
@@ -30,7 +30,7 @@ const Service = ({image_b64, name, description, price, category, user}: ServiceT
         <div className="text-3xl font-extrabold text-blue-600 mt-2">{price}₽</div>
       </div>
 
-      <OpenChatButton username={user.email} message={name}/>
+      <OpenChatButton username={user.username} message={name}/>
     </div>
   </div>
 );

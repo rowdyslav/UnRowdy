@@ -20,7 +20,7 @@ const ServicePage = ({nameCategory}: { nameCategory: string }) => {
         bound={true}
         preventClickOnDrag={true}
         disableOnInit={false}
-        className="h-full"
+        className="h-full w-full"
         panelsPerView={1}
         preventDefaultOnDrag={false}
         interruptable={true}

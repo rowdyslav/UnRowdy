@@ -1,10 +1,10 @@
 import CategoriesPage from "@/pages/categories/CategoriesPage.tsx";
 import ServicePage from "@/pages/service/ServicePage.tsx";
-import MainPage from "@/pages/main/MainPage.tsx";
+import { useEffect, useRef, useState } from "react";
 import { AppContext } from "./providers/AppContext";
+import MainPage from "@/pages/main/MainPage.tsx";
 import "@egjs/react-flicking/dist/flicking.css";
 import Flicking from "@egjs/react-flicking";
-import { useEffect, useRef, useState } from "react";
 
 const App = () => {
   const [idSubCategory, setIdSubCategory] = useState<string>('');
@@ -42,7 +42,7 @@ const App = () => {
     }
 
     return () => tg.BackButton.offClick(goPrev);
-  }, [currentPage, tg, goPrev]);
+  }, [currentPage]);
 
   return (
     <AppContext.Provider
