@@ -1,4 +1,5 @@
 import {useAppContext} from "@/app/providers/AppContext.tsx";
+import OpenChatButton from "@/share/components/OpenChatButton.tsx";
 
 const MainPage = () => {
   const user = window.Telegram?.WebApp.initDataUnsafe?.user;
@@ -52,6 +53,7 @@ const MainPage = () => {
               </p>
             </div>
 
+            <OpenChatButton username={'egorr600'}/>
             <button
               onClick={goNext}
               className="w-full py-4 bg-blue-500 text-white font-bold rounded-2xl
