@@ -3,19 +3,22 @@ import type {ServiceType} from "@/share/api/service/serviceType.ts";
 
 const Service = ({ name, description, price, category, user}: ServiceType) => (
   <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex justify-center">
-    <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-8 flex flex-col gap-8 mx-auto">
+    <div className="w-full max-w-4xl rounded-2xl p-8 flex flex-col gap-6 mx-auto">
 
       {/* ИЗОБРАЖЕНИЕ */}
-      <div className="w-full overflow-hidden rounded-2xl shadow-md">
+      <div className="w-full overflow-hidden rounded-2xl shadow-md max-h-1/3">
         <img
           // src={`data:${image_b64}`}
           src='/src/share/assets/coding.webp'
           alt="Изображение услуги"
-          className="w-full max-h-72 object-cover"
+          className="
+          w-full h-full object-cover rounded-2xl shadow-xl
+          transition-transform duration-300
+          hover:scale-[1.005]"
         />
       </div>
 
-      {/* ТЕКСТОВЫЙ КОНТЕНТ */}
+      {/* ТЕКСТ */}
       <div className="flex flex-col items-center text-center gap-3">
         <span className="p-4 py-1 text-sm font-semibold text-blue-700 bg-blue-100 rounded-full">
           {category.name}
@@ -29,9 +32,10 @@ const Service = ({ name, description, price, category, user}: ServiceType) => (
           {description}
         </p>
 
-        {/* БЛОК С ВЛАДЕЛЬЦЕМ */}
+        {/*ВЛАДЕЛЕЦ */}
         <div className="flex items-center gap-4 mt-2">
-          <div className="w-20 h-20 rounded-full border-2 border-blue-200 shadow-md overflow-hidden bg-white">
+          <div className="w-18 h-18 rounded-full border-2 border-blue-200 shadow-md
+          overflow-hidden bg-white ">
             {user.image_b64 ? (
               <img
                 src={`data:${user.image_b64}`}
@@ -39,7 +43,7 @@ const Service = ({ name, description, price, category, user}: ServiceType) => (
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-4xl text-blue-600">
+              <div className="w-full h-full text-4xl text-blue-600 flex items-center justify-center">
                 {user.username[0]?.toUpperCase() || "👤"}
               </div>
             )}

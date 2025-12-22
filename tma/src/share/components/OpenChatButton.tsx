@@ -11,7 +11,7 @@ const OpenChatButton = ({ username, message }: { username: string; message?: str
   return (
     <button
       onClick={handleClick}
-      className="bg-blue-500 text-white py-2 px-4 rounded-lg"
+      className="bg-blue-500 text-white py-4 px-5 rounded-lg"
     >
       Открыть чат с продавцом
     </button>

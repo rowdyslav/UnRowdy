@@ -1,5 +1,4 @@
 import {useAppContext} from "@/app/providers/AppContext.tsx";
-import OpenChatButton from "@/share/components/OpenChatButton.tsx";
 
 const MainPage = () => {
   const user = window.Telegram?.WebApp.initDataUnsafe?.user;
@@ -44,7 +43,7 @@ const MainPage = () => {
           <div
             className="bg-white/80 backdrop-blur-lg rounded-3xl p-8 w-full max-w-sm border border-blue-100 shadow-xl"
           >
-            <div className="mb-6">
+            <div className="mb-4">
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
                 Найдём нужную услугу
               </h3>
@@ -53,7 +52,6 @@ const MainPage = () => {
               </p>
             </div>
 
-            <OpenChatButton username={'egorr600'}/>
             <button
               onClick={goNext}
               className="w-full py-4 bg-blue-500 text-white font-bold rounded-2xl
@@ -68,7 +66,7 @@ const MainPage = () => {
           </div>
         </main>
 
-        <footer className="text-center mt-12">
+        <footer className="text-center mt-8">
           <p className="text-gray-500 text-sm">
             UnRowdy — ваш помощник в поиске услуг
           </p>

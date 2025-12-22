@@ -42,8 +42,6 @@ const Category = ({ label, _id, isSubCategory }: CategoryProps) => {
         )}
       </div>
 
-
-
       <p
         className=" absolute bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-600 opacity-80"
       >
