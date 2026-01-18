@@ -1,17 +1,19 @@
-import Flicking from '@egjs/react-flicking';
-import "@egjs/react-flicking/dist/flicking.css";
-import { useCategories } from "@/entities/category/api/useCategories.ts";
+import {useCategories} from "@/entities/category/api/useCategories.ts";
+import {useAppContext} from "@/app/providers/AppContext.tsx";
 import Category from "@/entities/category/ui/category.tsx";
-import { useAppContext } from "@/app/providers/AppContext.tsx";
+import "@egjs/react-flicking/dist/flicking.css";
+import Flicking from '@egjs/react-flicking';
 
-const CategoriesPage = ({ isSubCategories }: { isSubCategories: boolean }) => {
-  const { idSubCategory } = useAppContext();
-  const { data: categoriesData } = useCategories({
+const CategoriesPage = ({isSubCategories}: { isSubCategories: boolean }) => {
+  const {idSubCategory} = useAppContext();
+  const {data: categoriesData} = useCategories({
     _id: isSubCategories ? idSubCategory : "",
   });
 
   return (
-    <div className="w-full h-[100vh] overflow-hidden select-none bg-gradient-to-br from-blue-100 via-blue-50 to-blue-100">
+    <div
+      className="w-full h-[100vh] overflow-hidden select-none bg-gradient-to-br from-blue-100 via-blue-50 to-blue-100"
+    >
       <Flicking
         align="prev"
         circular={true}
@@ -32,11 +34,11 @@ const CategoriesPage = ({ isSubCategories }: { isSubCategories: boolean }) => {
             key={category._id}
             className="w-full h-[100vh] flex items-center justify-center"
           >
-              <Category
-                label={category.name}
-                _id={category._id}
-                isSubCategory={isSubCategories}
-              />
+            <Category
+              label={category.name}
+              _id={category._id}
+              isSubCategory={isSubCategories}
+            />
           </div>
         ))}
       </Flicking>

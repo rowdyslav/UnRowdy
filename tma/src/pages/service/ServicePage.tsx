@@ -2,8 +2,8 @@ import Flicking from '@egjs/react-flicking';
 import {useService} from "@/entities/service/api/useServices.ts";
 import Service from "@/entities/service/ui/Service.tsx";
 
-const ServicePage = ({nameCategory}: { nameCategory: string }) => {
-  const {data} = useService({category_name: nameCategory, max_price: ''})
+const ServicePage = ({nameCategory, keywords}: { nameCategory: string, keywords: string }) => {
+  const {data} = useService({category_name: nameCategory, max_price: '', keywords})
 
   return (
     <div className="w-full h-[100vh] overflow-hidden select-none">
