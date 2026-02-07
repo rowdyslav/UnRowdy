@@ -1,36 +1,70 @@
-import AuthorInfo from "@/share/components/AuthorInfo.tsx";
 import OpenChatButton from "@/share/components/OpenChatButton.tsx";
 import type {ServiceType} from "@/share/api/service/serviceType.ts";
 
-const Service = ({image_b64, name, description, price, category, user}: ServiceType) => (
+const Service = ({ name, description, price, category, user}: ServiceType) => (
+  <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex justify-center">
+    <div className="w-full max-w-4xl rounded-2xl p-8 flex flex-col gap-6 mx-auto">
 
-  <div className="flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4 h-[100vh]">
-    <div
-      className="bg-white shadow-xl rounded-2xl w-full max-w-xl p-6 flex flex-col gap-y-8"
-    >
-      <div className="overflow-hidden rounded-xl shadow-sm">
+      {/* ИЗОБРАЖЕНИЕ */}
+      <div className="w-full overflow-hidden rounded-2xl shadow-md max-h-1/3">
         <img
-          src={`data:${image_b64}`}
+          // src={`data:${image_b64}`}
+          src='/src/share/assets/coding.webp'
           alt="Изображение услуги"
-          className=" h-64 object-cover"
+          className="
+          w-full h-full object-cover rounded-2xl shadow-xl
+          transition-transform duration-300
+          hover:scale-[1.005]"
         />
       </div>
 
-      <div className="text-center flex flex-col items-center gap-y-3 px-2">
-        <span className="text-xs font-medium text-blue-600 bg-blue-50 px-3 py-1 rounded-full shadow-sm">
+      {/* ТЕКСТ */}
+      <div className="flex flex-col items-center text-center gap-3">
+        <span className="p-4 py-1 text-sm font-semibold text-blue-700 bg-blue-100 rounded-full">
           {category.name}
         </span>
 
-        <h2 className="text-3xl font-bold tracking-tight text-slate-900">{name}</h2>
+        <h1 className="text-4xl font-bold text-slate-900 tracking-tight">
+          {name}
+        </h1>
 
-        <p className="text-lg text-slate-600 max-w-md">{description}</p>
+        <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
+          {description}
+        </p>
 
-        <AuthorInfo author={user.username}/>
+        {/*ВЛАДЕЛЕЦ */}
+        <div className="flex items-center gap-4 mt-2">
+          <div className="w-18 h-18 rounded-full border-2 border-blue-200 shadow-md
+          overflow-hidden bg-white ">
+            {user.image_b64 ? (
+              <img
+                src={`data:${user.image_b64}`}
+                alt={user.username}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full text-4xl text-blue-600 flex items-center justify-center">
+                {user.username[0]?.toUpperCase() || "👤"}
+              </div>
+            )}
+          </div>
 
-        <div className="text-3xl font-extrabold text-blue-600 mt-2">{price}₽</div>
+          <div className="text-left">
+            <p className="font-bold text-lg text-slate-800">{user.username}</p>
+            <p className="text-sm text-slate-500">Автор услуги</p>
+          </div>
+        </div>
+
+        {/* ЦЕНА */}
+        <div className="text-4xl font-extrabold text-blue-600 mt-2">
+          {price}₽
+        </div>
       </div>
 
-      <OpenChatButton username={user.email}/>
+      {/* КНОПКА */}
+      <div className="flex justify-center">
+        <OpenChatButton username={user.email} message={name}/>
+      </div>
     </div>
   </div>
 );

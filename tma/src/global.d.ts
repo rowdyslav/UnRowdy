@@ -10,7 +10,7 @@ interface TelegramWebApp {
   initDataUnsafe?: {
     user?: TelegramWebAppUser
   }
-  BackButton?: {
+  BackButton: {
     show(): void
     hide(): void
     onClick(callback: () => void): void;
@@ -24,4 +24,5 @@ interface TelegramWebAppUser {
   last_name?: string;
   username?: string;
   language_code?: string;
+  photo_url?: string;
 }
