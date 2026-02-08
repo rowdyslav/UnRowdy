@@ -32,6 +32,13 @@ class SharedUser(BaseModel):
     username: Annotated[str, Field(max_length=20), Indexed(unique=True)]
 
 
+class SharedTgUser(BaseModel):
+    """Базовые поля TgUser"""
+
+    tgid: Annotated[int, Indexed(unique=True)]
+    tgusername: str | None = Field(default=None, max_length=32)
+
+
 class UserRead(SharedUser):
     """User для чтения"""
 
@@ -50,6 +57,27 @@ class UserUpdate(SharedUser):
 @optional_model
 class UserFind(SharedUser):
     """User для поиска"""
+
+
+class TgUserRead(SharedTgUser):
+    """TgUser для чтения"""
+
+    id: PydanticObjectId
+
+
+class TgAuthRequest(BaseModel):
+    """Запрос для авторизации/регистрации через Telegram"""
+
+    tgid: int
+    tgusername: str | None = Field(default=None, max_length=32)
+
+
+class TgAuthResponse(BaseModel):
+    """Ответ авторизации/регистрации через Telegram"""
+
+    tg: TgUserRead
+    user: UserRead | None = None
+    access_token: str | None = None
 
 
 class SharedServiceCategory(BaseModel):
@@ -78,6 +106,7 @@ class ServiceFind(BaseModel):
     keywords: str = ""
     min_price: int = 1
     max_price: int | None = 0x7FFFFFFFFFFFFFFF
+    tma: bool = False
 
 
 class ServiceRead(SharedService):
@@ -86,6 +115,7 @@ class ServiceRead(SharedService):
     id: PydanticObjectId
     user: UserRead
     category: ServiceCategoryRead
+    tg_username: str | None = None
 
 
 class ServiceCreate(SharedService):

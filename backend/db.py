@@ -5,7 +5,7 @@ from beanie import PydanticObjectId, init_beanie
 from fastapi import FastAPI
 from pymongo import AsyncMongoClient
 
-from core import Service, ServiceCategory, User
+from core import Service, ServiceCategory, TgUser, User
 from env import MONGO_DATABASE_NAME, MONGO_URL
 
 client = AsyncMongoClient(MONGO_URL, uuidRepresentation="standard")
@@ -21,7 +21,9 @@ SERVICE_CATEGORIES_NAMES = {
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
-    await init_beanie(database=db, document_models=[User, Service, ServiceCategory])
+    await init_beanie(
+        database=db, document_models=[User, Service, ServiceCategory, TgUser]
+    )
 
     all_names = {
         name

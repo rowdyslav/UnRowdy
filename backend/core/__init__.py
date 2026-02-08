@@ -1,18 +1,26 @@
 """Параметры, ошибки, модели, схемы и UserManager"""
 
 from .auth import login_manager
-from .deps import AuthForm, AuthorizedUser, PaginationQuery, ServiceQuery, UserQuery
+from .deps import (
+    AuthForm,
+    AuthorizedUser,
+    OptionalAuthorizedUser,
+    PaginationQuery,
+    ServiceQuery,
+    UserQuery,
+)
 from .errors.http import (
     already_friend_or_request,
     friend_request_yourself,
     service_category_not_found,
     service_not_found,
+    tg_already_bound,
     user_already_existed,
     user_no_friend_or_request,
     user_not_found,
 )
 from .errors.utils import ErrorResponsesDict
-from .models import Service, ServiceCategory, User
+from .models import Service, ServiceCategory, TgUser, User
 from .schemas import (
     BearerToken,
     FriendType,
@@ -20,6 +28,9 @@ from .schemas import (
     ServiceFind,
     ServiceRead,
     ServiceUpdate,
+    TgAuthRequest,
+    TgAuthResponse,
+    TgUserRead,
     UserCreate,
     UserFind,
     UserRead,
@@ -32,6 +43,7 @@ __all__ = [
     "BearerToken",
     "ErrorResponsesDict",
     "FriendType",
+    "OptionalAuthorizedUser",
     "PaginationQuery",
     "Service",
     "ServiceCategory",
@@ -40,6 +52,10 @@ __all__ = [
     "ServiceQuery",
     "ServiceRead",
     "ServiceUpdate",
+    "TgAuthRequest",
+    "TgAuthResponse",
+    "TgUser",
+    "TgUserRead",
     "User",
     "UserCreate",
     "UserFind",
@@ -51,6 +67,7 @@ __all__ = [
     "login_manager",
     "service_category_not_found",
     "service_not_found",
+    "tg_already_bound",
     "user_already_existed",
     "user_no_friend_or_request",
     "user_not_found",

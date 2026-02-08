@@ -1,5 +1,6 @@
 from typing import Annotated
 
+from beanie.operators import Set
 from fastapi import APIRouter, Form, status
 from fastapi_login.exceptions import InvalidCredentialsException
 
@@ -7,10 +8,16 @@ from core import (
     AuthForm,
     BearerToken,
     ErrorResponsesDict,
+    OptionalAuthorizedUser,
+    TgAuthRequest,
+    TgAuthResponse,
+    TgUser,
     User,
     login_manager,
+    tg_already_bound,
     user_already_existed,
 )
+from core.schemas import TgUserRead, UserRead
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
@@ -55,4 +62,45 @@ async def login(data: AuthForm) -> BearerToken:
 
     return BearerToken(
         access_token=login_manager.create_access_token(data={"sub": email})
+    )
+
+
+@router.post(
+    "/tg",
+    responses=ErrorResponsesDict("unauthorized", "conflict"),
+)
+async def tg(
+    data: TgAuthRequest,
+    me: OptionalAuthorizedUser,
+) -> TgAuthResponse:
+    update_fields = {TgUser.tgid: data.tgid}
+    if "tgusername" in data.model_fields_set:
+        update_fields[TgUser.tgusername] = data.tgusername
+
+    await TgUser.find_one(TgUser.tgid == data.tgid).upsert(
+        Set(update_fields),
+        on_insert=TgUser(tgid=data.tgid, tgusername=data.tgusername),
+    )
+
+    tg_user = await TgUser.find_one(TgUser.tgid == data.tgid)
+    if tg_user is None:
+        raise InvalidCredentialsException
+
+    linked_user = await User.find_one(User.tg.id == tg_user.id)
+
+    if me is not None:
+        if linked_user is not None and linked_user.id != me.id:
+            raise tg_already_bound
+        me.tg = tg_user
+        await me.save()
+        linked_user = me
+
+    return TgAuthResponse(
+        tg=TgUserRead(**tg_user.model_dump()),
+        user=UserRead(**linked_user.model_dump()) if linked_user is not None else None,
+        access_token=(
+            login_manager.create_access_token(data={"sub": linked_user.email})
+            if linked_user is not None
+            else None
+        ),
     )

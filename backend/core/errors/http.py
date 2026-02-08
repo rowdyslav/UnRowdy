@@ -20,3 +20,8 @@ service_not_found = HTTPException(404, "Услуга не найдена!")
 
 
 service_category_not_found = HTTPException(404, "Категория услуги не найдена!")
+
+
+tg_already_bound = HTTPException(
+    409, "Этот Telegram-аккаунт уже привязан к другому пользователю"
+)

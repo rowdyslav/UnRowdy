@@ -2,7 +2,13 @@ from beanie import BackLink, Document, Link, PydanticObjectId
 from passlib.context import CryptContext
 from pydantic import Field
 
-from .schemas import FriendType, SharedService, SharedServiceCategory, SharedUser
+from .schemas import (
+    FriendType,
+    SharedService,
+    SharedServiceCategory,
+    SharedTgUser,
+    SharedUser,
+)
 
 pwd_ctx = CryptContext(schemes=["argon2", "bcrypt"])
 
@@ -12,6 +18,7 @@ class User(SharedUser, Document):
 
     hashed_password: str
     services: list[Link["Service"]] = []
+    tg: Link["TgUser"] | None = None
     friends_ids: dict[FriendType, list[PydanticObjectId]] = {
         "active": [],
         "sent": [],
@@ -40,6 +47,13 @@ class ServiceCategory(SharedServiceCategory, Document):
 
     class Settings:
         name = "service_categories"
+
+
+class TgUser(SharedTgUser, Document):
+    """Модель Telegram-профиля"""
+
+    class Settings:
+        name = "tgusers"
 
 
 class Service(SharedService, Document):

@@ -10,6 +10,7 @@ from .schemas import Pagination, ServiceFind, UserFind
 AuthForm = Annotated[OAuth2PasswordRequestForm, Depends()]
 
 AuthorizedUser = Annotated[User, Depends(login_manager)]
+OptionalAuthorizedUser = Annotated[User | None, Depends(login_manager)]
 
 PaginationQuery = Annotated[Pagination, Depends()]
 UserQuery = Annotated[UserFind, Depends()]
