@@ -5,7 +5,7 @@ type SearchInputProps = {
 }
 
 const SearchInput = ({currPage, setKeywords, keywords}: SearchInputProps) => {
-  const searchVisible = currPage === 1
+  const searchVisible = currPage === 3
 
   return (
     <div

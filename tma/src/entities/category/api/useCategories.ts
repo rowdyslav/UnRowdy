@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {categoriesApi} from "@/share/api/categories/categories.ts";
+import {categoriesApi} from "@/share/api/categories/categoriesApi.ts";
 import type {CategoryType} from "@/share/api/categories/categoryType.ts";
 
 interface useCategoriesReturn {

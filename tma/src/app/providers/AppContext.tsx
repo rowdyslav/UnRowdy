@@ -1,11 +1,5 @@
-import { createContext, useContext } from "react";
-
-interface AppContextType {
-  goNext: () => void;
-  setIdSubCategory: (id: string) => void;
-  idSubCategory: string;
-  setNameCategory: (name: string) => void;
-}
+import type {AppContextType} from "@/app/providers/AppContextTypes.ts";
+import {createContext, useContext} from "react";
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
 

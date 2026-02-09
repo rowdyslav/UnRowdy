@@ -1,7 +1,7 @@
 import OpenChatButton from "@/share/components/OpenChatButton.tsx";
 import type {ServiceType} from "@/share/api/service/serviceType.ts";
 
-const Service = ({ name, description, price, category, user}: ServiceType) => (
+const Service = ({name, description, price, category, user, tg_username}: ServiceType) => (
   <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex justify-center">
     <div className="w-full max-w-4xl rounded-2xl p-8 flex flex-col gap-6 mx-auto">
 
@@ -32,10 +32,12 @@ const Service = ({ name, description, price, category, user}: ServiceType) => (
           {description}
         </p>
 
-        {/*ВЛАДЕЛЕЦ */}
+        {/* ВЛАДЕЛЕЦ */}
         <div className="flex items-center gap-4 mt-2">
-          <div className="w-18 h-18 rounded-full border-2 border-blue-200 shadow-md
-          overflow-hidden bg-white ">
+          <div
+            className="w-18 h-18 rounded-full border-2 border-blue-200 shadow-md
+          overflow-hidden bg-white "
+          >
             {user.image_b64 ? (
               <img
                 src={`data:${user.image_b64}`}
@@ -63,7 +65,7 @@ const Service = ({ name, description, price, category, user}: ServiceType) => (
 
       {/* КНОПКА */}
       <div className="flex justify-center">
-        <OpenChatButton username={user.email} message={name}/>
+        <OpenChatButton tg_username={tg_username} message={name}/>
       </div>
     </div>
   </div>

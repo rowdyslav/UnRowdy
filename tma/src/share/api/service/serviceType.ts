@@ -14,4 +14,5 @@ export interface ServiceType {
   category: { name: string }
   id: string
   user: UserType
+  tg_username: string
 }

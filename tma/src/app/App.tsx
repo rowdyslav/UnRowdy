@@ -1,11 +1,12 @@
 import CategoriesPage from "@/pages/categories/CategoriesPage.tsx";
 import ServicePage from "@/pages/service/ServicePage.tsx";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AppContext } from "./providers/AppContext";
 import MainPage from "@/pages/main/MainPage.tsx";
 import "@egjs/react-flicking/dist/flicking.css";
 import Flicking from "@egjs/react-flicking";
 import SearchInput from "@/features/SearchInput.tsx";
+import {authApi} from "@/share/api/auth/authApi.ts";
 
 const App = () => {
   const [idSubCategory, setIdSubCategory] = useState<string>("");
@@ -18,24 +19,22 @@ const App = () => {
   const goPrev = () => flickingRef.current?.prev();
 
   const tg = window.Telegram?.WebApp;
+  void authApi.auth( tg?.initDataUnsafe?.user?.id || 0, tg?.initDataUnsafe?.user?.username || "")
 
   const handleChanged = (e: any) => {
-    setCurrentPage(e.index ?? 0);
-  };
+    const page = e.index ?? 0;
+    setCurrentPage(page);
 
-  useEffect(() => {
     if (!tg) return;
+    tg.BackButton.offClick(goPrev);
 
-    if (currentPage > 0) {
+    if (page > 0) {
       tg.BackButton.show();
       tg.BackButton.onClick(goPrev);
     } else {
       tg.BackButton.hide();
-      tg.BackButton.offClick(goPrev);
     }
-
-    return () => tg.BackButton.offClick(goPrev);
-  }, [currentPage]);
+  };
 
   return (
     <AppContext.Provider
@@ -70,11 +69,18 @@ const App = () => {
           </div>
 
           <div className="w-full h-[100vh]">
-            <ServicePage nameCategory={nameCategory} keywords={keywords}/>
+            <ServicePage
+              nameCategory={nameCategory}
+              keywords={keywords}
+            />
           </div>
         </Flicking>
 
-        <SearchInput currPage={currentPage} setKeywords={setKeywords} keywords={keywords}/>
+        <SearchInput
+          currPage={currentPage}
+          setKeywords={setKeywords}
+          keywords={keywords}
+        />
       </div>
     </AppContext.Provider>
   );
