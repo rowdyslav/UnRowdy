@@ -28,9 +28,9 @@ class User(SharedUser, Document):
     class Settings:
         name = "users"
 
-    async def hash_password(self, plain_password: str) -> None:
-        self.hashed_password = pwd_ctx.hash(plain_password)
-        await self.save()
+    @classmethod
+    def hash_password(cls, plain_password: str) -> str:
+        return pwd_ctx.hash(plain_password)
 
     async def verify_password(self, password: str) -> bool:
         valid, new_hash = pwd_ctx.verify_and_update(password, self.hashed_password)

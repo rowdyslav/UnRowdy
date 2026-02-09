@@ -40,8 +40,11 @@ async def register(
     if user_existed:
         raise user_already_existed
 
-    new_user = await User(email=email, username=actually_username).insert()
-    await new_user.hash_password(password)
+    await User(
+        email=email,
+        username=actually_username,
+        hashed_password=User.hash_password(password),
+    ).insert()
 
     return BearerToken(
         access_token=login_manager.create_access_token(data={"sub": email})
