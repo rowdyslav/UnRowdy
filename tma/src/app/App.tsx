@@ -1,6 +1,6 @@
 import CategoriesPage from "@/pages/categories/CategoriesPage.tsx";
 import ServicePage from "@/pages/service/ServicePage.tsx";
-import { useRef, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { AppContext } from "./providers/AppContext";
 import MainPage from "@/pages/main/MainPage.tsx";
 import "@egjs/react-flicking/dist/flicking.css";
@@ -10,7 +10,7 @@ import {authApi} from "@/share/api/auth/authApi.ts";
 
 const App = () => {
   const [idSubCategory, setIdSubCategory] = useState<string>("");
-  const [nameCategory, setNameCategory] = useState<string>("");
+  const [nameCategory, setNameCategory] = useState<string>("Веб-разработка");
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [keywords, setKeywords] = useState<string>("");
 
@@ -19,7 +19,11 @@ const App = () => {
   const goPrev = () => flickingRef.current?.prev();
 
   const tg = window.Telegram?.WebApp;
-  void authApi.auth( tg?.initDataUnsafe?.user?.id || 0, tg?.initDataUnsafe?.user?.username || "")
+  useEffect(() => {
+    const tgUser = tg?.initDataUnsafe?.user;
+    if (!tgUser?.id) return;
+    void authApi.auth(tgUser.id, tgUser.username ?? null);
+  }, [tg]);
 
   const handleChanged = (e: any) => {
     const page = e.index ?? 0;
