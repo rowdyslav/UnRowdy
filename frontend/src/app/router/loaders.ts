@@ -9,29 +9,37 @@ import { serviceApi } from '@/shared/api/service/serviceApi.ts'
 export const protectedLoader = () => {
   const isAuthenticated = useAuthStore.getState().isAuthenticated
   if (!isAuthenticated) return redirect(ROUTES.HOME)
+  return null
 }
 
 export const publicLoader = () => {
   const isAuthenticated = useAuthStore.getState().isAuthenticated
   if (isAuthenticated) return redirect(ROUTES.HOME)
+  return null
 }
 
 export const profileLoader = async (username: string) => {
   const userData = await getDataByUsername(username)
 
-  if (userData) {
-    useProfileStore.getState().setProfile(userData)
-  } else {
+  if (!userData) {
     throw new Response('User not found', { status: 404 })
   }
+
+  useProfileStore.getState().setProfile(userData)
 }
 
 export const myProfileLoader = async () => {
-  protectedLoader()
+  const authRedirect = protectedLoader()
+  if (authRedirect) return authRedirect
+
   const data = await userApi.getInfoMe()
 
-  if (data.data) useProfileStore.getState().setMyProfile(data.data)
-  else redirect(ROUTES.HOME)
+  if (data.data) {
+    useProfileStore.getState().setMyProfile(data.data)
+    return null
+  }
+
+  return redirect(ROUTES.HOME)
 }
 
 export const serviceLoader = async (serviceId: string) => {

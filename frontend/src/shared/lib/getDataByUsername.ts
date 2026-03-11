@@ -1,11 +1,8 @@
 import { userApi } from '@/shared/api/user.ts'
+import type { UserType } from '@/shared/types/userType.ts'
 
-export const getDataByUsername = async (username: string) => {
+export const getDataByUsername = async (username: string): Promise<UserType | null> => {
   const response = await userApi.getInfoByName(username)
 
-  if (response.data.length !== 0) {
-    return response.data[0]
-  } else {
-    throw new Error('Ошибка получения данных по имени')
-  }
+  return response.data[0] ?? null
 }

@@ -39,7 +39,7 @@ const LoginForm = () => {
           autoComplete='current-password'
           onInput={reset}
         />
-        <p className='text-red-500'>{errors?.password?.message || error || null}</p>
+        <p className='text-red-500'>{errors?.password?.message ?? error?.message ?? null}</p>
       </div>
 
       <button type='submit' className='button-blue'>

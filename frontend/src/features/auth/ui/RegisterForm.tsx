@@ -31,7 +31,6 @@ const RegisterForm = () => {
           placeholder='Username'
           autoComplete='given-name'
         />
-        {/*ошибка валидации*/}
         <p className='text-red-500'>{errors?.username?.message}</p>
       </div>
 
@@ -44,10 +43,8 @@ const RegisterForm = () => {
           autoComplete='email'
           onInput={reset}
         />
-        {/*ошибка валидации*/}
         <p className='text-red-500'>{errors?.email?.message}</p>
-        {/*ошибка с бека*/}
-        <p className='text-red-500'>{error}</p>
+        <p className='text-red-500'>{error?.message}</p>
       </div>
 
       {/*PASSWORD*/}
@@ -60,7 +57,6 @@ const RegisterForm = () => {
           autoComplete='new-password'
           onInput={reset}
         />
-        {/*ошибка валидации*/}
         <p className='text-red-500'>{errors?.password?.message}</p>
       </div>
 

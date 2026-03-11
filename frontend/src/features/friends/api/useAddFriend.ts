@@ -11,10 +11,12 @@ export const useAddFriend = () => {
   const showError = useNotificationStore(state => state.showError)
   const showSuccess = useNotificationStore(state => state.showSuccess)
 
-  return useMutation<void, AxiosError<ErrorResponseType>, string>({
+  return useMutation<void, AxiosError<ErrorResponseType> | Error, string>({
     mutationFn: async username => {
       const user = await getDataByUsername(username)
-      if (!user) throw new Error()
+      if (!user) {
+        throw new Error('USER_NOT_FOUND')
+      }
 
       await friendsApi.addFriend(user.id)
     },
@@ -25,8 +27,17 @@ export const useAddFriend = () => {
     },
 
     onError: error => {
-      if (error.status === 409) showError('Заявка уже отправлена или пользователь ваш друг')
-      else showError('Ошибка отправки запроса')
+      if (error instanceof Error && error.message === 'USER_NOT_FOUND') {
+        showError('Пользователь не найден')
+        return
+      }
+
+      if ('status' in error && error.status === 409) {
+        showError('Заявка уже отправлена или пользователь ваш друг')
+        return
+      }
+
+      showError('Ошибка отправки запроса')
     },
   })
 }

@@ -99,29 +99,37 @@ body {
   }
 }
 
-@keyframes slide-in {
+@keyframes notification-in {
   0% {
-    transform: translate(-50%, -30px);
+    transform: translateY(-12px);
     opacity: 0;
   }
-  30% {
-    transform: translate(-50%, 0);
-    opacity: 1;
-  }
-  70% {
-    transform: translate(-50%, 0);
-    opacity: 1;
-  }
+
   100% {
-    transform: translate(-50%, -30px);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-notification-in {
+  animation: notification-in 0.25s ease-out;
+}
+
+@keyframes notification-out {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-8px);
     opacity: 0;
   }
 }
 
-.animate-slide-in {
-  animation: slide-in 3s ease forwards;
+.animate-notification-out {
+  animation: notification-out 0.3s ease forwards;
 }
-
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -129,7 +137,8 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* для Firefox */
+/* РґР»СЏ Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
 }
+

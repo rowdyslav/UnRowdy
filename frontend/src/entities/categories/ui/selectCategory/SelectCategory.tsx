@@ -46,9 +46,9 @@ const SelectCategory = ({ data, name }: SelectProps) => {
         <ul className='rounded-lg border border-gray-200 bg-white w-full p-1 grid gap-1 z-10 absolute'>
           {data.map(({ name, _id }) => (
             <li
-              key={name}
+              key={_id}
               tabIndex={0}
-              onKeyDown={e => e.key === 'Enter' && field.onChange(name)}
+              onKeyDown={e => e.key === 'Enter' && handleSelect(_id)}
               className={`pl-3 p-1 rounded-sm cursor-pointer text-sm color-font-light
                 ${field.value === _id ? 'bg-blue-100 text-blue-500' : 'hover:bg-gray-100'}`}
               onClick={() => handleSelect(_id)}
@@ -63,3 +63,4 @@ const SelectCategory = ({ data, name }: SelectProps) => {
 }
 
 export default SelectCategory
+
