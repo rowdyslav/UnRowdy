@@ -13,14 +13,14 @@ class EnvDataParser:
         return tuple(item.strip() for item in value.split(separator) if item.strip())
 
     @classmethod
-    def parse_csv(cls,value: str | Sequence[str]) -> tuple[str, ...]:
+    def parse_csv(cls, value: str | Sequence[str]) -> tuple[str, ...]:
 
         if isinstance(value, str):
             result = cls.split_items(value, ",")
         elif isinstance(value, Sequence):
             result = tuple(str(item).strip() for item in value if str(item).strip())
         else:
-            raise TypeError(_ := "CORS_ALLOW_ORIGINS должен быть непустым списком")
+            raise TypeError(_ := f"{value} должен быть непустым списком!")
 
         if not result:
             raise ValueError(_)
@@ -73,8 +73,7 @@ class EnvDataParser:
                 )
 
             category_tree[normalized_name] = cls.parse_csv(
-                subcategories,
-                error_message="Список подкатегорий не должен быть пустым",
+                subcategories
             )
 
         if not category_tree:
