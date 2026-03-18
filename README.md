@@ -61,8 +61,14 @@ Default TMA dev port: 5180
 Backend environment variables live in `backend/.env`:
 - `MONGO_URL`
 - `MONGO_DATABASE_NAME`
-- `MONGO_INITDB_ROOT_USERNAME`
-- `MONGO_INITDB_ROOT_PASSWORD`
+- `AUTH_SECRET`
+- `CORS_ALLOW_ORIGINS`
+- `SERVICE_CATEGORIES`
+
+Service categories are synchronized automatically on backend startup. Missing
+entries are added, and the existing category tree is reconciled against
+`SERVICE_CATEGORIES` in the format
+`[Категория>Подкатегория1,Подкатегория2;Категория2>Подкатегория1,Подкатегория2]`.
 
 API base URL is currently set in code:
 - `frontend/src/shared/api/axios.ts`

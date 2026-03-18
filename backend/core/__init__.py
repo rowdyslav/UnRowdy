@@ -24,6 +24,7 @@ from .models import Service, ServiceCategory, TgUser, User
 from .schemas import (
     BearerToken,
     FriendType,
+    ServiceCategoryRead,
     ServiceCreate,
     ServiceFind,
     ServiceRead,
@@ -47,6 +48,7 @@ __all__ = [
     "PaginationQuery",
     "Service",
     "ServiceCategory",
+    "ServiceCategoryRead",
     "ServiceCreate",
     "ServiceFind",
     "ServiceQuery",

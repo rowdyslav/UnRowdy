@@ -7,11 +7,11 @@ dependencies = [
     "fastapi[standard]",
     "fastapi-login",
     "pydantic",
+    "pydantic-settings",
     "pymongo",
     "beanie",
     "passlib",
     "argon2-cffi",
-    "environs",
     "icecream",
 ]
 
