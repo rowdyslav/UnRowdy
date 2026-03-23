@@ -1,5 +1,5 @@
 import { useRemove } from '@/features/friends/api/useRemove.ts'
-import { useConfirmStore } from '@/app/providers/confirm/confirmStore.ts'
+import { useConfirmStore } from '@/shared/model/confirm/confirmStore.ts'
 
 const AcceptButton = ({ id }: { id: string }) => {
   const confirm = useConfirmStore(state => state.confirm)

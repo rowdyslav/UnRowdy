@@ -1,7 +1,7 @@
-import RequestList from '@/entities/service/ui/requestList/RequestList.tsx'
 import { useProfileStore } from '@/app/providers/profile/userStore.ts'
-import ActiveList from '@/entities/service/ui/ActiveList.tsx'
 import AddFriend from '@/features/friends/ui/AddFriend.tsx'
+import FriendRequestsList from '@/features/friends/ui/FriendRequestsList.tsx'
+import FriendsList from '@/features/friends/ui/FriendsList.tsx'
 
 const FriendsSection = () => {
   const isMyProfile = useProfileStore(state => state.isMyProfile)
@@ -13,12 +13,12 @@ const FriendsSection = () => {
       {isMyProfile && (
         <>
           <AddFriend />
-          <RequestList type='sent' label='Отправленные заявки в друзья' />
-          <RequestList type='received' label='Полученные заявки в друзья' />
+          <FriendRequestsList type='sent' label='Отправленные заявки в друзья' />
+          <FriendRequestsList type='received' label='Полученные заявки в друзья' />
         </>
       )}
 
-      <ActiveList />
+      <FriendsList canManageFriends={isMyProfile} />
     </section>
   )
 }

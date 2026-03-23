@@ -1,4 +1,4 @@
-import { useNotificationStore } from '@/app/providers/notification/NotificationStore.ts'
+import { useNotificationStore } from '@/shared/model/notification/notificationStore.ts'
 
 const colors = {
   success: 'text-green-600 border-green-200',

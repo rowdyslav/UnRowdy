@@ -5,13 +5,10 @@ const AddFriend = () => {
   const { register, handleSubmit, reset } = useForm<{ username: string }>()
   const { mutate: addFriend, reset: resetError } = useAddFriend()
 
-  const onSubmit = async (data: { username: string }) => {
-    try {
-      addFriend(data.username)
-      reset()
-    } catch (e) {
-      console.error(e)
-    }
+  const onSubmit = (data: { username: string }) => {
+    addFriend(data.username, {
+      onSuccess: () => reset(),
+    })
   }
 
   return (

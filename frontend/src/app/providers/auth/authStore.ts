@@ -11,7 +11,7 @@ export const useAuthStore = create<AuthStateType>()(
       login: (token: string) => set({ isAuthenticated: true, token }),
 
       logout: () => {
-        useAuthStore.persist.clearStorage() //очистка localStorage
+        useAuthStore.persist.clearStorage()
         set({ token: null, isAuthenticated: false })
       },
     }),

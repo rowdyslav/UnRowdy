@@ -1,3 +1,6 @@
-import type { TabProfile } from '@/pages/profile/ui/profileTabs/TabsType.ts'
+import type { ProfileTab } from '@/pages/profile/ui/profileTabs/TabsType.ts'
 
-export const tabsProfileData: TabProfile[] = ['Услуги', 'Друзья']
+export const tabsProfileData: ProfileTab[] = [
+  { id: 'services', label: 'Услуги' },
+  { id: 'friends', label: 'Друзья' },
+]

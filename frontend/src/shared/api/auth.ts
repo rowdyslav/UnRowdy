@@ -1,10 +1,9 @@
 import type { TokenType } from '@/shared/types/tokenType.ts'
 import { api } from '@/shared/api/axios.ts'
-import type { LoginFormType } from '@/features/auth/model/LoginForm.schema.ts'
-import type { RegisterFormType } from '@/features/auth/model/RegisterForm.schema.ts'
+import type { LoginPayload, RegisterPayload } from '@/shared/api/auth/types.ts'
 
 export const authApi = {
-  login: (data: LoginFormType) => {
+  login: (data: LoginPayload) => {
     const formData = new URLSearchParams()
     formData.append('username', data.email)
     formData.append('password', data.password)
@@ -16,7 +15,7 @@ export const authApi = {
     })
   },
 
-  register: (data: RegisterFormType) => {
+  register: (data: RegisterPayload) => {
     const formData = new URLSearchParams()
     formData.append('username', data.email)
     formData.append('password', data.password)

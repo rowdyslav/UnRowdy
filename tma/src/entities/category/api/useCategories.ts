@@ -1,31 +1,34 @@
-import {useEffect, useState} from "react";
-import {categoriesApi} from "@/share/api/categories/categoriesApi.ts";
-import type {CategoryType} from "@/share/api/categories/categoryType.ts";
+﻿import {useCallback, useMemo} from "react";
+import {categoriesApi} from "@/shared/api/categories/categoriesApi.ts";
+import type {CategoryType} from "@/shared/api/categories/categoryType.ts";
+import {useAsyncData} from "@/shared/lib/hooks/useAsyncData.ts";
 
-interface useCategoriesReturn {
+interface UseCategoriesReturn {
   isLoading: boolean;
-  data: CategoryType[] | null
+  data: CategoryType[];
+  error: string | null;
 }
 
-export const useCategories = ({ _id }: { _id?: string }): useCategoriesReturn => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<CategoryType[] | null>(null);
+interface UseCategoriesParams {
+  parentId?: string;
+  enabled?: boolean;
+}
 
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        setIsLoading(true)
-        const servicesData = await (_id ? categoriesApi.getSubCategories(_id) : categoriesApi.getCategories())
-        setData(servicesData.data)
-      } catch (err) {
-        console.error('Error fetching services:', err)
-      } finally {
-        setIsLoading(false);
-      }
-    };
+export const useCategories = ({parentId, enabled = true}: UseCategoriesParams): UseCategoriesReturn => {
+  const initialData = useMemo<CategoryType[]>(() => [], []);
+  const fetchCategories = useCallback(async () => {
+    const response = parentId
+      ? await categoriesApi.getSubCategories(parentId)
+      : await categoriesApi.getCategories();
 
-    void fetchServices()
-  }, [_id]);
+    return response.data;
+  }, [parentId]);
 
-  return { isLoading, data};
+  const {data, isLoading, error} = useAsyncData<CategoryType[]>({
+    initialData,
+    enabled,
+    fetcher: fetchCategories,
+  });
+
+  return {isLoading, data, error};
 };

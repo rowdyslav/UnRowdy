@@ -23,7 +23,6 @@ const RegisterForm = () => {
       className='flex flex-col gap-y-7 justify-stretch'
       autoComplete='on'
     >
-      {/*USERNAME*/}
       <div>
         <input
           className='input'
@@ -34,7 +33,6 @@ const RegisterForm = () => {
         <p className='text-red-500'>{errors?.username?.message}</p>
       </div>
 
-      {/*EMAIL*/}
       <div>
         <input
           {...register('email')}
@@ -47,7 +45,6 @@ const RegisterForm = () => {
         <p className='text-red-500'>{error?.message}</p>
       </div>
 
-      {/*PASSWORD*/}
       <div>
         <input
           className='input'

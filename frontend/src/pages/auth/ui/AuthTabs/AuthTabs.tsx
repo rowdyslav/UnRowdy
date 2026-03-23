@@ -1,40 +1,32 @@
 import type { AuthTabsProps } from '@/pages/auth/ui/AuthTabs/AuthTabsProps.ts'
 
-const AuthTabs = ({ activeTab, setActiveTab }: AuthTabsProps) => {
-  const handleSwitchTab = () => {
-    setActiveTab(`${activeTab === 'login' ? 'registration' : 'login'}`)
-  }
+const AUTH_TABS = [
+  { id: 'login', label: 'Вход' },
+  { id: 'registration', label: 'Регистрация' },
+] as const
 
-  return (
-    <div className='mx-auto w-full p-6 bg-white rounded-lg'>
-      <div className='flex border-b border-gray-300 mb-4 relative' onClick={handleSwitchTab}>
+const AuthTabs = ({ activeTab, setActiveTab }: AuthTabsProps) => (
+  <div className='mx-auto w-full p-6 bg-white rounded-lg'>
+    <div
+      className='grid border-b border-gray-300 mb-4'
+      style={{ gridTemplateColumns: `repeat(${AUTH_TABS.length}, minmax(0, 1fr))` }}
+    >
+      {AUTH_TABS.map(tab => (
         <button
-          className={`flex-1 py-2 text-center font-medium ${
-            activeTab === 'login' ? ' text-blue-500' : 'text-gray-500 hover:text-blue-500'
+          key={tab.id}
+          type='button'
+          className={`border-b-2 py-2 text-center font-medium transition-colors ${
+            activeTab === tab.id
+              ? 'border-blue-500 text-blue-500'
+              : 'border-transparent text-gray-500 hover:text-blue-500'
           }`}
+          onClick={() => setActiveTab(tab.id)}
         >
-          Вход
+          {tab.label}
         </button>
-
-        <button
-          className={`flex-1 py-2 text-center font-medium ${
-            activeTab === 'registration' ? ' text-blue-500' : 'text-gray-500 hover:text-blue-500'
-          }`}
-        >
-          Регистрация
-        </button>
-
-        {/*Анимированная полоска под табами*/}
-        <span
-          className={`absolute bottom-0 h-0.5 bg-blue-500 transition-all duration-400`}
-          style={{
-            width: '50%',
-            transform: `translateX(${activeTab === 'login' ? '0%' : '100%'})`,
-          }}
-        />
-      </div>
+      ))}
     </div>
-  )
-}
+  </div>
+)
 
 export default AuthTabs

@@ -1,4 +1,4 @@
-import { useConfirmStore } from '@/app/providers/confirm/confirmStore.ts'
+import { useConfirmStore } from '@/shared/model/confirm/confirmStore.ts'
 import { useEffect } from 'react'
 
 export const ConfirmDialog = () => {

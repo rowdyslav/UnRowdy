@@ -4,11 +4,13 @@ import { useCallback, useRef, useState } from 'react'
 import { useController, useFormContext } from 'react-hook-form'
 import { getCroppedImg } from '@/shared/utils/getCroppedImg.ts'
 import { fileToBase64 } from '@/shared/utils/fileToBase64.ts'
+import { useNotificationStore } from '@/shared/model/notification/notificationStore.ts'
 
 const ImageInput = ({ name }: { name: string }) => {
   const { control, setValue } = useFormContext()
   const { field } = useController({ name, control })
   const inputRef = useRef<HTMLInputElement>(null)
+  const showError = useNotificationStore(state => state.showError)
 
   const [imageSrc, setImageSrc] = useState<string | null>(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
@@ -37,8 +39,8 @@ const ImageInput = ({ name }: { name: string }) => {
       setImageSrc(base64)
       field.onChange(base64)
       setValue('crop_dirty', false)
-    } catch (error) {
-      console.error('Error converting file:', error)
+    } catch {
+      showError('Не удалось обработать изображение')
     }
   }
 

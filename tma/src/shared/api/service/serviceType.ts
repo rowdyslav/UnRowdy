@@ -1,4 +1,4 @@
-import type {UserType} from "@/share/types/userType.ts";
+import type {UserType} from "@/shared/types/userType.ts";
 
 export interface FilterTypes {
   keywords?: string | null

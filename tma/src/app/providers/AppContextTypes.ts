@@ -1,7 +1,12 @@
 export interface AppContextType {
-  goNext: () => void;
-  setIdSubCategory: (id: string) => void;
-  idSubCategory: string;
-  setNameCategory: (name: string) => void;
+  currentPage: number;
+  selectedCategoryId: string;
+  selectedCategoryName: string;
+  searchQuery: string;
+  openCategories: () => void;
+  selectCategory: (categoryId: string) => void;
+  selectSubCategory: (categoryName: string) => void;
+  setSearchQuery: (value: string) => void;
+  goBack: () => void;
 }
 

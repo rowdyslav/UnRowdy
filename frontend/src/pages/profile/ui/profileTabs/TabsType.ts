@@ -1,8 +1,13 @@
 import type { Dispatch, SetStateAction } from 'react'
 
-export type TabProfile = 'Друзья' | 'Услуги'
+export type ProfileTabId = 'services' | 'friends'
 
-export type profileTabsProps = {
-  activeTab: TabProfile
-  setActiveTab: Dispatch<SetStateAction<TabProfile>>
+export type ProfileTab = {
+  id: ProfileTabId
+  label: string
+}
+
+export type ProfileTabsProps = {
+  activeTab: ProfileTabId
+  setActiveTab: Dispatch<SetStateAction<ProfileTabId>>
 }

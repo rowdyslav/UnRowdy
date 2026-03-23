@@ -1,11 +1,8 @@
-type SearchInputProps = {
-  currPage: number,
-  setKeywords: (value: string) => void,
-  keywords: string
-}
+﻿import {useAppContext} from "@/app/providers/useAppContext.ts";
 
-const SearchInput = ({currPage, setKeywords, keywords}: SearchInputProps) => {
-  const searchVisible = currPage === 3
+const SearchInput = () => {
+  const {currentPage, searchQuery, setSearchQuery} = useAppContext();
+  const searchVisible = currentPage === 3;
 
   return (
     <div
@@ -19,9 +16,9 @@ const SearchInput = ({currPage, setKeywords, keywords}: SearchInputProps) => {
     >
       <div className="mx-auto max-w-3xl">
         <input
-          value={keywords}
-          onChange={(e) => setKeywords(e.target.value)}
-          placeholder="Введите ключевое слово..."
+          value={searchQuery}
+          onChange={(event) => setSearchQuery(event.target.value)}
+          placeholder="Р вЂ™Р Р†Р ВµР Т‘Р С‘РЎвЂљР Вµ Р С”Р В»РЎР‹РЎвЂЎР ВµР Р†Р С•Р Вµ РЎРѓР В»Р С•Р Р†Р С•..."
           className="w-full rounded-2xl border border-blue-200 bg-white/90 backdrop-blur-md px-4 py-3 shadow-lg"
         />
       </div>
@@ -30,3 +27,4 @@ const SearchInput = ({currPage, setKeywords, keywords}: SearchInputProps) => {
 };
 
 export default SearchInput;
+

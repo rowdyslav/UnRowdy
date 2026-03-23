@@ -1,7 +1,11 @@
 import axios from 'axios'
-import { useAuthStore } from '@/app/providers/auth/authStore.ts'
-import { useNotificationStore } from '@/app/providers/notification/NotificationStore.ts'
-import { ROUTES } from '@/shared/routes/routes.ts'
+
+type UnauthorizedHandler = () => boolean | void
+
+interface ApiClientConfig {
+  getAccessToken?: () => string | null
+  onUnauthorized?: UnauthorizedHandler
+}
 
 export const api = axios.create({
   baseURL: 'http://127.0.0.1:8000',
@@ -10,11 +14,16 @@ export const api = axios.create({
   },
 })
 
+const apiClientConfig: ApiClientConfig = {}
 let isHandlingUnauthorized = false
 
-// при наличии access_token подставляется заголовок Authorization: Bearer eyJhb...
+export const configureApiClient = (config: ApiClientConfig) => {
+  apiClientConfig.getAccessToken = config.getAccessToken
+  apiClientConfig.onUnauthorized = config.onUnauthorized
+}
+
 api.interceptors.request.use(config => {
-  const token = useAuthStore.getState().token
+  const token = apiClientConfig.getAccessToken?.()
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
@@ -22,30 +31,24 @@ api.interceptors.request.use(config => {
 })
 
 const handleUnauthorized = () => {
-  if (isHandlingUnauthorized) {
+  if (isHandlingUnauthorized || !apiClientConfig.onUnauthorized) {
     return
   }
 
   isHandlingUnauthorized = true
-  useAuthStore.getState().logout()
-  useNotificationStore.getState().showError('Требуется повторный вход')
+  const shouldReleaseLock = apiClientConfig.onUnauthorized()
 
-  if (window.location.pathname !== ROUTES.AUTH) {
-    window.location.assign(ROUTES.AUTH)
-    return
+  if (shouldReleaseLock) {
+    isHandlingUnauthorized = false
   }
-
-  isHandlingUnauthorized = false
 }
 
-// проверка жизни токена
 api.interceptors.response.use(
   response => response,
   error => {
     const hasAuthHeader = Boolean(error.config?.headers?.Authorization)
-    const isAuthenticated = useAuthStore.getState().isAuthenticated
 
-    if (error.response?.status === 401 && isAuthenticated && hasAuthHeader) {
+    if (error.response?.status === 401 && hasAuthHeader) {
       handleUnauthorized()
     }
 

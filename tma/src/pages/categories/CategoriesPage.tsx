@@ -1,13 +1,15 @@
-import {useCategories} from "@/entities/category/api/useCategories.ts";
-import {useAppContext} from "@/app/providers/AppContext.tsx";
+﻿import {useCategories} from "@/entities/category/api/useCategories.ts";
+import {useAppContext} from "@/app/providers/useAppContext.ts";
 import Category from "@/entities/category/ui/category.tsx";
 import "@egjs/react-flicking/dist/flicking.css";
-import Flicking from '@egjs/react-flicking';
+import Flicking from "@egjs/react-flicking";
 
 const CategoriesPage = ({isSubCategories}: { isSubCategories: boolean }) => {
-  const {idSubCategory} = useAppContext();
+  const {selectedCategoryId} = useAppContext();
+  const canLoadCategories = !isSubCategories || Boolean(selectedCategoryId);
   const {data: categoriesData} = useCategories({
-    _id: isSubCategories ? idSubCategory : "",
+    parentId: isSubCategories ? selectedCategoryId : undefined,
+    enabled: canLoadCategories,
   });
 
   return (
@@ -29,7 +31,7 @@ const CategoriesPage = ({isSubCategories}: { isSubCategories: boolean }) => {
         className="h-full w-full"
         moveType={["snap"]}
       >
-        {categoriesData?.map((category) => (
+        {categoriesData.map((category) => (
           <div
             key={category._id}
             className="w-full h-[100vh] flex items-center justify-center"
@@ -47,3 +49,4 @@ const CategoriesPage = ({isSubCategories}: { isSubCategories: boolean }) => {
 };
 
 export default CategoriesPage;
+

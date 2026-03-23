@@ -7,7 +7,6 @@ const CataloguePage = () => {
 
   return (
     <section className='container grid grid-cols-[1fr_3.4fr] gap-x-10'>
-      {/* CATEGORY PICKER*/}
       <nav className='card-element p-4 shadow-sm h-fit sticky top-4'>
         <h2 className='text-2xl font-semibold color-font mb-3'>Категории</h2>
 
@@ -26,7 +25,6 @@ const CataloguePage = () => {
         </ul>
       </nav>
 
-      {/*CATEGORIES LIST*/}
       {isLoading ? (
         <CategoriesSkeleton catCount={1} subCount={1} />
       ) : (

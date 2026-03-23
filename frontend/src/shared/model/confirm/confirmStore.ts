@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { ConfirmState } from '@/app/providers/confirm/types.ts'
+import type { ConfirmState } from '@/shared/model/confirm/types.ts'
 
 export const useConfirmStore = create<ConfirmState>((set, get) => ({
   isOpen: false,

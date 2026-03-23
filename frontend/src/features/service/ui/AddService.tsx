@@ -1,7 +1,7 @@
 import {ServiceFormSchema, type ServiceFormType,} from '@/features/service/model/ServiceForm.schema.ts'
 import SelectCategory from '@/entities/categories/ui/selectCategory/SelectCategory.tsx'
 import {useCategories} from '@/entities/categories/api/useCategories.ts'
-import {useConfirmStore} from "@/app/providers/confirm/confirmStore.ts";
+import {useConfirmStore} from "@/shared/model/confirm/confirmStore.ts";
 import {useAddService} from '@/features/service/api/useAddService.ts'
 import type {ServiceApiPostType} from '@/shared/api/service/types.ts'
 import NavButton from '@/shared/components/navButton/NavButton.tsx'
@@ -49,7 +49,6 @@ const AddService = () => {
     <FormProvider {...methods}>
       <div className='card-element hover:shadow-sm w-[70%] p-5'>
         <form className='grid gap-y-5' onSubmit={handleSubmit(onSubmit)} id='service-form'>
-          {/* НАЗВАНИЕ */}
           <Field label='Название' error={errors.name?.message}>
             <input
               {...register('name')}
@@ -58,7 +57,6 @@ const AddService = () => {
             />
           </Field>
 
-          {/* ОПИСАНИЕ */}
           <Field label='Описание' error={errors.description?.message}>
             <textarea
               {...register('description')}
@@ -67,7 +65,6 @@ const AddService = () => {
             />
           </Field>
 
-          {/* КАТЕГОРИИ */}
           <div className='grid grid-cols-2 gap-4'>
             <Field label='Категория' error={errors.category?.message}>
               <SelectCategory
@@ -85,14 +82,12 @@ const AddService = () => {
             </div>
           </div>
 
-          {/* ИЗОБРАЖЕНИЕ */}
           <div className='add-flex'>
             <h4 className='text-lg font-bold color-font-light'>Обложка услуги</h4>
             <ImageInput name='image_b64'/>
             <p className='text-center text-red-400'>{errors?.image_b64?.message}</p>
           </div>
 
-          {/* ЦЕНА */}
           <Field label='Цена' error={errors.price?.message}>
             <input
               {...register('price', {valueAsNumber: true})}

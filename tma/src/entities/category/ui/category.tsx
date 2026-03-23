@@ -1,14 +1,17 @@
-import type { CategoryProps } from "@/entities/category/ui/CategoryProps.ts";
-import { useAppContext } from "@/app/providers/AppContext.tsx";
+﻿import type {CategoryProps} from "@/entities/category/ui/CategoryProps.ts";
+import {useAppContext} from "@/app/providers/useAppContext.ts";
+import codingImage from "@/shared/assets/coding.webp";
 
-const Category = ({ label, _id, isSubCategory }: CategoryProps) => {
-  const { setNameCategory, setIdSubCategory, goNext } = useAppContext();
+const Category = ({label, _id, isSubCategory}: CategoryProps) => {
+  const {selectCategory, selectSubCategory} = useAppContext();
 
   const handleClick = () => {
-    if (!isSubCategory) setIdSubCategory(_id);
-    else setNameCategory(label);
+    if (!isSubCategory) {
+      selectCategory(_id);
+      return;
+    }
 
-    goNext();
+    selectSubCategory(label);
   };
 
   return (
@@ -22,15 +25,15 @@ const Category = ({ label, _id, isSubCategory }: CategoryProps) => {
     >
       <div className="w-full h-[60vh] flex items-center justify-center p-6">
         <img
-          src='/src/share/assets/coding.webp'
+          src={codingImage}
           alt={label}
           className="
             w-full h-full object-cover rounded-2xl shadow-xl
             transition-transform duration-300
-            hover:scale-[1.005]" draggable="false"
+            hover:scale-[1.005]"
+          draggable="false"
         />
       </div>
-
 
       <div className="w-full flex flex-col items-center text-gray-900 mt-4">
         <p className="text-3xl font-extrabold mb-1 text-center">{label}</p>
@@ -42,9 +45,7 @@ const Category = ({ label, _id, isSubCategory }: CategoryProps) => {
         )}
       </div>
 
-      <p
-        className=" absolute bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-600 opacity-80"
-      >
+      <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-600 opacity-80">
         Свайпните вверх или нажмите для продолжения
       </p>
     </div>

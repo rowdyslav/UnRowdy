@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/features/friends/config/queryKeys.ts'
 import { friendsApi } from '@/shared/api/friends.ts'
 import type { AxiosError } from 'axios'
-import { useNotificationStore } from '@/app/providers/notification/NotificationStore.ts'
+import { useNotificationStore } from '@/shared/model/notification/notificationStore.ts'
 
 export const useAddFriend = () => {
   const queryClient = useQueryClient()
